@@ -32,7 +32,7 @@ export default {
       <div class="ml-5 mr-1.5">
         <h3 class="font-medium text-2xl mb-3">{{ tab.header }}</h3>
         <p v-html="tab.content" class="italic"></p>
-        <button class="mx-auto text-left mt-3 btn-base-darker capitalize mt-5">{{ tab.btn }}</button>
+        <button class="mx-auto text-left mt-3 flat-btn-base  capitalize mt-5" style="font-size: 15px">{{ tab.btn }}</button>
       </div>
 
     </div>

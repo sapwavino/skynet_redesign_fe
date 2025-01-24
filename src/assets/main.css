@@ -1,18 +1,8 @@
 @import './base.css';
+@import "./animations.css";
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-
-/* ANIMATIONS */
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.35s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
 
 
 /*TAILWIND THEME CONFIG*/
@@ -47,23 +37,23 @@
 }
 
 .btn-base {
-    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-darker {
-    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .flat-btn-base-darker {
-    @apply bg-black text-customGold px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply bg-black text-customGold px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-darker-sm {
-    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-xs tracking-wider hover:cursor-pointer;
+    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-xs tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .flat-btn-base {
-    @apply bg-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply bg-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .border-btn-base {
@@ -101,3 +91,5 @@
 .announcement-banner {
     @apply flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-gradient-to-br from-customGold via-amber-300 to-customGold md:animate-pulse hover:animate-none;
 }
+
+/*LOADING ANIMATIONS*/

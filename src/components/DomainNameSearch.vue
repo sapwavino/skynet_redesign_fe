@@ -1,7 +1,18 @@
 <script>
+// import the library
+import {createToast} from 'mosha-vue-toastify';
+// import the styling for the toast
+import 'mosha-vue-toastify/dist/style.css'
 
 export default {
   name: "DomainNameSearch",
+
+  setup() {
+    const toast = () => {
+      createToast('Wow, easy')
+    }
+    return {toast}
+  },
 
   data() {
     return {
@@ -50,7 +61,42 @@ export default {
         'GBP'
       ],
       selectedCurrency: 'NGN',
+      loading: false,
+      searchTerm: '',
+      searchResults: [],
 
+    }
+  },
+
+  methods: {
+    fetchSearchResults() {
+      if (!this.searchTerm) {
+        createToast(
+            `Please enter a domain name`,
+            {
+              duration: 5000,
+              type: 'danger',
+            }
+        )
+        return;
+      }
+      this.loading = true;
+      this.axios.get(`https://api.domainsdb.info/v1/domains/search/${this.searchTerm}`)
+          .then(response => {
+            this.searchResults = response.data.domains;
+            this.loading = false;
+          })
+          .catch(error => {
+            console.error(error);
+            createToast(
+                `Error fetching domain information: ${error.message}`,
+                {
+                  duration: 3000,
+                  type: 'danger',
+                }
+            )
+            this.loading = false;
+          });
     }
   }
 }
@@ -58,13 +104,17 @@ export default {
 
 <template>
   <div class="w-1/3">
+
+    <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">
       <input type="text" placeholder="Find your domain name"
              class="w-5/6 border rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0" autofocus
-             style="padding: 1rem"/>
-      <button class="flat-btn-base rounded-tr-xl rounded-br-xl tracking-wider">Search</button>
+             style="padding: 1rem" v-model="searchTerm"/>
+      <button class="flat-btn-base rounded-tr-xl rounded-br-xl tracking-wider" @click="fetchSearchResults">Search
+      </button>
     </section>
 
+    <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-10">
       <select id="currency"
               class="h-12 border border-gray-400 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none font-bold"
@@ -76,8 +126,10 @@ export default {
       </select>
     </div>
 
-    <section class="grid grid-cols-5">
-      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20" v-for="(tld, idx) in tldPrices"
+    <!--    TLD PRICES -->
+    <section class="grid grid-cols-5 mt-3" v-if="!loading">
+      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
+           v-for="(tld, idx) in tldPrices"
            :key="idx">
         <span class="text-2xl font-medium">{{ tld.tld }}</span>
         <hr class="border-gray-300 border w-1/2"/>
@@ -93,6 +145,17 @@ export default {
       </div>
     </section>
 
+
+    <!--    SEARCH RESULTS-->
+    <section class="mt-3 w-full " v-else>
+      <div class="border border-gray-300 text-center flex flex-col justify-center" v-if="searchResults.length > 0">
+        <span class="text-2xl font-semibold">Search Results:</span>
+        <span class="text-sm">{{ searchTerm }}</span>
+      </div>
+      <div class="domainSearchLoader">
+<!--        <h2 class="font-semibold text-center">Loading...</h2>-->
+      </div>
+    </section>
   </div>
 </template>
 

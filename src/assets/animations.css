@@ -15,7 +15,6 @@
     margin: 0 auto;
     width: fit-content;
     font-size: 40px;
-    font-family: system-ui,sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     color: #0000;
@@ -23,9 +22,13 @@
     background: conic-gradient(#000 0 0) 0/0% 100% no-repeat text;
     animation: l1 1s linear infinite;
 }
+
 .domainSearchLoader:before {
-    content: "Loading";
+    content: "Searching...";
 }
+
 @keyframes l1 {
-    to{background-size: 120% 100%}
+    to {
+        background-size: 120% 100%
+    }
 }

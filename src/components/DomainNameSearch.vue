@@ -89,7 +89,7 @@ export default {
           .catch(error => {
             console.error(error);
             createToast(
-                `Error fetching domain information: ${error.message}`,
+                `Couldn't fetch domain information: ${error.message}`,
                 {
                   duration: 3000,
                   type: 'danger',
@@ -97,6 +97,7 @@ export default {
             )
             this.loading = false;
           });
+      this.searchResults.push(this.searchTerm);
     }
   }
 }
@@ -127,7 +128,7 @@ export default {
     </div>
 
     <!--    TLD PRICES -->
-    <section class="grid grid-cols-5 mt-3" v-if="!loading">
+    <section class="grid grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
       <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
            v-for="(tld, idx) in tldPrices"
            :key="idx">
@@ -147,13 +148,16 @@ export default {
 
 
     <!--    SEARCH RESULTS-->
-    <section class="mt-3 w-full " v-else>
-      <div class="border border-gray-300 text-center flex flex-col justify-center" v-if="searchResults.length > 0">
+    <section class="mt-3 w-full " v-if="!loading && searchResults.length > 0">
+      <div class="border border-gray-300 text-center flex flex-col justify-center">
         <span class="text-2xl font-semibold">Search Results:</span>
         <span class="text-sm">{{ searchTerm }}</span>
       </div>
-      <div class="domainSearchLoader">
-<!--        <h2 class="font-semibold text-center">Loading...</h2>-->
+    </section>
+
+    <!--    LOADING ANIMATION-->
+    <section class="mt-3 w-full " v-if="loading">
+      <div class="domainSearchLoader h-40">
       </div>
     </section>
   </div>

@@ -1,86 +1,48 @@
-/*!* color palette from <https://github.com/vuejs/theme> *!*/
-/*:root {*/
-/*  --vt-c-white: #ffffff;*/
-/*  --vt-c-white-soft: #f8f8f8;*/
-/*  --vt-c-white-mute: #f2f2f2;*/
+/*BASE STYLES*/
+.navbar-base {
+    @apply w-full px-10 py-2 md:flex items-center justify-between hidden ;
+}
 
-/*  --vt-c-black: #181818;*/
-/*  --vt-c-black-soft: #222222;*/
-/*  --vt-c-black-mute: #282828;*/
+.mobile-nav {
+    @apply md:hidden block;
+}
 
-/*  --vt-c-indigo: #2c3e50;*/
+.btn-base {
+    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+}
 
-/*  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);*/
-/*  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);*/
-/*  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);*/
-/*  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);*/
+.btn-base-darker {
+    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+}
 
-/*  --vt-c-text-light-1: var(--vt-c-indigo);*/
-/*  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);*/
-/*  --vt-c-text-dark-1: var(--vt-c-white);*/
-/*  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);*/
-/*}*/
+.flat-btn-base-darker {
+    @apply bg-black text-customGold px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+}
 
-/*!* semantic color variables for this project *!*/
-/*:root {*/
-/*  --color-background: var(--vt-c-white);*/
-/*  --color-background-soft: var(--vt-c-white-soft);*/
-/*  --color-background-mute: var(--vt-c-white-mute);*/
+.btn-base-darker-sm {
+    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-xs tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+}
 
-/*  --color-border: var(--vt-c-divider-light-2);*/
-/*  --color-border-hover: var(--vt-c-divider-light-1);*/
+.flat-btn-base {
+    @apply bg-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+}
 
-/*  --color-heading: var(--vt-c-text-light-1);*/
-/*  --color-text: var(--vt-c-text-light-1);*/
+.border-btn-base {
+    @apply border border-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+}
 
-/*  --section-gap: 160px;*/
-/*}*/
+.flat-border-btn-base {
+    @apply border border-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+}
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --color-background: var(--vt-c-black);*/
-/*    --color-background-soft: var(--vt-c-black-soft);*/
-/*    --color-background-mute: var(--vt-c-black-mute);*/
+.border-btn-base-sm {
+    @apply border border-customGold px-2 py-1 rounded-xl text-black text-xs font-bold text-lg tracking-wider hover:cursor-pointer;
+}
 
-/*    --color-border: var(--vt-c-divider-dark-2);*/
-/*    --color-border-hover: var(--vt-c-divider-dark-1);*/
+.text-btn-base {
+    @apply px-3 py-1 text-customGold font-bold transform transition-all duration-300 ease-in-out hover:scale-110 hover:underline hover:text-black text-lg tracking-wider hover:cursor-pointer underline-offset-3;
+}
 
-/*    --color-heading: var(--vt-c-text-dark-1);*/
-/*    --color-text: var(--vt-c-text-dark-2);*/
-/*  }*/
-/*}*/
-
-/**,*/
-/**::before,*/
-/**::after {*/
-/*  box-sizing: border-box;*/
-/*  margin: 0;*/
-/*  font-weight: normal;*/
-/*}*/
-
-/*body {*/
-/*  min-height: 100vh;*/
-/*  color: var(--color-text);*/
-/*  background: var(--color-background);*/
-/*  transition:*/
-/*    color 0.5s,*/
-/*    background-color 0.5s;*/
-/*  line-height: 1.6;*/
-/*  font-family:*/
-/*    Inter,*/
-/*    -apple-system,*/
-/*    BlinkMacSystemFont,*/
-/*    'Segoe UI',*/
-/*    Roboto,*/
-/*    Oxygen,*/
-/*    Ubuntu,*/
-/*    Cantarell,*/
-/*    'Fira Sans',*/
-/*    'Droid Sans',*/
-/*    'Helvetica Neue',*/
-/*    sans-serif;*/
-/*  font-size: 15px;*/
-/*  text-rendering: optimizeLegibility;*/
-/*  -webkit-font-smoothing: antialiased;*/
-/*  -moz-osx-font-smoothing: grayscale;*/
-/*}*/
+.text-input-base {
+    @apply outline-customGold
+}

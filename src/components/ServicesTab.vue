@@ -35,7 +35,7 @@ export default {
 
     <!--    DOMAIN TAB-->
     <transition name="fade" mode="in-out">
-      <tab-component v-if="tab === 'domain'" animation="src/assets/domainAnimation.json" :tab="{
+      <tab-component v-if="tab === 'domain'" animation="/domainAnimation.json" :tab="{
        btn: 'See available TLDs',
        header: 'Search the most popular domains',
        content: `Discover the latest domain deals and check our pricing on hundreds of Top-Level Domains(TLDs) with invaluable add-ons for your
@@ -45,7 +45,7 @@ export default {
     </transition>
     <!--    HOSTING TAB-->
     <transition name="fade" mode="in-out">
-      <tab-component v-if="tab === 'hosting'" :animation="'src/assets/hostingAnimation.json'" :tab="{
+      <tab-component v-if="tab === 'hosting'" :animation="'/hostingAnimation.json'" :tab="{
        btn: 'See hosting plans',
        header: 'Host your websites & web apps with 99% uptime',
        content:`Our hosting options have been carefully selected to cater to most deployment needs.<br/> Let us know if

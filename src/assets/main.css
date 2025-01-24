@@ -3,6 +3,18 @@
 @import "tailwindcss";
 
 
+/* ANIMATIONS */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.35s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+
 /*TAILWIND THEME CONFIG*/
 @theme {
     --color-customGold: #ffc107;

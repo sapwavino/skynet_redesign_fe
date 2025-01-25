@@ -12,7 +12,6 @@ export default {
   <section class="hero">
     <h2 class="bigHeader"><span class="text-5xl tracking-wider">Do more online,</span> <br/> for much less</h2>
     <DomainNameSearch class=""/>
-    <ServicesTab/>
   </section>
 </template>
 

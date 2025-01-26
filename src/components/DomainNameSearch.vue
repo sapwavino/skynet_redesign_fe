@@ -8,10 +8,7 @@ export default {
   name: "DomainNameSearch",
 
   setup() {
-    const toast = () => {
-      createToast('Wow, easy')
-    }
-    return {toast}
+    return {}
   },
 
   data() {
@@ -53,6 +50,13 @@ export default {
         this.convertPrices(newCurrency);
       },
       immediate: true
+    },
+    searchTerm(newval) {
+      if(newval === ''){
+        this.loading = true
+        this.searchResults = []
+        this.loading = false
+      }
     }
   },
 

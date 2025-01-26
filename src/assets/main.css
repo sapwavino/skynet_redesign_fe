@@ -30,12 +30,21 @@
 }
 
 .header {
-    @apply text-3xl font-bold text-center;
+    @apply text-3xl font-bold;
 }
 
 .subheader{
-    @apply text-center capitalize font-medium
+    @apply font-medium
 }
+
+.smallHeader {
+    @apply text-xl font-bold;
+}
+
+.muteSmallSubheader{
+    @apply font-medium text-gray-500 text-sm
+}
+
 
 /*ELEMENTS*/
 .hero {
@@ -62,7 +71,7 @@
     padding: 10px 0;
     position: absolute;
     top: -6px;
-    right: 25px;
+    right: 20px;
     text-align: center;
     border-top-left-radius: 3px;
     @apply bg-gradient-to-br from-customGold  via-yellow-200 to-customGold shadow-xl font-black;

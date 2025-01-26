@@ -18,7 +18,7 @@ export default {
 
 <template>
   <section class="flex flex-col gap-y-5 mt-10 w-3/4 mx-auto">
-    <div class="flex flex-col">
+    <div class="flex flex-col text-center">
       <h2 class="header capitalize">What we offer</h2>
       <h2 class="subheader">More from us for less from you</h2>
     </div>

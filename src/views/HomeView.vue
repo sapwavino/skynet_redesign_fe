@@ -15,9 +15,8 @@ onMounted(() => {
 
 <template>
   <main class="min-h-screen">
-    <hero-section></hero-section>
+    <HeroSection/>
     <ServicesTab/>
-    <div class="h-64"></div>
-    <WebHosting id="hosting"/>
+    <WebHosting/>
   </main>
 </template>

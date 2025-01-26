@@ -18,9 +18,10 @@ export default {
 
 <template>
   <section class="flex flex-col gap-y-5 mt-10 w-3/4 mx-auto">
+  <h2 class="header capitalize">Our services</h2>
     <div class="flex items-center justify-center">
       <button :class="tab === 'domain' ? 'tab-selector-active' : 'tab-selector-inactive'" @click="tab = 'domain'">
-        Domain
+        Domains
       </button>
       <button :class="tab === 'hosting' ? 'tab-selector-active' : 'tab-selector-inactive'" @click="tab = 'hosting'">
         Hosting

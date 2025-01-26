@@ -17,59 +17,43 @@ export default {
   data() {
     return {
       tldPrices: [
-        {
-          'tld': '.com',
-          'price': '18,650.32',
-        },
-        {
-          'tld': '.org',
-          'price': '18,650.32',
-        },
-        {
-          'tld': '.ng',
-          'price': '18,650.32',
-        },
-        {
-          'tld': '.com.ng',
-          'price': '3,885.48',
-        },
-        {
-          'tld': '.net',
-          'price': '23,312.90',
-        },
-        {
-          'tld': '.co',
-          'price': '18,650.32',
-        },
-        {
-          'tld': '.ai',
-          'price': '124,335.49',
-        },
-        {
-          'tld': '.africa',
-          'price': '23,312.90',
-        },
-        {
-          'tld': '.co.za',
-          'price': '7,770.97',
-        },
-
+        {'tld': '.com', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': '.org', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': '.ng', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': '.com.ng', 'originalPrice': 3885.48, 'price': 3885.48},
+        {'tld': '.net', 'originalPrice': 23312.90, 'price': 23312.90},
+        {'tld': '.co', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': '.ai', 'originalPrice': 124335.49, 'price': 124335.49},
+        {'tld': '.africa', 'originalPrice': 23312.90, 'price': 23312.90},
+        {'tld': '.co.za', 'originalPrice': 7770.97, 'price': 7770.97},
       ],
       currencies: [
         'NGN',
         'USD',
-        'GBP'
+        'GBP',
+        'EUR'
       ],
       selectedCurrency: 'NGN',
       loading: false,
       searchTerm: '',
       searchResults: [],
+      exchangeRates: {
+        NGN: 1,
+        USD: 0.00066,  // 1 NGN = 0.0022 USD
+        GBP: 0.00051,  // 1 NGN = 0.0017 GBP
+        EUR: 0.00061,  // 1 NGN = 0.0020 EUR
+      },
 
     }
   },
 
-  mounted() {
-    console.log(this.$store.state.count) // this.$store
+  watch: {
+    selectedCurrency: {
+      handler(newCurrency) {
+        this.convertPrices(newCurrency);
+      },
+      immediate: true
+    }
   },
 
   methods: {
@@ -91,21 +75,22 @@ export default {
         )
         return;
       }
-      if(this.searchTerm === this.$store.state.domainToSearch) {
+      if (this.searchTerm === this.$store.state.domainToSearch) {
         return;
       }
       this.loading = true;
       this.searchTerm = removeWhitespace(this.searchTerm.toLowerCase())
       this.searchTerm = removeTLD(this.searchTerm)
 
-      if (!noHyphenStartEndRegex.test(this.searchTerm)) {
+      if (maxLengthRegex.test(this.searchTerm) === false) {
         createToast(
-            `Domain name cannot start or end with a hyphen`,
+            `Domain name must be between 1 and 253 characters`,
             {
               duration: 5000,
               type: 'danger',
             }
         )
+        this.loading = false;
         return;
       }
       if (!noSpecialCharsRegex.test(this.searchTerm)) {
@@ -116,16 +101,18 @@ export default {
               type: 'danger',
             }
         )
+        this.loading = false;
         return;
       }
-      if (maxLengthRegex.test(this.searchTerm) === false) {
+      if (!noHyphenStartEndRegex.test(this.searchTerm)) {
         createToast(
-            `Domain name must be between 1 and 253 characters`,
+            `Domain name cannot start or end with a hyphen`,
             {
               duration: 5000,
               type: 'danger',
             }
         )
+        this.loading = false;
         return;
       }
 
@@ -140,7 +127,18 @@ export default {
             this.loading = false;
           });
       this.searchResults.push(this.$store.state.domainToSearch);
-    }
+    },
+    convertPrices(currency) {
+      const rate = this.exchangeRates[currency];
+      this.tldPrices.forEach(tld => {
+        tld.price = (tld.originalPrice * rate).toFixed(2);
+      });
+    },
+    formatNumber(value) {
+      let parts = value.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
   }
 }
 </script>
@@ -187,7 +185,7 @@ export default {
           <span v-if="selectedCurrency === 'NGN'">₦</span>
           <span v-else-if="selectedCurrency === 'USD'">$</span>
           <span v-else-if="selectedCurrency === 'GBP'">£</span>
-          <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ tld.price }}
+          <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
         </span>
       </div>
       <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">
@@ -202,23 +200,24 @@ export default {
       </div>
     </section>
   </div>
+
   <!--    SEARCH RESULTS-->
   <section class="mt-3 w-1/2 mx-auto" v-if="!loading && searchResults.length > 0">
     <div class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100">
-      <span class="text-2xl font-semibold text-center">Results</span>
+      <span class="text-2xl font-bold text-center">Results</span>
       <ul class="w-full">
         <li class="list-none resultListItem flex items-center justify-between"
-            v-for="(tld, idx) in ['com', 'org', 'com.ng', 'ai', 'co']">
+            v-for="(tld, idx) in tldPrices">
           <div class="flex flex-col gap-y-1">
             <h2 class="font-bold text-lg">
               {{
-                ($store.state.domainToSearch.length > 45
-                    ? $store.state.domainToSearch.substring(0, 45) + '***'
+                ($store.state.domainToSearch.length > 30
+                    ? $store.state.domainToSearch.substring(0, 30) + '***'
                     : $store.state.domainToSearch)
-                + '.' + tld
+                + '.' + tld.tld
               }}
             </h2>
-            <span v-if="$store.state.domainToSearch.length > 45" class="text-xs text-green-600">We are showing a shorter name because domain name is longer than 45 characters</span>
+            <span v-if="$store.state.domainToSearch.length > 30" class="text-xs text-green-600">We are showing a shorter name because domain name is longer than 30 characters</span>
 
           </div>
           <div class="flex items-center gap-x-1">
@@ -228,7 +227,7 @@ export default {
                     <span v-if="selectedCurrency === 'NGN'">₦</span>
                     <span v-else-if="selectedCurrency === 'USD'">$</span>
                     <span v-else-if="selectedCurrency === 'GBP'">£</span>
-                    <span v-else-if="selectedCurrency === 'EUR'">€</span>100
+                    <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
                   </span>
               </h1>
               <h1 class="text-xs text-gray-400 tracking-tight font-medium">Per Year</h1>

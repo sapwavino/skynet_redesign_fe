@@ -12,7 +12,7 @@ export default {
     <!--    <div></div>-->
     <div class="flex items-center gap-x-5 font-bold">
       <a href="#hosting" class="text-btn-base">Hosting</a>
-      <router-link to="#" class="text-btn-base">Email</router-link>
+      <a href="#email" class="text-btn-base">Email</a>
       <router-link to="#" class="text-btn-base">Apps</router-link>
       <router-link to="#" class="text-btn-base">Database</router-link>
       <router-link to="#" class="text-btn-base">Help & Support</router-link>

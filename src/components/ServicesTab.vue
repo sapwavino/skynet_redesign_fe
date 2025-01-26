@@ -19,7 +19,7 @@ export default {
 <template>
   <section class="flex flex-col gap-y-5 mt-10 w-3/4 mx-auto">
     <div class="flex flex-col">
-      <h2 class="header capitalize">Our services</h2>
+      <h2 class="header capitalize">What we offer</h2>
       <h2 class="subheader">More from us for less from you</h2>
     </div>
     <div class="flex items-center justify-center">
@@ -62,7 +62,7 @@ export default {
     <tab-component v-if="tab === 'email'" :animation="'/emailAnimation.lottie'" :tab="{
        btn: 'Set up email service',
        header: 'Professional email service for your business',
-       content:`Skynet's email service provides simplicity and security in one package.<br/> Connect your domain or get one from us and start sending emails.`
+       content:`Skynet's email service provides simplicity and security in one package. Connect your domain or get one from us and start sending emails.`
      }"></tab-component>
 
 
@@ -72,7 +72,11 @@ export default {
        btn: 'Join waitlist',
        header: 'High-performance, scalable databases on demand',
        content:'Join our waitlist for the latest database offerings.<br/> We will send you updates & discount on all our new offerings.'
-     }"></tab-component>
+     }">
+      <slot>
+        <input type="email" v-model="earlyBirdEmail" class="outline-customGold border border-customGold block rounded-2xl p-2 w-3/4" placeholder="your_email@yourwebsite.com">
+      </slot>
+    </tab-component>
 
   </section>
 

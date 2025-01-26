@@ -144,8 +144,8 @@ export default {
 </script>
 
 <template>
-  <div class="mt-10"></div>
-  <h1 class="text-center font-bold text-3xl" id="hosting">Web Hosting Plans</h1>
+  <div class="mt-10 min-h-10" id="hosting"></div>
+  <h1 class="text-center font-bold text-3xl">Web Hosting Plans</h1>
   <h2 class="subheader">All plans can be upgraded or downgraded</h2>
   <!-- PLANS -->
   <div>
@@ -175,7 +175,7 @@ export default {
     </div>
 
     <!--    TABS-->
-    <div v-if="tab === 'hosting'" class="grid grid-cols-3 gap-x-5 p-10">
+    <div v-if="tab === 'hosting'" class="cardGrid3">
       <HostingPlanCard v-for="(plan, idx) in hostingPlans"
                        :key="idx"
                        :plan-name="plan.name"
@@ -186,7 +186,8 @@ export default {
 
       />
     </div>
-    <div v-if="tab === 'cloud'" class="grid grid-cols-3 gap-5 p-10">
+    <div v-if="tab === 'cloud'" class="cardGrid3">
+      <button class="col-span-3 text-btn-base">View all cloud →</button>
       <HostingPlanCard v-for="(plan, idx) in cloudPlans"
                        :key="idx"
                        :plan-name="plan.name"

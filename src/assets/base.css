@@ -50,3 +50,9 @@
 .text-input-base {
     @apply outline-customGold
 }
+
+
+/*LAYOUTS*/
+.cardGrid3{
+    @apply grid grid-cols-3 gap-x-16 w-3/4 py-10 mx-auto
+  }

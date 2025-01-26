@@ -17,15 +17,15 @@ export default {
   data() {
     return {
       tldPrices: [
-        {'tld': '.com', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': '.org', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': '.ng', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': '.com.ng', 'originalPrice': 3885.48, 'price': 3885.48},
-        {'tld': '.net', 'originalPrice': 23312.90, 'price': 23312.90},
-        {'tld': '.co', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': '.ai', 'originalPrice': 124335.49, 'price': 124335.49},
-        {'tld': '.africa', 'originalPrice': 23312.90, 'price': 23312.90},
-        {'tld': '.co.za', 'originalPrice': 7770.97, 'price': 7770.97},
+        {'tld': 'com', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': 'org', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': 'ng', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': 'com.ng', 'originalPrice': 3885.48, 'price': 3885.48},
+        {'tld': 'net', 'originalPrice': 23312.90, 'price': 23312.90},
+        {'tld': 'co', 'originalPrice': 18650.32, 'price': 18650.32},
+        {'tld': 'ai', 'originalPrice': 124335.49, 'price': 124335.49},
+        {'tld': 'africa', 'originalPrice': 23312.90, 'price': 23312.90},
+        {'tld': 'co.za', 'originalPrice': 7770.97, 'price': 7770.97},
       ],
       currencies: [
         'NGN',
@@ -179,7 +179,7 @@ export default {
       <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
            v-for="(tld, idx) in tldPrices"
            :key="idx">
-        <span class="text-2xl font-medium">{{ tld.tld }}</span>
+        <span class="text-2xl font-medium">.{{ tld.tld }}</span>
         <hr class="border-gray-300 border w-1/2"/>
         <span class="text-sm text-customGold font-bold">
           <span v-if="selectedCurrency === 'NGN'">₦</span>
@@ -192,7 +192,6 @@ export default {
         <span class="text-2xl font-semibold">& much more</span>
       </div>
     </section>
-
 
     <!--    LOADING ANIMATION-->
     <section class="mt-3 w-full " v-if="loading">

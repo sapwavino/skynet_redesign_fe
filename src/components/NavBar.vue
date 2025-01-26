@@ -11,7 +11,7 @@ export default {
     </router-link>
     <!--    <div></div>-->
     <div class="flex items-center gap-x-5 font-bold">
-      <router-link :to="{ path: '/', hash: '#hosting' }" class="text-btn-base">Hosting</router-link>
+      <a href="#hosting" class="text-btn-base">Hosting</a>
       <router-link to="#" class="text-btn-base">Email</router-link>
       <router-link to="#" class="text-btn-base">Apps</router-link>
       <router-link to="#" class="text-btn-base">Database</router-link>

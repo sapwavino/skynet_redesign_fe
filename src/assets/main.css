@@ -32,6 +32,10 @@
     @apply text-3xl font-bold text-center;
 }
 
+.subheader{
+    @apply text-center capitalize font-medium
+}
+
 /*ELEMENTS*/
 .hero {
     @apply p-5 hidden md:flex flex-col items-center;
@@ -51,4 +55,35 @@
 
 .tab-selector-inactive {
     @apply px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+}
+.ribbon {
+    width: 60px;
+    padding: 10px 0;
+    position: absolute;
+    top: -6px;
+    right: 25px;
+    text-align: center;
+    border-top-left-radius: 3px;
+    @apply bg-gradient-to-br from-customGold  via-yellow-200 to-customGold shadow-xl font-black;
+}
+.ribbon:before {
+    height: 0;
+    width: 0;
+    right: -5.5px;
+    top: 0.1px;
+    border-bottom: 6px solid #8D5A20;
+    border-right: 6px solid transparent;
+}
+.ribbon:before, .ribbon:after {
+    content: "";
+    position: absolute;
+}
+.ribbon:after {
+    height: 0;
+    width: 0;
+    bottom: -29.5px;
+    left: 0;
+    border-left: 30px solid #ffc107;
+    border-right: 30px solid #ffc107;
+    border-bottom: 30px solid transparent;
 }

@@ -31,12 +31,12 @@
     @apply bg-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
-.border-btn-base {
-    @apply border border-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+.flat-border-btn-base {
+    @apply border border-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out;
 }
 
-.flat-border-btn-base {
-    @apply border border-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+.border-btn-base {
+    @apply border border-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer;
 }
 
 .border-btn-base-sm {

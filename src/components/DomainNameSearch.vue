@@ -3,29 +3,26 @@
 import {createToast} from 'mosha-vue-toastify';
 // import the styling for the toast
 import 'mosha-vue-toastify/dist/style.css'
+import Recents from "@/components/Recents.vue";
 
 export default {
   name: "DomainNameSearch",
-
+  components: {Recents},
   setup() {
-    const toast = () => {
-      createToast('Wow, easy')
-    }
-    return {toast}
+    return {}
   },
-
   data() {
     return {
       tldPrices: [
-        {'tld': 'com', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': 'org', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': 'ng', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': 'com.ng', 'originalPrice': 3885.48, 'price': 3885.48},
-        {'tld': 'net', 'originalPrice': 23312.90, 'price': 23312.90},
-        {'tld': 'co', 'originalPrice': 18650.32, 'price': 18650.32},
-        {'tld': 'ai', 'originalPrice': 124335.49, 'price': 124335.49},
-        {'tld': 'africa', 'originalPrice': 23312.90, 'price': 23312.90},
-        {'tld': 'co.za', 'originalPrice': 7770.97, 'price': 7770.97},
+        {'tld': 'com', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'co', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'ai', 'originalPrice': 123204.46, 'price': 123204.46},
+        {'tld': 'org', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'ng', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'com.ng', 'originalPrice': 3850.14, 'price': 3850.14},
+        {'tld': 'net', 'originalPrice': 23100.84, 'price': 23100.84},
+        {'tld': 'africa', 'originalPrice': 23100.84, 'price': 23100.84},
+        {'tld': 'co.za', 'originalPrice': 7770.28, 'price': 7770.28},
       ],
       currencies: [
         'NGN',
@@ -43,19 +40,25 @@ export default {
         GBP: 0.00051,  // 1 NGN = 0.0017 GBP
         EUR: 0.00061,  // 1 NGN = 0.0020 EUR
       },
+      recents: []
 
     }
   },
-
   watch: {
     selectedCurrency: {
       handler(newCurrency) {
         this.convertPrices(newCurrency);
       },
       immediate: true
+    },
+    searchTerm(newval) {
+      if (newval === '') {
+        this.loading = true
+        this.searchResults = []
+        this.loading = false
+      }
     }
   },
-
   methods: {
     fetchSearchResults() {
       const removeTLD = (str) => str.replace(/\..*$/, '');
@@ -117,6 +120,9 @@ export default {
       }
 
       this.$store.dispatch('updateSearchDomain', removeTLD(this.searchTerm));
+      this.recents.push(this.$store.state.domainToSearch);
+      window.localStorage.setItem('recents', JSON.stringify(this.recents));
+
       this.axios.get(`https://api.domainsdb1.info/v1/domains/search/${this.$store.state.domainToSearch}`)
           .then(response => {
             this.searchResults = response.data.domains;
@@ -139,6 +145,16 @@ export default {
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
     },
+    clearRecents() {
+      this.recents = [];
+      this.searchTerm = '';
+      window.localStorage.removeItem('recents');
+    }
+  },
+  mounted() {
+    this.recents = window.localStorage.getItem('recents')
+        ? JSON.parse(window.localStorage.getItem('recents'))
+        : [];
   }
 }
 </script>
@@ -161,6 +177,8 @@ export default {
       </button>
 
     </section>
+
+    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents"/>
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">

@@ -34,7 +34,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col  justify-center gap-y-2 shadow-lg rounded-2xl p-20 relative">
+  <div class="hostingPlanCard">
     <span class="ribbon" v-if="popular">P<br>O<br>P<br>U<br>L<br>A<br>R</span>
     <h2 class="text-2xl font-bold" :style="`color: ${color}`">{{ planName }}</h2>
     <h2 class="text-3xl font-bold">₦ {{ formatNumber(cost) }}<span class="text-sm text-gray-400 font-medium">/month</span></h2>

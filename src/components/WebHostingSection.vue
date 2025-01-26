@@ -3,7 +3,7 @@ import HostingPlanCard from "@/components/HostingPlanCard.vue";
 import {DotLottieVue} from "@lottiefiles/dotlottie-vue";
 
 export default {
-  name: "WebHosting",
+  name: "WebHostingSection",
   components: {DotLottieVue, HostingPlanCard},
   data() {
     return {
@@ -146,7 +146,7 @@ export default {
 <template>
   <div class="mt-10 min-h-10" id="hosting"></div>
   <h1 class="text-center font-bold text-3xl">Web Hosting Plans</h1>
-  <h2 class="subheader">All plans can be upgraded or downgraded</h2>
+  <h2 class="subheader text-center">All plans can be upgraded or downgraded</h2>
   <!-- PLANS -->
   <div>
 

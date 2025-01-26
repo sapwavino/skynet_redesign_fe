@@ -1,10 +1,10 @@
 <script>
 import DomainNameSearch from "@/components/DomainNameSearch.vue";
-import ServicesTab from "@/components/ServicesTab.vue";
+import ServicesTabs from "@/components/ServicesTabs.vue";
 
 export default {
   name: "HeroSection",
-  components: {ServicesTab, DomainNameSearch}
+  components: {ServicesTab: ServicesTabs, DomainNameSearch}
 }
 </script>
 

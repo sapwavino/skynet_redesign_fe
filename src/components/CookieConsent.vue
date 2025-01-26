@@ -11,6 +11,7 @@ export default {
       this.$store.dispatch("hideCookieModal");
     },
     accept() {
+      // window.localStorage.setItem('showCookieModal', false)
       this.$store.dispatch("hideCookieModal");
     }
   },
@@ -22,7 +23,7 @@ export default {
   <transition name="slowFade" mode="in-out">
     <div class="flex flex-col gap-3 fixed bottom-10 left-5 w-1/4 bg-white shadow-2xl rounded-2xl p-5"
          v-show="$store.state.showCookieModal">
-      <h1>Cookie Consent</h1>
+      <h1 class="smallHeader">Cookie Consent</h1>
       <p>
         This website uses cookies to improve your experience and personalize content. By continuing to use this site,
         you

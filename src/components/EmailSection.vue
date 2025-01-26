@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div class="w-5/6 mx-auto">
+  <div class="w-5/6 mx-auto pb-20">
     <div class="mt-10 min-h-10" id="email"></div>
     <div class="text-center">
       <h2 class="header">Professional Business Email</h2>
@@ -28,11 +28,14 @@ export default {
           </li>
           <li class="mr-5 rounded-2xl shadow p-5">
             <h2 class="smallHeader mb-1">Keep working on the go</h2>
-            <p class="muteSmallSubheader">Easily access all your personal and business email addresses from any device. Connect to your favorite email application, like Outlook, Thunderbird, or Gmail.</p>
+            <p class="muteSmallSubheader">Easily access all your personal and business email addresses from any device.
+              Connect to your favorite email application, like Outlook, Thunderbird, or Gmail.</p>
           </li>
           <li class="mr-5 rounded-2xl shadow p-5 col-span-2">
-            <h2 class="smallHeader mb-1">Feel you belong</h2>
-            <p class="muteSmallSubheader">We don’t just guarantee our Professional Business Email service — we use it daily. Our 30+ Skynet staff (across 4 countries and three continents) are happily connected.</p>
+            <h2 class="smallHeader mb-1">With you the whole way</h2>
+            <p class="muteSmallSubheader">We don’t just guarantee our Professional Business Email service — we use it
+              daily. Our 30+ Skynet staff (across 4 countries and three continents) and even Help & Support are happily
+              connected.</p>
           </li>
           <li class="flex items-center mt-5 gap-x-5">
             <button class="btn-base">Get Started</button>

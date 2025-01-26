@@ -1,10 +1,12 @@
 <script setup>
 import HeroSection from "@/components/HeroSection.vue";
-import ServicesTab from "@/components/ServicesTab.vue";
+import ServicesTabs from "@/components/ServicesTabs.vue";
 import WebHostingSection from "@/components/WebHostingSection.vue";
 import {nextTick, onMounted} from "vue";
 import router from "@/router/index.js";
 import EmailSection from "@/components/EmailSection.vue";
+import AppsSection from "@/components/AppsSection.vue";
+import DatabaseSection from "@/components/DatabaseSection.vue";
 
 onMounted(() => {
   const section = router.currentRoute.value.hash.replace("#", "")
@@ -17,8 +19,10 @@ onMounted(() => {
 <template>
   <main class="min-h-screen">
     <HeroSection/>
-    <ServicesTab/>
+    <ServicesTabs/>
     <WebHostingSection/>
     <EmailSection/>
+    <AppsSection/>
+    <DatabaseSection/>
   </main>
 </template>

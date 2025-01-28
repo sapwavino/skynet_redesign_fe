@@ -10,7 +10,7 @@ export default {
     return {
       appsArray: [
         {
-          "app": "HR",
+          "app": "Human Resources",
           "icon": ''
         },
         {

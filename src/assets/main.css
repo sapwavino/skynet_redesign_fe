@@ -5,7 +5,8 @@
 
 /*TAILWIND THEME CONFIG*/
 @theme {
-    --color-customGold: #ffc107;
+    /*--color-customGold: #ffc107;*/
+    --color-customGold: #f5b325;
 }
 
 /*STYLE DEFAULTS & RESET*/
@@ -52,7 +53,7 @@
 }
 
 .announcement-banner {
-    @apply flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-gradient-to-br from-customGold via-amber-200 to-customGold ;
+    @apply flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-gradient-to-br from-yellow-600 via-amber-200 to-yellow-600 ;
 }
 
 .resultListItem {

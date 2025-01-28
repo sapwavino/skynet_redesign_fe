@@ -1,6 +1,6 @@
 /*BASE STYLES*/
 .navbar-base {
-    @apply w-full px-10 py-2 md:flex items-center justify-between hidden ;
+    @apply w-full px-10 py-2 md:flex items-center justify-between hidden dark:bg-gray-950;
 }
 
 .mobile-nav {
@@ -28,15 +28,15 @@
 }
 
 .flat-btn-base {
-    @apply bg-black px-3 py-1 text-customGold font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+    @apply  bg-customGold text-black px-3 py-1  font-bold text-lg tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
 }
 
 .flat-border-btn-base {
-    @apply border border-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out;
+    @apply border border-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out dark:text-customGold;
 }
 
 .border-btn-base {
-    @apply border border-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply border border-customGold px-3 py-1 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer dark:text-customGold;
 }
 
 .border-btn-base-sm {
@@ -44,15 +44,15 @@
 }
 
 .text-btn-base {
-    @apply px-3 py-1 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3;
+    @apply px-3 py-1 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
 }
 
 .text-input-base {
-    @apply outline-customGold
+    @apply outline-customGold dark:outline-customGold dark:border-customGold ring-customGold border border-customGold dark:ring-customGold focus:outline-2 dark:focus:bg-gray-50 dark:bg-gray-200;
 }
 
 
 /*LAYOUTS*/
-.cardGrid3{
+.cardGrid3 {
     @apply grid grid-cols-3 gap-x-16 w-3/4 py-10 mx-auto
-  }
+}

@@ -31,6 +31,7 @@
     -webkit-text-stroke: 1px #000;
     background: conic-gradient(#000 0 0) 0/0% 100% no-repeat text;
     animation: l1 1s linear infinite;
+    @apply dark:text-customGold dark:animate-pulse;
 }
 
 .domainSearchLoader:before {

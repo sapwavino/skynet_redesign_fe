@@ -17,10 +17,10 @@ export default {
 </script>
 
 <template>
-  <section class="flex flex-col gap-y-5 mt-10 w-3/4 mx-auto">
+  <section class="flex flex-col gap-y-5 mt-10 w-3/4 mx-auto ">
     <div class="flex flex-col text-center">
-      <h2 class="header capitalize">What we offer</h2>
-      <h2 class="subheader">More from us for less from you</h2>
+      <h2 class="header capitalize dark:text-gray-200">What we offer</h2>
+      <h2 class="subheader dark:text-gray-200">More from us for less from you</h2>
     </div>
     <div class="flex items-center justify-center">
       <button :class="tab === 'domain' ? 'tab-selector-active' : 'tab-selector-inactive'" @click="tab = 'domain'">
@@ -42,8 +42,7 @@ export default {
     <tab-component v-if="tab === 'domain'" animation="/domainAnimation.lottie" :tab="{
        btn: 'See available TLDs',
        header: 'Search the most popular domains',
-       content: `Discover the latest domain deals and check our pricing on hundreds of Top-Level Domains(TLDs) with invaluable add-ons for your
-              project.`
+       content: `Explore the best domain deals and pricing on hundreds of TLDs, plus awesome add-ons to level up your project! 🚀`
 
     }"></tab-component>
 
@@ -52,17 +51,16 @@ export default {
 
     <tab-component v-if="tab === 'hosting'" :animation="'/hostingAnimation.lottie'" :tab="{
        btn: 'See hosting plans',
-       header: 'Seamlessly Host your web apps with 99% uptime',
-       content:`Our hosting options have been carefully selected to cater to most deployment needs.<br/> Let us know if
-          you need something more customized.`
+       header: 'Host your web apps with 99% uptime',
+       content:`We've got hosting options to cover most needs—just let us know if you need something custom! 😊`
      }"></tab-component>
 
     <!--    EMAIL TAB-->
 
     <tab-component v-if="tab === 'email'" :animation="'/emailAnimation.lottie'" :tab="{
        btn: 'Set up email service',
-       header: 'Professional email service for your business',
-       content:`Skynet's email service provides simplicity and security in one package. Connect your domain or get one from us and start sending emails.`
+       header: 'Professional email for your business',
+       content:`Skynet makes email easy and secure. Bring your domain or grab one from us—you're all set to start sending! 🚀`
      }"></tab-component>
 
 
@@ -74,7 +72,7 @@ export default {
        content:'Join our waitlist for the latest database offerings.<br/> We will send you updates & discount on all our new offerings.'
      }">
       <slot>
-        <input type="email" v-model="earlyBirdEmail" class="outline-customGold border border-customGold block rounded-2xl p-2 w-3/4" placeholder="your_email@yourwebsite.com">
+        <input type="email" v-model="earlyBirdEmail" class="outline-customGold border border-customGold block rounded-2xl p-2 w-3/4 dark:text-gray-200 dark:placeholder:text-gray-500 focus:outline-0 focus:bg-gray-100 focus:text-gray-900 focus:border-customGold focus:border-2" placeholder="your_email@yourwebsite.com">
       </slot>
     </tab-component>
 

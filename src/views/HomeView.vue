@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="min-h-screen">
+  <main class="min-h-screen dark:bg-gray-900">
     <HeroSection/>
     <ServicesTabs/>
     <WebHostingSection/>

@@ -1,5 +1,9 @@
 <script>
 import {Vue3Marquee} from 'vue3-marquee'
+import {useDarkMode} from "@/composables/useDarkMode";
+
+// Use the composable for dark mode
+const {mode} = useDarkMode();
 
 export default {
   name: "AppsSection",
@@ -21,15 +25,15 @@ export default {
           "app": "Inventory Management",
           "icon": ''
         },
-          {
+        {
           "app": "CRM",
           "icon": ''
         },
-          {
+        {
           "app": "Marketing",
           "icon": ''
         },
-          {
+        {
           "app": "Sales",
           "icon": ''
         }
@@ -55,15 +59,20 @@ export default {
           "app": "Identity Management",
           "icon": ''
         },
-          {
+        {
           "app": "Electronic Health Records",
           "icon": ''
         },
-          {
+        {
           "app": "Digital Document Management",
           "icon": ''
         }
       ]
+    }
+  },
+  setup() {
+    return {
+      mode
     }
   }
 }
@@ -77,7 +86,7 @@ export default {
       <h2 class="header">Business Apps</h2>
       <h3 class="subheader">From HR, Accounting, Finance, Payroll, Identity Management, Hospital Solution and Even
         Banking, we got you covered.</h3>
-      <h3 class="mt-3">Our one-click installs and managed services are readily available to make the process smoother for you to get from idea to market in as little time as possible.</h3>
+      <!--      <h3 class="mt-3">Our one-click installs and managed services are readily available to make the process smoother for you to get from idea to market in as little time as possible.</h3>-->
       <div class="flex items-center mt-5 gap-x-5">
         <button class="btn-base">Get Started</button>
         <div class="flex flex-col justify-center">
@@ -87,7 +96,7 @@ export default {
       </div>
     </div>
 
-    <div  class="grid grid-cols-2 gap-x-10 px-5 h-44">
+    <div class="grid grid-cols-2 gap-x-10 px-5 h-44">
       <Vue3Marquee pause-on-hover vertical>
         <div class="appsMarqueeCard" v-for="app in appsArray" :key="app">
           {{ app.app }}

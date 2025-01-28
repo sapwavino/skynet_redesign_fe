@@ -4,9 +4,12 @@
 @import "tailwindcss";
 
 /*TAILWIND THEME CONFIG*/
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
     /*--color-customGold: #ffc107;*/
     --color-customGold: #EABE63ff;
+    --color-customGold-transparent: rgba(234, 186, 99, 0.6);
+
 }
 
 /*STYLE DEFAULTS & RESET*/
@@ -14,6 +17,7 @@
     font-family: 'Raleway', sans-serif !important;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    transition: background-color 0.5s ease, color 0.3s ease;
 }
 
 @media (min-width: 1024px) {
@@ -27,19 +31,19 @@
 
 /*TEXT */
 .bigHeader {
-    @apply text-4xl font-bold capitalize text-center mb-5;
+    @apply text-4xl font-bold capitalize text-center mb-5 dark:text-gray-200;
 }
 
 .header {
-    @apply text-3xl font-bold;
+    @apply text-3xl font-bold dark:text-gray-200;
 }
 
 .subheader {
-    @apply font-medium
+    @apply font-medium dark:text-gray-200
 }
 
 .smallHeader {
-    @apply text-xl font-bold;
+    @apply text-xl font-bold dark:text-gray-200;
 }
 
 .muteSmallSubheader {
@@ -49,7 +53,7 @@
 
 /*ELEMENTS*/
 .hero {
-    @apply p-5 hidden md:flex flex-col items-center;
+    @apply p-5 hidden md:flex flex-col items-center dark:bg-gray-900;
 }
 
 .announcement-banner {
@@ -57,15 +61,15 @@
 }
 
 .resultListItem {
-    @apply bg-white p-5 shadow-md hover:shadow transition-all duration-150 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300;
+    @apply bg-white p-5 shadow-md hover:shadow transition-all duration-150 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300 dark:bg-gray-200;
 }
 
 .tab-selector-active {
-    @apply bg-black text-customGold rounded-3xl px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+    @apply bg-black text-customGold rounded-3xl px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-100 ease-in-out dark:bg-customGold dark:text-gray-900;
 }
 
 .tab-selector-inactive {
-    @apply px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer transform transition-all duration-100 ease-in-out dark:text-customGold;
 }
 
 .ribbon {
@@ -104,7 +108,7 @@
 }
 
 .hostingPlanCard {
-    @apply flex flex-col  justify-center gap-y-2 shadow-xl rounded-2xl p-20 relative transform transition-all;
+    @apply flex flex-col  justify-center gap-y-2 shadow-2xl rounded-2xl p-20 relative transform transition-all dark:bg-gray-300;
 }
 
 .appsMarqueeCard {

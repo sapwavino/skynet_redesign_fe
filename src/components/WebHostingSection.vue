@@ -145,8 +145,8 @@ export default {
 
 <template>
   <div class="mt-10 min-h-10" id="hosting"></div>
-  <h1 class="text-center font-bold text-3xl">Web Hosting Plans</h1>
-  <h2 class="subheader text-center">All plans can be upgraded or downgraded</h2>
+  <h1 class="text-center font-bold text-3xl dark:text-gray-200">Web Hosting Plans</h1>
+  <h2 class="subheader text-center dark:text-gray-200">All plans can be upgraded or downgraded</h2>
   <!-- PLANS -->
   <div>
 

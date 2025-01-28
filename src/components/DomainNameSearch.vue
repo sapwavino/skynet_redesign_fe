@@ -166,11 +166,11 @@ export default {
     <section class="container flex h-14">
       <input type="search"
              placeholder="Find your domain name"
-             class="w-5/6 border rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0" autofocus
+             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0" autofocus
              style="padding: 1rem" v-model="searchTerm"
              @keydown.enter="fetchSearchResults"/>
       <button
-          class="flat-btn-base rounded-tr-xl rounded-br-xl tracking-wider disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed"
+          class="flat-btn-base rounded-tr-xl rounded-br-xl tracking-wider disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed hover:no-underline"
           @click="fetchSearchResults"
           :disabled="loading">
         Search
@@ -183,7 +183,7 @@ export default {
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
       <select id="currency"
-              class="h-12 border border-gray-400 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none font-bold"
+              class="h-12 border border-gray-400 text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold"
               v-model="selectedCurrency">
         <option value="NGN">Nigerian Naira (NGN) - ₦</option>
         <option value="USD">United States Dollar (USD) - $</option>
@@ -194,12 +194,12 @@ export default {
 
     <!--    TLD PRICES -->
     <section class="grid grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
-      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
+      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20 "
            v-for="(tld, idx) in tldPrices"
            :key="idx">
-        <span class="text-2xl font-medium">.{{ tld.tld }}</span>
+        <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>
         <hr class="border-gray-300 border w-1/2"/>
-        <span class="text-sm text-customGold font-bold">
+        <span class="text-sm text-customGold font-bold tracking-wider">
           <span v-if="selectedCurrency === 'NGN'">₦</span>
           <span v-else-if="selectedCurrency === 'USD'">$</span>
           <span v-else-if="selectedCurrency === 'GBP'">£</span>
@@ -207,7 +207,7 @@ export default {
         </span>
       </div>
       <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">
-        <span class="text-2xl font-semibold">& much more</span>
+        <span class="text-2xl font-semibold dark:text-gray-300">& much more</span>
       </div>
     </section>
 
@@ -220,7 +220,7 @@ export default {
 
   <!--    SEARCH RESULTS-->
   <section class="mt-3 w-1/2 mx-auto" v-if="!loading && searchResults.length > 0">
-    <div class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100">
+    <div class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
       <span class="text-2xl font-bold text-center">Results</span>
       <ul class="w-full">
         <li class="list-none resultListItem flex items-center justify-between"

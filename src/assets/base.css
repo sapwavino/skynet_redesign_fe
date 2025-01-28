@@ -28,7 +28,7 @@
 }
 
 .flat-btn-base {
-    @apply bg-customGold px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-black px-3 py-1 text-customGold font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .flat-border-btn-base {

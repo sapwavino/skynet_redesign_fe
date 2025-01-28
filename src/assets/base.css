@@ -44,7 +44,7 @@
 }
 
 .text-btn-base {
-    @apply px-3 py-1 text-customGold font-bold transform transition-all duration-300 ease-in-out hover:scale-110 hover:underline hover:text-black text-lg tracking-wider hover:cursor-pointer underline-offset-3;
+    @apply px-3 py-1 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3;
 }
 
 .text-input-base {

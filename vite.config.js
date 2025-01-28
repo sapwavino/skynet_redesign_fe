@@ -26,5 +26,6 @@ export default defineConfig({
   preview: {
     port: 3333,
     host: true,
+    allowedHosts: ['localhost', '127.0.0.1', 'first-skynet-redesign-impde4-e7b78d-212-115-124-106.traefik.me', "mydokploy.simeonsamari.xyz"],
   },
 })

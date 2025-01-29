@@ -3,6 +3,7 @@ import {RouterView} from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
 import CookieConsent from "@/components/CookieConsent.vue";
+import MyFooter from "@/components/MyFooter.vue";
 // import {useDarkMode} from "@/composables/useDarkMode.js";
 // import {onMounted} from "vue";
 //
@@ -21,6 +22,7 @@ import CookieConsent from "@/components/CookieConsent.vue";
   <nav-bar></nav-bar>
   <RouterView/>
   <CookieConsent/>
+  <MyFooter/>
 </template>
 
 <style>

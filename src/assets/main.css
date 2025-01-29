@@ -20,6 +20,10 @@
     transition: background-color 0.5s ease, color 0.3s ease;
 }
 
+html{
+    @apply dark:bg-gray-900
+}
+
 @media (min-width: 1024px) {
     #dash {
         display: grid;
@@ -44,6 +48,10 @@
 
 .smallHeader {
     @apply text-xl font-bold dark:text-gray-200;
+}
+
+.muteSubheader {
+    @apply font-medium text-gray-500
 }
 
 .muteSmallSubheader {

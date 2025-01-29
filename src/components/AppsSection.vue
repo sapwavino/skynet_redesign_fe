@@ -82,7 +82,7 @@ export default {
   <div class="mt-10 min-h-10" id="apps"></div>
   <div class="grid grid-cols-2 w-3/4 mx-auto mb-10">
 
-    <div class="">
+    <div class="flex flex-col justify-center">
       <h2 class="header">Business Apps</h2>
       <h3 class="subheader">From HR, Accounting, Finance, Payroll, Identity Management, Hospital Solution and Even
         Banking, we got you covered.</h3>

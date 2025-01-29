@@ -10,7 +10,8 @@ export default {
   },
   data() {
     return {
-      tab: 'domain'
+      tab: 'domain',
+      earlyBirdEmail: ''
     };
   }
 }

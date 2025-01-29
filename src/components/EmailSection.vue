@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div class="w-5/6 mx-auto pb-20">
+  <div class="w-5/6 mx-auto pb-20 hidden md:block">
     <div class="mt-10 min-h-10" id="email"></div>
     <div class="text-center">
       <h2 class="header">Professional Business Email</h2>

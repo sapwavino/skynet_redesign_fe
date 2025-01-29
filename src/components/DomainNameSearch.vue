@@ -183,7 +183,7 @@ export default {
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
       <select id="currency"
-              class="h-12 border border-gray-400 text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold"
+              class="h-12 border-2 border-gray-400 dark:text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold"
               v-model="selectedCurrency">
         <option value="NGN">Nigerian Naira (NGN) - ₦</option>
         <option value="USD">United States Dollar (USD) - $</option>

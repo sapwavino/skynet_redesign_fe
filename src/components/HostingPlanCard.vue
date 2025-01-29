@@ -36,7 +36,7 @@ export default {
 <template>
   <div class="hostingPlanCard">
     <span class="ribbon" v-if="popular">P<br>O<br>P<br>U<br>L<br>A<br>R</span>
-    <h2 class="text-2xl font-bold" :style="`color: ${color}`">{{ planName }}</h2>
+    <h2 class="text-2xl font-bold tracking-wider" :style="`color: ${color}`">{{ planName }}</h2>
     <h2 class="text-3xl font-bold">₦ {{ formatNumber(cost) }}<span class="text-sm text-gray-400 font-medium">/month</span></h2>
     <hr class="mt-5 mb-10"/>
     <ul>

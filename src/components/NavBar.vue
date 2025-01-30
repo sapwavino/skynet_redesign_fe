@@ -30,7 +30,7 @@ export default {
       <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
         Log In
       </router-link>
-      <router-link to="#" class="btn-base" style="padding: 10px  15px">
+      <router-link to="/auth/signup" class="btn-base" style="padding: 10px  15px">
         Create Account
       </router-link>
     </div>

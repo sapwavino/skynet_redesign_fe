@@ -9,7 +9,6 @@ import Vue3Marquee from 'vue3-marquee'
 
 
 const app = createApp(App)
-console.log('App.vue has been created!')
 app.use(router)
 app.use(store)
 app.use(Vue3Marquee)

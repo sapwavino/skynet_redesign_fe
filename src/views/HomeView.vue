@@ -9,6 +9,7 @@ import AppsSection from "@/components/AppsSection.vue";
 import DatabaseSection from "@/components/DatabaseSection.vue";
 import WhyUsSection from "@/components/WhyUsSection.vue";
 import Testimonials from "@/components/Testimonials.vue";
+import FAQs from "@/components/FAQs.vue";
 
 onMounted(() => {
   const section = router.currentRoute.value.hash.replace("#", "")
@@ -28,5 +29,6 @@ onMounted(() => {
     <DatabaseSection/>
     <WhyUsSection/>
     <Testimonials/>
+    <FAQs/>
   </main>
 </template>

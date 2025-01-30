@@ -15,14 +15,21 @@ export default {
     return {
       tldPrices: [
         {'tld': 'com', 'originalPrice': 18480.67, 'price': 18480.67},
-        {'tld': 'co', 'originalPrice': 18480.67, 'price': 18480.67},
         {'tld': 'ai', 'originalPrice': 123204.46, 'price': 123204.46},
         {'tld': 'org', 'originalPrice': 18480.67, 'price': 18480.67},
         {'tld': 'ng', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'africa', 'originalPrice': 23100.84, 'price': 23100.84},
+        {'tld': 'co', 'originalPrice': 18480.67, 'price': 18480.67},
         {'tld': 'com.ng', 'originalPrice': 3850.14, 'price': 3850.14},
         {'tld': 'net', 'originalPrice': 23100.84, 'price': 23100.84},
-        {'tld': 'africa', 'originalPrice': 23100.84, 'price': 23100.84},
         {'tld': 'co.za', 'originalPrice': 7770.28, 'price': 7770.28},
+      ],
+      tldPricesShort: [
+        {'tld': 'com', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'ai', 'originalPrice': 123204.46, 'price': 123204.46},
+        {'tld': 'org', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'ng', 'originalPrice': 18480.67, 'price': 18480.67},
+        {'tld': 'africa', 'originalPrice': 23100.84, 'price': 23100.84},
       ],
       currencies: [
         'NGN',
@@ -40,7 +47,8 @@ export default {
         GBP: 0.00051,  // 1 NGN = 0.0017 GBP
         EUR: 0.00061,  // 1 NGN = 0.0020 EUR
       },
-      recents: []
+      recents: [],
+      showMore: false,
 
     }
   },
@@ -133,6 +141,7 @@ export default {
             this.loading = false;
           });
       this.searchResults.push(this.$store.state.domainToSearch);
+      // this.$store.dispatch('updateSearchDomain', '');
     },
     convertPrices(currency) {
       const rate = this.exchangeRates[currency];
@@ -149,12 +158,23 @@ export default {
       this.recents = [];
       this.searchTerm = '';
       window.localStorage.removeItem('recents');
+    },
+    setRecent(domain) {
+      this.searchTerm = domain;
     }
   },
   mounted() {
     this.recents = window.localStorage.getItem('recents')
         ? JSON.parse(window.localStorage.getItem('recents'))
         : [];
+  },
+  computed: {
+    toggleTldPrices() {
+      if (this.showMore) {
+        return this.tldPrices
+      }
+      return this.tldPricesShort
+    }
   }
 }
 </script>
@@ -178,17 +198,17 @@ export default {
 
     </section>
 
-    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents"/>
+    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents" @clickedRecent="setRecent"/>
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
       <select id="currency"
-              class="h-12 border-2 border-gray-400 dark:text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold"
+              class="h-12 border-2 border-gray-400 dark:text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold cursor-pointer"
               v-model="selectedCurrency">
         <option value="NGN">Nigerian Naira (NGN) - ₦</option>
         <option value="USD">United States Dollar (USD) - $</option>
         <option value="GBP">British Pound Sterling (GBP) - £</option>
-        <option value="EUR">Euro (EUR) - €</option>
+        <option value="EUR">European Euro (EUR) - €</option>
       </select>
     </div>
 
@@ -220,11 +240,12 @@ export default {
 
   <!--    SEARCH RESULTS-->
   <section class="mt-3 w-1/2 mx-auto" v-if="!loading && searchResults.length > 0">
-    <div class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
-      <span class="text-2xl font-bold text-center">Results</span>
+    <div
+        class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
+      <span class="text-2xl font-bold text-center dark:text-gray-200">Results</span>
       <ul class="w-full">
         <li class="list-none resultListItem flex items-center justify-between"
-            v-for="(tld, idx) in tldPrices">
+            v-for="(tld, idx) in toggleTldPrices" :key="idx">
           <div class="flex flex-col gap-y-1">
             <h2 class="font-bold text-lg">
               {{
@@ -234,11 +255,11 @@ export default {
                 + '.' + tld.tld
               }}
             </h2>
-            <span v-if="$store.state.domainToSearch.length > 30" class="text-xs text-green-600">We are showing a shorter name because domain name is longer than 30 characters</span>
+            <span v-if="$store.state.domainToSearch.length > 30" class="text-xs text-green-600 dark:text-gray-700">We are showing a shorter name because domain name is longer than 30 characters</span>
 
           </div>
           <div class="flex items-center gap-x-1">
-            <div class="flex flex-col">
+            <div class="flex flex-col text-right mr-1">
               <h1 class="font-black text-lg">
                   <span class="font-bold">
                     <span v-if="selectedCurrency === 'NGN'">₦</span>
@@ -247,13 +268,13 @@ export default {
                     <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
                   </span>
               </h1>
-              <h1 class="text-xs text-gray-400 tracking-tight font-medium">Per Year</h1>
+              <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
             </div>
-            <button class="btn-base">🛒 Add to cart</button>
+            <button class="resultListAddBtn">🛒 Add to cart</button>
           </div>
         </li>
         <li class="list-none resultListItem flex items-center justify-center">
-          <button class="btn-base-darker">Explore more</button>
+          <button class="resultListAddBtn" @click="showMore = true">+ Explore more Domains</button>
         </li>
       </ul>
     </div>

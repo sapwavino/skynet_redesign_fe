@@ -17,11 +17,11 @@
     font-family: 'Raleway', sans-serif !important;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    transition: background-color 0.5s ease, color 0.3s ease;
+    transition: background-color 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 
 html{
-    @apply dark:bg-gray-900
+    @apply dark:bg-gray-800
 }
 
 @media (min-width: 1024px) {
@@ -61,7 +61,7 @@ html{
 
 /*ELEMENTS*/
 .hero {
-    @apply p-5 hidden md:flex flex-col items-center dark:bg-gray-900;
+    @apply p-5 hidden md:flex flex-col items-center ;
 }
 
 .announcement-banner {
@@ -69,15 +69,19 @@ html{
 }
 
 .resultListItem {
-    @apply bg-white p-5 shadow-md hover:shadow transition-all duration-150 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300 dark:bg-gray-200;
+    @apply bg-white p-5 shadow-md hover:shadow transition-all duration-300 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300 dark:bg-gray-400 dark:border-0 dark:hover:border-0;
+}
+
+.resultListAddBtn {
+    @apply bg-customGold text-gray-900 dark:bg-gray-900 dark:text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out
 }
 
 .tab-selector-active {
-    @apply bg-black text-customGold rounded-3xl px-3 py-1 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-100 ease-in-out dark:bg-customGold dark:text-gray-900;
+    @apply bg-black text-customGold rounded-3xl px-3 py-2 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-100 ease-in-out dark:bg-customGold dark:text-gray-900;
 }
 
 .tab-selector-inactive {
-    @apply px-3 py-1 text-black font-bold text-lg tracking-wider hover:cursor-pointer transform transition-all duration-100 ease-in-out dark:text-customGold;
+    @apply px-3 py-2 text-black font-bold text-lg tracking-wider hover:cursor-pointer transform transition-all duration-100 ease-in-out dark:text-customGold;
 }
 
 .ribbon {

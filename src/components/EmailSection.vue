@@ -22,16 +22,16 @@ export default {
           src="emailSectionAnimation.lottie"/>
       <section>
         <ul class="grid grid-cols-2 gap-y-1">
-          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-black">
+          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-gray-900">
             <h2 class="smallHeader mb-1">Your business at the heart of every mail</h2>
             <p class="muteSmallSubheader">Create yourname@yoursite.com so every single email looks 'the business'.</p>
           </li>
-          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-black">
+          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-gray-900">
             <h2 class="smallHeader mb-1">Keep working on the go</h2>
             <p class="muteSmallSubheader">Easily access all your personal and business email addresses from any device.
               Connect to your favorite email application, like Outlook, Thunderbird, or Gmail.</p>
           </li>
-          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-black col-span-2">
+          <li class="mr-5 rounded-2xl shadow p-5 dark:bg-gray-900 col-span-2">
             <h2 class="smallHeader mb-1">With you the whole way</h2>
             <p class="muteSmallSubheader">We don’t just guarantee our Professional Business Email service — we use it
               daily. Our 30+ Skynet staff (across 4 countries and three continents) and even Help & Support are happily

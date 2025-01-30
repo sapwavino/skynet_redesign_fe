@@ -14,10 +14,10 @@ export default {
     </router-link>
     <!--    <div></div>-->
     <div class="flex items-center gap-x-5 font-bold">
-      <a href="#hosting" class="text-btn-base">Hosting</a>
-      <a href="#email" class="text-btn-base">Email</a>
-      <a href="#apps" class="text-btn-base">Apps</a>
-      <a href="#database" class="text-btn-base">Database</a>
+      <a href="/#hosting" class="text-btn-base">Hosting</a>
+      <a href="/#email" class="text-btn-base">Email</a>
+      <a href="/#apps" class="text-btn-base">Apps</a>
+      <a href="/#database" class="text-btn-base">Database</a>
       <router-link to="#" class="text-btn-base">Help & Support</router-link>
       <router-link to="#" class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒

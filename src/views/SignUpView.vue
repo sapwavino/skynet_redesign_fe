@@ -212,9 +212,6 @@ export default {
 
 <template>
   <div class="">
-
-    <!--    <h2 class="header text-center my-5">Welcome</h2>-->
-
     <form @submit.prevent="login"
           class="dark:bg-gray-400 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto w-1/3 p-10">
       <h2 class="header text-center mb-5">Sign Up</h2>

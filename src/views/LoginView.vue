@@ -25,9 +25,6 @@ export default {
 
 <template>
   <div class="h-[78vh]">
-
-<!--    <h2 class="header text-center my-5">Welcome back</h2>-->
-
     <form @submit.prevent="login"
           class="dark:bg-gray-400 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto w-1/3 p-10 my-5">
       <h2 class="header text-center mb-5">Log in</h2>

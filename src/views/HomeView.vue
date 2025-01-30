@@ -24,7 +24,7 @@ onMounted(() => {
     <WebHostingSection/>
     <EmailSection/>
     <AppsSection/>
-    <DatabaseSection/>
+<!--    <DatabaseSection/>-->
 <!--    <WhyUsSection/>-->
   </main>
 </template>

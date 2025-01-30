@@ -25,6 +25,6 @@ onMounted(() => {
     <EmailSection/>
     <AppsSection/>
     <DatabaseSection/>
-    <WhyUsSection/>
+<!--    <WhyUsSection/>-->
   </main>
 </template>

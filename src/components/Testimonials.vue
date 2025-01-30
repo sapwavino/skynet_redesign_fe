@@ -5,7 +5,9 @@ export default {
 </script>
 
 <template>
-
+  <div>
+    Testimonials section goes here...
+  </div>
 </template>
 
 <style scoped>

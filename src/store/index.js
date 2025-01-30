@@ -9,6 +9,7 @@ const store = createStore({
             total: 0,
         },
         showCookieModal: true,
+        showLogin: true,
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -22,6 +23,12 @@ const store = createStore({
         },
         HIDE_COOKIE_MODAL(state) {
             state.showCookieModal = false;
+        },
+        SHOW_LOGIN(state) {
+            state.showLogin = true;
+        },
+        HIDE_LOGIN(state) {
+            state.showLogin = false;
         }
     },
     actions: {
@@ -33,7 +40,13 @@ const store = createStore({
         },
         hideCookieModal({ commit }) {
             commit("HIDE_COOKIE_MODAL", false);
-        }
+        },
+        showLogin({ commit }) {
+            commit("SHOW_LOGIN", true);
+        },
+        hideLogin({ commit }) {
+            commit("HIDE_LOGIN", false);
+        },
     },
 });
 

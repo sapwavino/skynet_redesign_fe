@@ -21,8 +21,8 @@ import MyFooter from "@/components/MyFooter.vue";
   <announcement-banner></announcement-banner>
   <nav-bar></nav-bar>
   <RouterView/>
-  <CookieConsent/>
   <MyFooter/>
+  <CookieConsent/>
 </template>
 
 <style>

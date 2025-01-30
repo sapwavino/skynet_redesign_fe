@@ -27,7 +27,7 @@ export default {
 
     </div>
     <div class="flex gap-x-2">
-      <router-link to="#" class="border-btn-base" style="padding: 10px 15px">
+      <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
         Log In
       </router-link>
       <router-link to="#" class="btn-base" style="padding: 10px  15px">

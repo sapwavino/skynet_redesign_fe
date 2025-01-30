@@ -73,7 +73,7 @@ html{
 }
 
 .resultListAddBtn {
-    @apply bg-customGold text-gray-900 dark:bg-gray-900 dark:text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out
+    @apply bg-customGold text-gray-900 dark:bg-gray-900 dark:text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-gray-900 hover:text-customGold transform transition-all duration-300 ease-in-out dark:hover:bg-customGold dark:hover:text-gray-900;
 }
 
 .tab-selector-active {

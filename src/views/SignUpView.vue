@@ -211,10 +211,10 @@ export default {
 </script>
 
 <template>
-  <div class="">
+  <div class="mt-5">
     <form @submit.prevent="login"
           class="dark:bg-gray-400 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto w-1/3 p-10">
-      <h2 class="header text-center mb-5">Sign Up</h2>
+      <h2 class="header text-center">Sign Up</h2>
       <h2 class="muteSmallSubheader text-center mb-5">Join 1000+ website & app owners</h2>
 
       <!--      FIELDS-->

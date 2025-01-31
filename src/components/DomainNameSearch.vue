@@ -128,7 +128,11 @@ export default {
       }
 
       this.$store.dispatch('updateSearchDomain', removeTLD(this.searchTerm));
-      this.recents.push(this.$store.state.domainToSearch);
+      let recentExists = this.recents.includes(this.$store.state.domainToSearch);
+      if (!recentExists) {
+        this.recents.push(this.$store.state.domainToSearch);
+
+      }
       window.localStorage.setItem('recents', JSON.stringify(this.recents));
 
       this.axios.get(`https://api.domainsdb1.info/v1/domains/search/${this.$store.state.domainToSearch}`)
@@ -167,6 +171,7 @@ export default {
     this.recents = window.localStorage.getItem('recents')
         ? JSON.parse(window.localStorage.getItem('recents'))
         : [];
+    this.$store.dispatch('updateSearchDomain', '');
   },
   computed: {
     toggleTldPrices() {
@@ -180,7 +185,7 @@ export default {
 </script>
 
 <template>
-  <div >
+  <div>
 
     <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">
@@ -198,7 +203,8 @@ export default {
 
     </section>
 
-    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents" @clickedRecent="setRecent"/>
+    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents"
+             @clickedRecent="setRecent"/>
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
@@ -239,7 +245,7 @@ export default {
   </div>
 
   <!--    SEARCH RESULTS-->
-  <section class="mt-3 w-1/2 mx-auto" v-if="!loading && searchResults.length > 0">
+  <section class="mt-3 mx-auto" v-if="!loading && searchResults.length > 0">
     <div
         class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
       <span class="text-2xl font-bold text-center dark:text-gray-200">Results</span>

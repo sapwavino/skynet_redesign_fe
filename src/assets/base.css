@@ -51,6 +51,9 @@
     @apply outline-customGold dark:outline-customGold dark:border-customGold ring-customGold border border-customGold dark:ring-customGold focus:outline-2 dark:focus:bg-gray-50 dark:bg-gray-200;
 }
 
+.dash-card-btn-base {
+    @apply bg-customGold px-3 py-2 rounded-xl text-black font-bold text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+}
 
 /*LAYOUTS*/
 .cardGrid3 {

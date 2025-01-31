@@ -138,3 +138,7 @@ html {
 .dashLinkActive {
     @apply flex items-center mx-auto w-full bg-customGold dark:text-gray-900;
 }
+
+.dashGroupCard{
+    @apply rounded-2xl shadow-lg px-10 py-5 bg-gray-100 dark:bg-gray-900
+}

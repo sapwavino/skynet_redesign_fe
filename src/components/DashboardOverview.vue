@@ -12,34 +12,6 @@ export default {
     <!--    ROW 1-->
     <div class="flex items-center gap-4 mt-5">
 
-      <!--HOSTING-->
-      <section class="dashGroupCard w-1/3">
-        <h1 class="muteBoldSubheader uppercase text-center">Hosting</h1>
-        <ul class="">
-          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
-            <div
-                class="absolute right-[10%] bg-red-700 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-              Stopped
-            </div>
-            <p class="text-gray-700 font-bold text-sm">My Blog</p>
-            <p class="muteSmallSubheader">Wordpress</p>
-          </li>
-          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
-            <div
-                class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-              Running
-            </div>
-            <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
-            <p class="muteSmallSubheader">Wordpress</p>
-          </li>
-        </ul>
-        <div class="flex flex-col items-center justify-center">
-          <button
-              class="dash-card-btn-base w-full">Manage Cloud
-          </button>
-        </div>
-      </section>
-
       <!--      DOMAINS-->
       <section class="dashGroupCard w-1/4">
         <h1 class="muteBoldSubheader uppercase text-center">Domains</h1>
@@ -61,25 +33,63 @@ export default {
           </div>
         </div>
         <button
-            class="dash-card-btn-base w-full mt-3"
+            class="dash-card-btn-base w-full mt-5"
             @click="$router.push('/dashboard/domains')">Manage Domains
         </button>
         <button
-            class="dash-card-btn-base w-full mt-2"
+            class="dash-card-btn-base w-full mt-2 mb-5"
             @click="$router.push('/dashboard/domains')">Buy New Domain
         </button>
 
       </section>
 
 
-      <!--      CLOUD-->
+      <!--HOSTING-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteBoldSubheader uppercase text-center">Cloud</h1>
-        <ul class="">
+        <h1 class="muteBoldSubheader uppercase text-center">Hosting</h1>
+        <ul class="h-44 overflow-y-auto">
           <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
             <div
                 class="absolute right-[10%] bg-red-700 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Stopped
+            </div>
+            <p class="text-gray-700 font-bold text-sm">My Blog</p>
+            <p class="muteSmallSubheader">Wordpress</p>
+          </li>
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2 justify-center">
+            <div
+                class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+              Running
+            </div>
+            <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
+            <p class="muteSmallSubheader">Wordpress</p>
+          </li>
+                    <li class="flex flex-col justify-center bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
+                      <div
+                          class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+                        Running
+                      </div>
+                      <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
+                      <p class="muteSmallSubheader">Wordpress</p>
+                    </li>
+        </ul>
+        <div class="mt-3">
+          <button
+              @click="$router.push('/dashboard/hosting')"
+              class="dash-card-btn-base w-full">Manage Hosting
+          </button>
+        </div>
+      </section>
+
+
+      <!--      CLOUD-->
+      <section class="dashGroupCard w-1/3">
+        <h1 class="muteBoldSubheader uppercase text-center">Cloud</h1>
+        <ul class="h-44 overflow-y-auto">
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
+            <div
+                class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+              Running
             </div>
             <p class="text-gray-700 font-bold text-sm">Atari Cloud Server</p>
             <p class="muteSmallSubheader">G3 Instance</p>
@@ -95,6 +105,7 @@ export default {
         </ul>
         <div class="flex flex-col items-center justify-center">
           <button
+              @click="$router.push('/dashboard/cloud')"
               class="dash-card-btn-base w-full">Manage Cloud
           </button>
         </div>
@@ -107,8 +118,8 @@ export default {
 
       <!--      DATABASE-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteBoldSubheader uppercase text-center">Databases</h1>
-        <ul class="">
+        <h1 class="muteBoldSubheader uppercase text-center">Database</h1>
+        <ul class="h-44 overflow-y-auto">
           <li
               class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
             <div

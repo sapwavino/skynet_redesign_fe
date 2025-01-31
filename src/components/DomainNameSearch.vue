@@ -180,7 +180,7 @@ export default {
 </script>
 
 <template>
-  <div class="w-1/3">
+  <div >
 
     <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">

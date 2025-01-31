@@ -38,7 +38,7 @@ export default {
 
           <router-link
               class="dashLink"
-              to="/dashboard/domains"
+              to="/dashboard/domains?tab=buy"
               exact-active-class="dashLinkActive">
 
             <svg

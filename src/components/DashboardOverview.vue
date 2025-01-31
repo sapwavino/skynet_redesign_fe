@@ -34,11 +34,11 @@ export default {
         </div>
         <button
             class="dash-card-btn-base w-full mt-5"
-            @click="$router.push('/dashboard/domains')">Manage Domains
+            @click="$router.push('/dashboard/domains?tab=manage')">Manage Domains
         </button>
         <button
             class="dash-card-btn-base w-full mt-2 mb-5"
-            @click="$router.push('/dashboard/domains')">Buy New Domain
+            @click="$router.push('/dashboard/domains?tab=buy')">Buy New Domain
         </button>
 
       </section>

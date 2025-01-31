@@ -14,7 +14,7 @@ export default {
 
       <!--      DOMAINS-->
       <section class="dashGroupCard w-1/4">
-        <h1 class="muteSubheader uppercase text-center">Domains</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Domains</h1>
         <div class="flex items-center gap-4 justify-center mt-5">
 
           <div class="flex flex-col items-center border-4 border-green-600 p-3 rounded-3xl">
@@ -45,23 +45,23 @@ export default {
 
       <!--HOSTING-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteSubheader uppercase text-center">Hosting</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Hosting</h1>
         <ul class="">
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center border-2">
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
             <div
                 class="absolute right-[10%] bg-red-700 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Stopped
             </div>
-            <p class="text-gray-700 font-bold text-sm">Atari Cloud Server</p>
-            <p class="muteSmallSubheader">G3 Instance</p>
+            <p class="text-gray-700 font-bold text-sm">My Blog</p>
+            <p class="muteSmallSubheader">Wordpress</p>
           </li>
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative border-2">
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
             <div
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
             </div>
-            <p class="text-gray-700 font-bold text-sm">Ballr API</p>
-            <p class="muteSmallSubheader">G2 Instance</p>
+            <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
+            <p class="muteSmallSubheader">Wordpress</p>
           </li>
         </ul>
         <div class="flex flex-col items-center justify-center">
@@ -73,9 +73,9 @@ export default {
 
       <!--      CLOUD-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteSubheader uppercase text-center">Cloud</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Cloud</h1>
         <ul class="">
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center border-2">
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
             <div
                 class="absolute right-[10%] bg-red-700 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Stopped
@@ -83,7 +83,7 @@ export default {
             <p class="text-gray-700 font-bold text-sm">Atari Cloud Server</p>
             <p class="muteSmallSubheader">G3 Instance</p>
           </li>
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative border-2">
+          <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
             <div
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
@@ -106,9 +106,10 @@ export default {
 
       <!--      DATABASE-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteSubheader uppercase text-center">Databases</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Databases</h1>
         <ul class="">
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center border-2">
+          <li
+              class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative justify-center border-2">
             <div
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               In Use
@@ -116,18 +117,19 @@ export default {
             <p class="text-gray-700 font-bold text-sm">Todo List DB</p>
             <p class="muteSmallSubheader">PostgreSQL</p>
           </li>
-          <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative border-2">
+          <li
+              class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
             <div
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               In Use
             </div>
-            <p class="text-gray-700 font-bold text-sm">Ballr API</p>
-            <p class="muteSmallSubheader">G2 Instance</p>
+            <p class="text-gray-700 font-bold text-sm">NewDB</p>
+            <p class="muteSmallSubheader">Redis</p>
           </li>
         </ul>
         <div class="flex flex-col items-center justify-center">
-          <button
-              class="dash-card-btn-base w-full">Manage Cloud
+          <button @click="$router.push('/dashboard/database')"
+                  class="dash-card-btn-base w-full">Manage Databases
           </button>
         </div>
 
@@ -135,10 +137,10 @@ export default {
 
       <!--EMAIL-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteSubheader uppercase text-center">Email</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Email</h1>
         <div class="flex flex-col items-center gap-4 mt-3">
 
-          <div class="flex flex-col items-center bg-gray-200 p-5 rounded-3xl w-3/4">
+          <div class="flex flex-col items-center bg-gray-300 p-5 rounded-3xl w-3/4">
             <svg
                 height="5rem"
                 class="fill-gray-900"
@@ -156,10 +158,10 @@ export default {
 
       <!--WALLET-->
       <section class="dashGroupCard w-1/3">
-        <h1 class="muteSubheader uppercase text-center">Wallet</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Wallet</h1>
         <div class="flex items-center gap-4 mt-3">
 
-          <div class="flex flex-col items-center bg-gray-200 p-5 rounded-3xl w-1/2">
+          <div class="flex flex-col items-center bg-gray-300 p-5 rounded-3xl w-1/2">
             <h2 class="text-gray-700 font-bold text-6xl">0.00</h2>
             <p class="text-xs text-gray-500 font-bold tracking-wider capitalize">Balance</p>
           </div>
@@ -187,12 +189,12 @@ export default {
 
       <!--      NOTIFICATIONS-->
       <section class="dashGroupCard w-2/3">
-        <h1 class="muteSubheader uppercase text-center">Recent Notifications</h1>
+        <h1 class="muteBoldSubheader uppercase text-center">Recent Notifications</h1>
         <div class="flex flex-col items-center gap-y-4 mt-3">
           <div
-              class="flex flex-col items-center justify-center bg-gray-200 py-3 px-5 rounded-3xl w-5/6 overflow-y-auto">
+              class="flex flex-col items-center justify-center bg-gray-300 py-3 px-5 rounded-3xl w-5/6 overflow-y-auto">
             <ul class="h-56">
-              <li class="flex flex-col bg-gray-300 p-3 hover:bg-gray-400 cursor-pointer my-2 items-start">
+              <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 items-start">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 64 80" x="0px" y="0px"
@@ -235,7 +237,7 @@ export default {
                 <p class="text-gray-700 font-bold text-sm">Domain "www.newdomain.com" registered</p>
                 <p class="muteSmallSubheader">A few minutes ago</p>
               </li>
-              <li class="flex flex-col bg-gray-300 p-3 hover:bg-gray-400 cursor-pointer my-2 items-start">
+              <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 items-start">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 64 80" x="0px" y="0px"
@@ -278,7 +280,7 @@ export default {
                 <p class="text-gray-700 font-bold text-sm">Domain "www.olddomain.com" expiring in 3 days</p>
                 <p class="muteSmallSubheader">Mon, 17th Jan. 2025</p>
               </li>
-              <li class="flex flex-col bg-gray-300 p-3 hover:bg-gray-400 cursor-pointer my-2 items-start">
+              <li class="flex flex-col bg-gray-200 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 items-start">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="" height="1.2rem">
                   <path
                       d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"/>

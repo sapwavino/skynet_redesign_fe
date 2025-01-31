@@ -53,6 +53,9 @@ html {
 .muteSubheader {
     @apply font-medium text-gray-500
 }
+.muteBoldSubheader {
+    @apply font-bold text-gray-500
+}
 
 .muteSmallSubheader {
     @apply font-medium text-gray-500 text-sm

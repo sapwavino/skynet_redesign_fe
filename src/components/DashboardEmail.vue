@@ -5,9 +5,9 @@ export default {
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <!-- Your dashboard overview content goes here -->
-    <h1>Dashboard email</h1>
+  <div class="">
+    <h1 class="header uppercase">Email</h1>
+    <h1 class="muteSubheader capitalize">All your professional email packages in one place</h1>
   </div>
 </template>
 

@@ -5,9 +5,9 @@ export default {
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <!-- Your dashboard overview content goes here -->
-    <h1>Dashboard database</h1>
+  <div class="">
+    <h1 class="header uppercase">Database</h1>
+    <h1 class="muteSubheader capitalize">Your managed database services</h1>
   </div>
 </template>
 

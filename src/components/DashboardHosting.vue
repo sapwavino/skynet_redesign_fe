@@ -5,9 +5,9 @@ export default {
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <!-- Your dashboard overview content goes here -->
-    <h1>Dashboard hosting</h1>
+  <div class="">
+    <h1 class="header uppercase">Hosting</h1>
+    <h1 class="muteSubheader capitalize">All your hosting packages in one place</h1>
   </div>
 </template>
 

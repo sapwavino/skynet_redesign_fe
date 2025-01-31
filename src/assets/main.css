@@ -20,7 +20,7 @@
     transition: background-color 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 
-html{
+html {
     @apply dark:bg-gray-800
 }
 
@@ -125,4 +125,16 @@ html{
 
 .appsMarqueeCard {
     @apply my-3 shadow bg-customGold px-4 py-2 font-bold cursor-pointer
+}
+
+.dashLink {
+    @apply px-3 py-2 font-bold flex items-center mx-auto w-full  dark:text-customGold dark:text-customGold
+}
+
+.dashLinkSVG{
+    @apply mr-5;
+}
+
+.dashLinkActive {
+    @apply flex items-center mx-auto w-full bg-customGold dark:text-gray-900;
 }

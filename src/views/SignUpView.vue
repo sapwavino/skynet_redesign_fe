@@ -5,6 +5,7 @@ export default {
     return {
       email: '',
       password: '',
+      password2: '',
       error: '',
       countries: [
         {name: "Afghanistan", flag: "🇦🇫"},
@@ -191,7 +192,11 @@ export default {
         {"name": "Zambia", "flag": "🇿🇲"},
         {"name": "Zimbabwe", "flag": "🇿🇼"}
       ],
-      selectedCountry: 'none'
+      selectedCountry: 'none',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      address: '',
 
     }
   },
@@ -237,6 +242,10 @@ export default {
       <input type="email" v-model="email" placeholder="you@yourwebsite.com"
              class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-5 text-center"/>
 
+      <label class="muteSubheader mb-1">Address</label>
+      <input type="text" v-model="address" placeholder="123, Skynet Street, Earth"
+             class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-5 text-center"/>
+
       <!--COUNTRY DROPDOWN-->
       <label class="muteSubheader mb-1">Country</label>
       <div class="block w-full mb-5">
@@ -252,12 +261,8 @@ export default {
       </div>
 
 
-      <label class="muteSubheader mb-1">Address</label>
-      <input type="text" v-model="email" placeholder="123, Skynet Street, Earth"
-             class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-5 text-center"/>
-
       <label class="muteSubheader mb-1">Phone</label>
-      <input type="email" v-model="email" placeholder="+123456789"
+      <input type="tel" v-model="phone" placeholder="+123456789"
              class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-5 text-center"/>
 
       <label class="muteSubheader mb-1">Password</label>
@@ -265,7 +270,7 @@ export default {
              class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-3 text-center"/>
 
       <label class="muteSubheader mb-1">Confirm Password</label>
-      <input type="password" v-model="password" placeholder="Password again"
+      <input type="password" v-model="password2" placeholder="Password again"
              class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-8 text-center"/>
 
       <button type="submit" class="resultListAddBtn mt-5">Create Account</button>

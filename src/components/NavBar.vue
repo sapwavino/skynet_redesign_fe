@@ -19,7 +19,7 @@ export default {
       <a href="/#apps" class="text-btn-base">Apps</a>
       <a href="/#database" class="text-btn-base">Database</a>
       <router-link to="#" class="text-btn-base">Help & Support</router-link>
-      <router-link to="#" class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
+      <router-link to="/cart" class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒
         <div class="absolute top-0 right-0 bg-red-600 px-1 rounded-full text-xs text-white text-center">1</div>
       </router-link>

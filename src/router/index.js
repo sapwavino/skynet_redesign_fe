@@ -10,8 +10,22 @@ const router = createRouter({
         },
         {
             path: '/dashboard',
-            name: 'dashboard',
             component: () => import('../views/DashboardView.vue'),
+            children: [
+                {
+                    path: '',
+                    component: () => import('../components/DashboardOverview.vue')
+                },
+                {
+                    path: 'domains',
+                    component: () => import('../components/DashboardDomains.vue')
+                },
+            ],
+        },
+        {
+            path: '/cart',
+            name: 'cart',
+            component: () => import('../views/CartView.vue'),
         },
         {
             path: '/auth/login',

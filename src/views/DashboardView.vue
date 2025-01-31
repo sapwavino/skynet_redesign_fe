@@ -224,11 +224,11 @@ export default {
 
         <hr class="mr-5 dark:border-gray-500"/>
 
-        <!--        USER PROFILE>ACCOUNT SETTINGS+LOGOUT, BALANCE+CURRENCY, -->
+        <!--        USER PROFILE>ACCOUNT SETTINGS+BALANCE+CURRENCY, DOCS, LOG OUT -->
         <section class="flex flex-col p-5 gap-y-1">
           <router-link
               class="dashLink"
-              to="/dashboard/my-orders"
+              to="/dashboard/profile-settings"
               exact-active-class="dashLinkActive">
             <svg
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="1.5rem"
@@ -241,7 +241,7 @@ export default {
 
           <router-link
               class="dashLink"
-              to="/dashboard/invoices"
+              to="/dashboard/docs"
               exact-active-class="dashLinkActive">
             <svg
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
@@ -256,7 +256,7 @@ export default {
 
           <router-link
               class="dashLink"
-              to="/dashboard/wallet"
+              to="/dashboard/logout"
               exact-active-class="dashLinkActive">
 
             <svg

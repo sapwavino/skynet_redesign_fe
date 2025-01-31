@@ -20,6 +20,46 @@ const router = createRouter({
                     path: 'domains',
                     component: () => import('../components/DashboardDomains.vue')
                 },
+                {
+                    path: 'hosting',
+                    component: () => import('../components/DashboardHosting.vue')
+                },
+                {
+                    path: 'cloud',
+                    component: () => import('../components/DashboardCloud.vue')
+                },
+                {
+                    path: 'email',
+                    component: () => import('../components/DashboardEmail.vue')
+                },
+                {
+                    path: 'database',
+                    component: () => import('../components/DashboardDatabase.vue')
+                },
+                {
+                    path: 'my-orders',
+                    component: () => import('../components/DashboardOrders.vue')
+                },
+                {
+                    path: 'invoices',
+                    component: () => import('../components/DashboardInvoices.vue')
+                },
+                {
+                    path: 'wallet',
+                    component: () => import('../components/DashboardWallet.vue')
+                },
+                {
+                    path: 'notifications',
+                    component: () => import('../components/DashboardNotifications.vue')
+                },
+                {
+                    path: 'support',
+                    component: () => import('../components/DashboardSupport.vue')
+                },
+                {
+                    path: 'profile-settings',
+                    component: () => import('../components/DashboardProfileSettings.vue')
+                },
             ],
         },
         {

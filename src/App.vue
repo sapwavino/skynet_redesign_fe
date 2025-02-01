@@ -1,26 +1,39 @@
 <script setup>
-import {RouterView} from 'vue-router'
+import {RouterView, useRoute} from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
 import CookieConsent from "@/components/CookieConsent.vue";
 import MyFooter from "@/components/MyFooter.vue";
-// import {useDarkMode} from "@/composables/useDarkMode.js";
-// import {onMounted} from "vue";
-//
-// const { setDarkMode } = useDarkMode(); // Access the function to set dark mode
-//
-// // Trigger dark mode when the component is mounted
-// onMounted(() => {
-//   setDarkMode()
-// });
+
+// Import your layouts
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import {computed} from "vue";
+
+const route = useRoute();
+
+// Define available layouts
+const layouts = {
+  DefaultLayout,
+  DashboardLayout,
+};
+
+// Get the layout dynamically from the matched component
+const layoutComponent = computed(() => {
+  return layouts[route.meta.layout] || DefaultLayout;
+});
 
 
 </script>
 
 <template>
   <announcement-banner></announcement-banner>
-  <nav-bar></nav-bar>
-  <RouterView/>
+<!--  <nav-bar :dashboard-nav="true"></nav-bar>-->
+
+  <component :is="layoutComponent">
+    <RouterView/>
+  </component>
+
   <MyFooter/>
   <CookieConsent/>
 </template>

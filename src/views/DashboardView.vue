@@ -4,6 +4,10 @@ export default {
 }
 </script>
 
+<script setup>
+defineProps({ layout: "DashboardLayout" });
+</script>
+
 <template>
   <div class="">
     <section class="flex">

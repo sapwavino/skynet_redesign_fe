@@ -7,10 +7,12 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: () => import('../views/HomeView.vue'),
+            meta: { layout: "DefaultLayout" }, // Assign layout
         },
         {
             path: '/dashboard',
             component: () => import('../views/DashboardView.vue'),
+            meta: { layout: "DashboardLayout" }, // Assign layout
             children: [
                 {
                     path: '',

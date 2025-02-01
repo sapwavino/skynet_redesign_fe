@@ -3,7 +3,13 @@ import ThemeDropdown from "@/components/ThemeDropdown.vue";
 
 export default {
   name: "NavBar",
-  components: {ThemeDropdown}
+  components: {ThemeDropdown},
+  props: {
+    dashboardNav: {
+      type: Boolean,
+      required: true
+    }
+  }
 }
 </script>
 
@@ -13,20 +19,21 @@ export default {
       <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16"/>
     </router-link>
     <!--    <div></div>-->
-    <div class="flex items-center gap-x-5 font-bold">
+    <div class="flex items-center gap-x-5 font-bold" v-show="!dashboardNav">
       <a href="/#hosting" class="text-btn-base">Hosting</a>
       <a href="/#email" class="text-btn-base">Email</a>
       <a href="/#apps" class="text-btn-base">Apps</a>
       <a href="/#database" class="text-btn-base">Database</a>
       <router-link to="#" class="text-btn-base">Help & Support</router-link>
-      <router-link to="/cart" class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
+      <router-link to="/cart"
+                   class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒
         <div class="absolute top-0 right-0 bg-red-600 px-1 rounded-full text-xs text-white text-center">1</div>
       </router-link>
       <ThemeDropdown/>
 
     </div>
-    <div class="flex gap-x-2">
+    <div class="flex gap-x-2" v-show="!dashboardNav">
       <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
         Log In
       </router-link>

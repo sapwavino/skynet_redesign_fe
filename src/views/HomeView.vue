@@ -17,6 +17,8 @@ onMounted(() => {
     nextTick(() => window?.document?.getElementById(section)?.scrollIntoView())
   }
 })
+
+defineProps({ layout: "DefaultLayout" });
 </script>
 
 <template>

@@ -11,7 +11,7 @@ export default {
   },
   watch: {
     // Watch the route query for changes
-    "$route.query.tab": {
+    ["$route.query.tab"]: {
       immediate: true, // Run on component mount
       handler(newTab) {
         this.tab = newTab || "buy"; // Fallback to 'buy' if no tab is set
@@ -57,15 +57,6 @@ export default {
         Manage
       </a>
     </li>
-    <li class="me-2" @click="setTab('domain')">
-      <a
-          href="#"
-          class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-          :class="{ 'text-customGold font-bold bg-gray-800 active': tab === 'domain' }"
-      >
-        Domain Contacts
-      </a>
-    </li>
   </ul>
 
   <!-- Tab Content -->
@@ -75,5 +66,11 @@ export default {
 
   <div v-if="tab === 'manage'">
     <h1 class="muteSubheader">Manage your domains</h1>
+    <div>
+      <img src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain" />
+      <p class="mt-4 text-center text-gray-500 dark:text-gray-400">
+        You haven't registered any domains yet. Go to the "Buy" tab to register your domain.
+      </p>
+    </div>
   </div>
 </template>

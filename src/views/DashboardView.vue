@@ -82,7 +82,7 @@ defineProps({layout: "DashboardLayout"});
 
           <router-link
               class="dashLink"
-              to="/dashboard/hosting"
+              to="/dashboard/hosting?tab=new"
               exact-active-class="dashLinkActive">
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"

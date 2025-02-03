@@ -41,7 +41,13 @@ export default {
         Create Account
       </router-link>
     </div>
-    <div class="flex gap-x-2" v-show="dashboardNav">
+    <div class="flex gap-x-4 items-center" v-show="dashboardNav">
+      <ThemeDropdown/>
+      <router-link to="/cart"
+                   class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
+        🛒
+        <div class="absolute top-0 right-0 bg-red-600 px-1 rounded-full text-xs text-white text-center">1</div>
+      </router-link>
       <router-link to="/auth/login" class="btn-base" style="padding: 10px 15px">
         Log Out
       </router-link>

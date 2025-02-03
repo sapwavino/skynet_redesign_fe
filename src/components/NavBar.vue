@@ -41,6 +41,11 @@ export default {
         Create Account
       </router-link>
     </div>
+    <div class="flex gap-x-2" v-show="dashboardNav">
+      <router-link to="/auth/login" class="btn-base" style="padding: 10px 15px">
+        Log Out
+      </router-link>
+    </div>
   </nav>
 
   <nav class="mobile-nav">

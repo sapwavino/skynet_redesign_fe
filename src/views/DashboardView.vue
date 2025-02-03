@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-defineProps({ layout: "DashboardLayout" });
+defineProps({layout: "DashboardLayout"});
 </script>
 
 <template>
@@ -13,14 +13,6 @@ defineProps({ layout: "DashboardLayout" });
     <section class="flex">
       <!--      SIDEBAR-->
       <div class="h-[85vh] w-1/4 p-5 border-r border-r-gray-700 overflow-y-auto">
-
-        <!--        LOGO-->
-        <div class="flex flex-col px-5">
-          <h2 class="header">John Doe</h2>
-          <h2 class="muteSubheader">john@doe.com</h2>
-          <h2 class="muteSmallSubheader">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
-        </div>
-        <hr class="mr-5 mt-5 dark:border-gray-500"/>
 
 
         <!--        OVERVIEW, DOMAINS, HOSTING, CLOUD, EMAIL, DATABASE-->
@@ -275,6 +267,20 @@ defineProps({ layout: "DashboardLayout" });
           </router-link>
 
         </section>
+
+
+        <!--        LOGO-->
+        <hr class="mr-5 mb-5 dark:border-gray-500"/>
+
+        <div class="flex items-center">
+          <img src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4=" alt="userImg" class="rounded-full h-14 w-14 object-cover border-4 border-customGold mb-3"/>
+          <div class="flex flex-col px-5">
+
+            <h2 class="header">John Doe</h2>
+            <h2 class="muteSubheader">john@doe.com</h2>
+            <h2 class="muteSmallSubheader">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
+          </div>
+        </div>
 
       </div>
 

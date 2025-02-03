@@ -40,6 +40,7 @@ const store = createStore({
         },
         hideCookieModal({ commit }) {
             commit("HIDE_COOKIE_MODAL", false);
+            window.localStorage.setItem('showCookieModal', JSON.stringify(false));
         },
         showLogin({ commit }) {
             commit("SHOW_LOGIN", true);

@@ -13,7 +13,6 @@ export default {
     <main>
       <slot/>
     </main>
-    <footer>Default Footer</footer>
   </div>
 </template>
 

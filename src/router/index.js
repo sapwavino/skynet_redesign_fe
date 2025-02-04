@@ -68,6 +68,7 @@ const router = createRouter({
             path: '/cart',
             name: 'cart',
             component: () => import('../views/CartView.vue'),
+            meta: { layout: "DashboardLayout" },
         },
         {
             path: '/auth/login',

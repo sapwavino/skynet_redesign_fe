@@ -5,11 +5,36 @@ const store = createStore({
     state: {
         domainToSearch: "",
         cart: {
-            items: [],
+            items: [
+                {
+                    name: "Product 1",
+                    price: 90,
+                    quantity: 1,
+                    description: "Domain registration",
+                    type: "domain"
+                },
+                {
+                    name: "Product 2",
+                    price: 100,
+                    quantity: 2,
+                    type: "cloud"
+                },
+                {
+                    name: "Product 3",
+                    price: 700,
+                    quantity: 1,
+                    type: "hosting"
+                },
+                {
+                    name: "Product 4",
+                    price: 200,
+                    quantity: 1,
+                    type: "database"
+                }
+            ],
             total: 0,
         },
         showCookieModal: true,
-        showLogin: true,
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -24,12 +49,6 @@ const store = createStore({
         HIDE_COOKIE_MODAL(state) {
             state.showCookieModal = false;
         },
-        SHOW_LOGIN(state) {
-            state.showLogin = true;
-        },
-        HIDE_LOGIN(state) {
-            state.showLogin = false;
-        }
     },
     actions: {
         updateSearchDomain({ commit }, domain) {
@@ -41,12 +60,6 @@ const store = createStore({
         hideCookieModal({ commit }) {
             commit("HIDE_COOKIE_MODAL", false);
             window.localStorage.setItem('showCookieModal', JSON.stringify(false));
-        },
-        showLogin({ commit }) {
-            commit("SHOW_LOGIN", true);
-        },
-        hideLogin({ commit }) {
-            commit("HIDE_LOGIN", false);
         },
     },
 });

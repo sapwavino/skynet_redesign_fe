@@ -6,8 +6,7 @@ export default {
       currentStep: 1, // Example: Step 2 is active
       steps: [
         {label: "App Configuration"},
-        {label: "Panel Configuration"},
-        {label: "Review Order & Finish"}
+        {label: "Panel Configuration"}
       ],
       appType: "",
       preferredPanel: "",
@@ -31,7 +30,9 @@ export default {
     </li>
   </ol>
 
-  <transition name="slowFade">
+
+  <!--  STEP 1-->
+  <transition name="fade">
     <section v-if="currentStep === 1" class="shadow rounded-md p-5">
       <h1 class="muteBoldSubheader text-center">What type of application or service will you be hosting?</h1>
       <p class="muteSmallSubheader text-center">(You can change anytime)</p>
@@ -72,7 +73,6 @@ export default {
           <h3 class="text-center muteSmallSubheader">Flask, Django, FastAPI</h3>
         </section>
         <section class="hostingConfigureAppCard" @click="appType = 'go'">
-
           <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                class="dark:fill-customGold" :class="{'fill-customGold': appType === 'go'}"
                height="4rem"
@@ -126,7 +126,6 @@ export default {
             </g>
           </g>
         </svg>
-
           <h3 class="text-center font-black dark:text-customGold">Go</h3>
           <h3 class="text-center muteSmallSubheader">Gin, Echo</h3>
         </section>
@@ -205,7 +204,9 @@ export default {
       </transition>
     </section>
   </transition>
-  <transition name="slowFade">
+
+  <!--  STEP 2-->
+  <transition name="fade">
     <section v-if="currentStep === 2">
       <h1 class="muteBoldSubheader text-center">What is your preferred hosting panel?</h1>
 
@@ -261,13 +262,13 @@ export default {
 
       <button @click="currentStep = 1; preferredPanel = ''" class="btn-base mt-3 mr-3">Start Over</button>
       <transition name="slowFade">
-        <button @click="currentStep = 3" class="btn-base mt-3" v-show="preferredPanel !== ''">Review & Finish</button>
+        <router-link to="/cart">
+          <button class="btn-base mt-3" v-show="preferredPanel !== ''">Review & Finish</button>
+        </router-link>
       </transition>
     </section>
   </transition>
-  <transition name="slowFade">
-    <section v-if="currentStep === 3"></section>
-  </transition>
+
 </template>
 
 <style scoped>

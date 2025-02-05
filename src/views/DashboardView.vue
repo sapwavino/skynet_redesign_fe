@@ -1,6 +1,18 @@
 <script>
 export default {
-  name: "Dashboard"
+  name: "Dashboard",
+  data() {
+    return {
+      countries: [
+        {name: "GHS", flag: "🇬🇭"},
+        {name: "KSH", flag: "🇰🇪"},
+        {name: "NGN", flag: "🇳🇬"},
+        {name: "POUND", flag: "🇬🇧"},
+        {name: "USD", flag: "🇺🇸"}
+      ],
+      selectedCurrency: 'NGN'
+    };
+  }
 }
 </script>
 
@@ -20,11 +32,11 @@ defineProps({layout: "DashboardLayout"});
   <div class="">
     <section class="flex">
       <!--      SIDEBAR-->
-      <div class="h-[85vh] w-1/4 p-5 border-r border-r-gray-700 overflow-y-auto">
+      <div class="h-[85vh] w-1/4 px-5 pt-1 border-r border-r-gray-700 overflow-y-auto">
 
 
         <!--        OVERVIEW, DOMAINS, HOSTING, CLOUD, EMAIL, DATABASE-->
-        <section class="flex flex-col p-5 gap-y-1">
+        <section class="flex flex-col px-5 gap-y-1">
           <router-link
               class="dashLink"
               to="/dashboard"
@@ -247,7 +259,7 @@ defineProps({layout: "DashboardLayout"});
 
           <router-link
               class="dashLink"
-              to="/dashboard/docs"
+              to="/dashboard/support"
               exact-active-class="dashLinkActive">
             <svg
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
@@ -260,19 +272,6 @@ defineProps({layout: "DashboardLayout"});
             Docs
           </router-link>
 
-          <router-link
-              class="dashLink"
-              to="/dashboard/logout"
-              exact-active-class="dashLinkActive">
-
-            <svg
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height="1.5rem"
-                :class="{'dashLinkSVG dark:fill-gray-800': $route.path === '/dashboard/wallet', 'fill-gray-400 dark:fill-customGold mr-5': $route.path !== '/dashboard/wallet'}">
-              <path
-                  d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/>
-            </svg>
-            Logout
-          </router-link>
 
         </section>
 
@@ -281,13 +280,28 @@ defineProps({layout: "DashboardLayout"});
         <hr class="mr-5 mb-5 dark:border-gray-500"/>
 
         <div class="flex items-center">
-          <img src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4=" alt="userImg" class="rounded-full h-14 w-14 object-cover border-4 border-customGold mb-3"/>
+          <img
+              src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4="
+              alt="userImg" class="rounded-full h-14 w-14 object-cover border-4 border-customGold mb-3"/>
           <div class="flex flex-col px-5">
 
             <h2 class="header">John Doe</h2>
             <h2 class="muteSubheader">john@doe.com</h2>
             <h2 class="muteSmallSubheader">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
           </div>
+        </div>
+        <div class="flex items-center mt-4">
+          <div class="block w-1/2">
+            <select id="country"
+                    class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
+                    v-model="selectedCurrency">
+              <option v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
+                {{ country.name }}
+              </option>
+            </select>
+          </div>
+          <button class="flat-border-btn-base-small w-full rounded-2xl w-1/2 ">Balance: <span
+              class="text-base">0.00</span></button>
         </div>
 
       </div>

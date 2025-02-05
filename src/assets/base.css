@@ -34,6 +34,9 @@
 .flat-border-btn-base {
     @apply border border-customGold px-3 py-2 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out dark:text-customGold;
 }
+.flat-border-btn-base-small {
+    @apply border-2 border-customGold dark:text-gray-300 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center;
+}
 
 .border-btn-base {
     @apply border border-customGold px-3 py-2 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer dark:text-customGold;

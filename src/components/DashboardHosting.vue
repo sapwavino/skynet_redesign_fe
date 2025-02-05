@@ -63,7 +63,13 @@ export default {
 
     <div v-show="tab ==='manage'">
       <!-- Manage your hosting packages here -->
-      <p>Manage your hosting packages here.</p>
+      <p class="muteSubheader">Manage your hosting packages here.</p>
+      <div>
+        <img src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain" />
+        <p class="mt-4 text-center text-gray-500 dark:text-gray-400">
+          You don't have any hosted apps/services yet. Go to the "New" tab to host an app/service.
+        </p>
+      </div>
     </div>
 
   </div>

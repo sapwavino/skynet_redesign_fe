@@ -46,7 +46,10 @@ export default {
       <router-link to="/cart"
                    class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒
-        <div class="absolute top-0 right-0 bg-red-600 px-1 rounded-full text-xs text-white text-center">1</div>
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">{{$store.state.cart.items.length}}</div>
+      </router-link>
+      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px" v-if="$route.path === '/cart'">
+        Dashboard
       </router-link>
       <router-link to="/auth/login" class="btn-base" style="padding: 10px 15px">
         Log Out

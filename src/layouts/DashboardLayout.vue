@@ -1,9 +1,10 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
+import MyFooter from "@/components/MyFooter.vue";
 
 export default {
-  name: "DashboardLayout" ,
-  components: {NavBar}
+  name: "DashboardLayout",
+  components: {MyFooter, NavBar}
 }
 </script>
 
@@ -11,8 +12,9 @@ export default {
   <div class="dashboard-layout">
     <NavBar :dashboard-nav="true"/>
     <main>
-      <slot />
+      <slot/>
     </main>
+    <MyFooter/>
   </div>
 </template>
 

@@ -1,16 +1,50 @@
 <script>
+import {createToast} from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
+
 export default {
   name: "DashboardHostingStepper",
   data() {
     return {
       currentStep: 1, // Example: Step 2 is active
       steps: [
-        {label: "App Configuration"},
-        {label: "Panel Configuration"}
+        {label: "What type of application or service will you be hosting?"},
+        {label: "What is your preferred hosting panel?"}
       ],
+      domainSteps: [
+        {label: "I will use my existing domain & update nameservers"},
+        {label: "I want to register a new domain"}
+      ],
+      currentDomainStep: 1, // Example: Step 2 is active
       appType: "",
       preferredPanel: "",
+      domainChecked: false,
+      domain: ""
     };
+  },
+  methods:{
+    checkDomain() {
+      if(this.domain === ''){
+        console.log('Domain is empty');
+        createToast(
+            `Please enter a valid domain`,
+            {
+              // duration: 5000,
+              type: 'danger',
+            }
+        )
+        return;
+      }
+      this.domainChecked = true;
+      createToast(
+          `Domain has been checked`,
+          {
+            // duration: 5000,
+            type: 'success',
+          }
+      )
+      console.log('Domain checked');
+    }
   }
 };
 </script>
@@ -25,7 +59,7 @@ export default {
          class="border-l-2 flex flex-col border-t-0 pl-4 pt-0 border-solid lg:pt-4 lg:border-t-2 lg:border-l-0 lg:pl-0 cursor-not-allowed"
       >
         <span class="text-sm lg:text-base">Step {{ idx + 1 }}</span>
-        <h4 class="text-base lg:text-lg">{{ step.label }}</h4>
+        <h4 class="text-base lg:text-lg text-black">{{ step.label }}</h4>
       </a>
     </li>
   </ol>
@@ -34,10 +68,11 @@ export default {
   <!--  STEP 1-->
   <transition name="fade">
     <section v-if="currentStep === 1" class="shadow rounded-md p-5">
-      <h1 class="muteBoldSubheader text-center">What type of application or service will you be hosting?</h1>
       <p class="muteSmallSubheader text-center">(You can change anytime)</p>
       <div class="grid grid-cols-3 gap-5 w-3/4 mx-auto p-5">
-        <section class="hostingConfigureAppCard" @click="appType = 'php'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'php'"
+            :class="{'border-2 dark:border-customGold' : appType === 'php'}">
           <svg
               class="dark:fill-customGold"
               :class="{'fill-customGold': appType === 'php'}"
@@ -50,7 +85,9 @@ export default {
           <h3 class="text-center font-black dark:text-customGold">PHP</h3>
           <h3 class="text-center muteSmallSubheader">Laravel, CodeIgniter, Wordpress</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'js'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'js'"
+            :class="{'border-2 dark:border-customGold' : appType === 'js'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'js'}"
               height="4rem"
@@ -62,7 +99,9 @@ export default {
           <h3 class="text-center font-black dark:text-customGold">Javascript</h3>
           <h3 class="text-center muteSmallSubheader">Node, React, Vue</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'python'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'python'"
+            :class="{'border-2 dark:border-customGold' : appType === 'python'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'python'}"
               height="4rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -72,7 +111,9 @@ export default {
           <h3 class="text-center font-black dark:text-customGold">Python</h3>
           <h3 class="text-center muteSmallSubheader">Flask, Django, FastAPI</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'go'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'go'"
+            :class="{'border-2 dark:border-customGold' : appType === 'go'}">
           <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                class="dark:fill-customGold" :class="{'fill-customGold': appType === 'go'}"
                height="4rem"
@@ -129,7 +170,9 @@ export default {
           <h3 class="text-center font-black dark:text-customGold">Go</h3>
           <h3 class="text-center muteSmallSubheader">Gin, Echo</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'c#'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'c#'"
+            :class="{'border-2 dark:border-customGold' : appType === 'c#'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'c#'}"
               height="4rem"
@@ -154,7 +197,9 @@ export default {
           <h3 class="text-center font-black dark:text-customGold">C#</h3>
           <h3 class="text-center muteSmallSubheader">.NET, Mono, VB</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'ruby'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'ruby'"
+            :class="{'border-2 dark:border-customGold' : appType === 'ruby'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'ruby'}"
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 395.9 139.2" height="4rem">
@@ -171,7 +216,9 @@ export default {
           </svg>
           <h3 class="text-center font-black dark:text-customGold">Ruby On Rails</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'perl'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'perl'"
+            :class="{'border-2 dark:border-customGold' : appType === 'perl'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'perl'}"
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43.17 48.65" height="4rem">
@@ -180,7 +227,9 @@ export default {
           </svg>
           <h3 class="text-center font-black dark:text-customGold">Perl</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'html&css'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'html&css'"
+            :class="{'border-2 dark:border-customGold' : appType === 'html&css'}">
           <svg
               class="dark:fill-customGold" :class="{'fill-customGold': appType === 'html&css'}" height="4rem"
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -189,7 +238,9 @@ export default {
           </svg>
           <h3 class="text-center font-black dark:text-customGold">Plain HTML & CSS</h3>
         </section>
-        <section class="hostingConfigureAppCard" @click="appType = 'undecided'">
+        <section
+            class="hostingConfigureAppCard" @click="appType = 'undecided'"
+            :class="{'border-2 dark:border-customGold' : appType === 'undecided'}">
           <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="dark:fill-customGold"
               :class="{'fill-customGold': appType === 'undecided'}" height="4rem">
@@ -208,10 +259,10 @@ export default {
   <!--  STEP 2-->
   <transition name="fade">
     <section v-if="currentStep === 2">
-      <h1 class="muteBoldSubheader text-center">What is your preferred hosting panel?</h1>
-
-      <div class="flex items-center gap-5 mx-auto mb-10">
-        <section class="hostingConfigureAppCard" @click="preferredPanel = 'cpanel'">
+      <div class="flex items-center gap-5 w-1/2 mx-auto mb-10">
+        <section
+            class="hostingConfigureAppCard" @click="preferredPanel = 'cpanel'"
+            :class="{'border-2 dark:border-customGold' : preferredPanel === 'cpanel'}">
           <svg
               height="10rem"
               class="dark:fill-customGold"
@@ -222,7 +273,9 @@ export default {
           </svg>
           <h2 class="header">CPanel</h2>
         </section>
-        <section class="hostingConfigureAppCard" @click="preferredPanel = 'plesk'">
+        <section
+            class="hostingConfigureAppCard" @click="preferredPanel = 'plesk'"
+            :class="{'border-2 dark:border-customGold' : preferredPanel === 'plesk'}">
           <svg
               class="dark:fill-customGold"
               :class="{'fill-customGold': preferredPanel === 'plesk'}"
@@ -260,12 +313,82 @@ export default {
         </section>
       </div>
 
-      <button @click="currentStep = 1; preferredPanel = ''" class="btn-base mt-3 mr-3">Start Over</button>
-      <transition name="slowFade">
-        <router-link to="/cart">
-          <button class="btn-base mt-3" v-show="preferredPanel !== ''">Review & Finish</button>
-        </router-link>
-      </transition>
+
+      <!--DOMAIN CONFIG TAB SELECTORS      -->
+      <section class="w-3/4 mx-auto" v-if="preferredPanel !== ''">
+        <ol class="lg:flex items-center w-full space-y-4 lg:space-x-8 lg:space-y-0">
+          <li
+              class="flex-1 cursor-pointer"
+              v-for="(step, idx) in domainSteps"
+              :key="idx"
+              @click="currentDomainStep = idx + 1"
+          >
+            <a
+                :class="{
+          'border-customGold text-customGold font-semibold': (idx + 1) === currentDomainStep,
+          'border-gray-200 text-gray-500': (idx + 1) !== currentDomainStep
+        }"
+                class="border-l-2 flex flex-col border-t-0 pl-4 pt-0 border-solid lg:pt-4 lg:border-t-2 lg:border-l-0 lg:pl-0"
+            >
+              <h4 class="text-base lg:text-lg">{{ step.label }}</h4>
+            </a>
+          </li>
+        </ol>
+      </section>
+
+
+      <!--      DOMAIN CONFIG-->
+      <section v-if="preferredPanel !== ''">
+        <transition name="fade">
+          <section v-if="currentDomainStep === 1" class="h-[20vh] w-3/4 mx-auto mt-5">
+            <form>
+              <div class="">
+                <label class="muteSmallSubheader" for="domain">
+                  Domain name
+                </label>
+                <div class="mt-1 flex items-center">
+                  <input
+                      v-model="domain"
+                      type="text"
+                      class="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-customGold focus:border-customGold sm:text-sm"
+                  />
+                  <button class="btn-base ml-2" @click.prevent="checkDomain">Check</button>
+
+                </div>
+              </div>
+            </form>
+          </section>
+        </transition>
+
+
+        <transition name="fade">
+          <!--      DOMAIN CONFIG-->
+          <section v-if="currentDomainStep === 2" class="h-[20vh] w-3/4 mx-auto mt-5">
+            <form>
+              <div class="">
+                <label class="muteSmallSubheader" for="domain">
+                  Domain name
+                </label>
+                <div class="mt-1 flex items-center">
+                  <input
+                      v-model="domain"
+                      type="text"
+                      class="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-customGold focus:border-customGold sm:text-sm"
+                  />
+                  <button class="btn-base ml-2">Check</button>
+                </div>
+              </div>
+            </form>
+          </section>
+        </transition>
+
+        <button @click="currentStep = 1; preferredPanel = ''" class="btn-base mt-3 mr-3">Go back</button>
+        <transition name="slowFade">
+          <router-link to="/cart">
+            <button class="btn-base mt-3" v-show="domainChecked">Review & Finish</button>
+          </router-link>
+        </transition>
+      </section>
     </section>
   </transition>
 

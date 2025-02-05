@@ -1,13 +1,13 @@
 import { createStore } from "vuex";
 // Create a new store instance or import from module.
 const store = createStore({
-    /* state, actions, mutations */
+
     state: {
         domainToSearch: "",
         cart: {
             items: [
                 {
-                    name: "Product 1",
+                    name: "anewdomain.com",
                     price: 90,
                     quantity: 1,
                     description: "Domain registration",
@@ -15,21 +15,17 @@ const store = createStore({
                 },
                 {
                     name: "Product 2",
+                    description: 'G3 VPS',
                     price: 100,
                     quantity: 2,
                     type: "cloud"
                 },
                 {
                     name: "Product 3",
+                    description: 'CPanel Hosting',
                     price: 700,
                     quantity: 1,
                     type: "hosting"
-                },
-                {
-                    name: "Product 4",
-                    price: 200,
-                    quantity: 1,
-                    type: "database"
                 }
             ],
             total: 0,

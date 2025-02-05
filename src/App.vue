@@ -1,9 +1,7 @@
 <script setup>
 import {RouterView, useRoute} from 'vue-router'
-import NavBar from "@/components/NavBar.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
 import CookieConsent from "@/components/CookieConsent.vue";
-import MyFooter from "@/components/MyFooter.vue";
 
 // Import your layouts
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
@@ -34,7 +32,6 @@ const layoutComponent = computed(() => {
     <RouterView/>
   </component>
 
-  <MyFooter/>
   <CookieConsent/>
 </template>
 

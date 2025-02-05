@@ -36,7 +36,7 @@ defineProps({layout: "DashboardLayout"});
 
 
         <!--        OVERVIEW, DOMAINS, HOSTING, CLOUD, EMAIL, DATABASE-->
-        <section class="flex flex-col px-5 gap-y-1">
+        <section class="flex flex-col px-5 pb-3 gap-y-1">
           <router-link
               class="dashLink"
               to="/dashboard"

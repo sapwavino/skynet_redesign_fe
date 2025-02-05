@@ -1,7 +1,6 @@
 <script>
 // import the library
 import {createToast} from 'mosha-vue-toastify';
-// import the styling for the toast
 import 'mosha-vue-toastify/dist/style.css'
 import Recents from "@/components/Recents.vue";
 

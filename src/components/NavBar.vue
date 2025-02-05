@@ -48,12 +48,12 @@ export default {
         🛒
         <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">{{$store.state.cart.items.length}}</div>
       </router-link>
-      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px" v-if="$route.path === '/cart'">
+      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px" v-if="$route.path === '/cart' && $store.state.isLoggedIn">
         Dashboard
       </router-link>
-      <router-link to="/auth/login" class="btn-base" style="padding: 10px 15px">
+      <button @click="$store.dispatch('logout'); $router.push('/auth/login')" class="btn-base" style="padding: 10px 15px">
         Log Out
-      </router-link>
+      </button>
     </div>
   </nav>
 

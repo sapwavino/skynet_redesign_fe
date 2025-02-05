@@ -1,4 +1,4 @@
-import { createStore } from "vuex";
+import {createStore} from "vuex";
 // Create a new store instance or import from module.
 const store = createStore({
 
@@ -31,6 +31,7 @@ const store = createStore({
             total: 0,
         },
         showCookieModal: true,
+        isLoggedIn: false,
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -45,18 +46,32 @@ const store = createStore({
         HIDE_COOKIE_MODAL(state) {
             state.showCookieModal = false;
         },
+        LOGIN(state) {
+            state.isLoggedIn = true
+        },
+        LOGOUT(state) {
+            state.isLoggedIn = false
+        },
     },
     actions: {
-        updateSearchDomain({ commit }, domain) {
+        updateSearchDomain({commit}, domain) {
             commit("UPDATE_DOMAIN_TO_SEARCH", domain);
         },
-        showCookieModal({ commit }) {
+        showCookieModal({commit}) {
             commit("SHOW_COOKIE_MODAL", true);
         },
-        hideCookieModal({ commit }) {
+        hideCookieModal({commit}) {
             commit("HIDE_COOKIE_MODAL", false);
             window.localStorage.setItem('showCookieModal', JSON.stringify(false));
         },
+        login({commit}) {
+            commit("LOGIN");
+            window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        },
+        logout({commit}) {
+            commit("LOGOUT");
+            window.localStorage.removeItem('isLoggedIn');
+        }
     },
 });
 

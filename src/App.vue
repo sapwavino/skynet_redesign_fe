@@ -6,9 +6,11 @@ import CookieConsent from "@/components/CookieConsent.vue";
 // Import your layouts
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
-import {computed} from "vue";
-
+import {computed, onMounted} from "vue";
+import store from "@/store/index.js";
+import router from "@/router/index.js";
 const route = useRoute();
+// const store = store;
 
 // Define available layouts
 const layouts = {
@@ -20,6 +22,14 @@ const layouts = {
 const layoutComponent = computed(() => {
   return layouts[route.meta.layout] || DefaultLayout;
 });
+
+onMounted(() => {
+  const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
+  if (isLoggedIn) {
+    store.dispatch('login')
+    router.push('/dashboard')
+  }
+})
 
 
 </script>

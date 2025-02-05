@@ -5,6 +5,14 @@ export default {
 </script>
 
 <script setup>
+import {onMounted} from "vue";
+
+onMounted(() => {
+  const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'))
+  if (!isLoggedIn) {
+    window.location.href = '/auth/login';
+  }
+})
 defineProps({layout: "DashboardLayout"});
 </script>
 

@@ -7,7 +7,7 @@ export default {
         {name: "GHS", flag: "🇬🇭"},
         {name: "KSH", flag: "🇰🇪"},
         {name: "NGN", flag: "🇳🇬"},
-        {name: "POUND", flag: "🇬🇧"},
+        {name: "GBP", flag: "🇬🇧"},
         {name: "USD", flag: "🇺🇸"}
       ],
       selectedCurrency: 'NGN'
@@ -287,7 +287,7 @@ defineProps({layout: "DashboardLayout"});
 
             <h2 class="header">John Doe</h2>
             <h2 class="muteSubheader">john@doe.com</h2>
-            <h2 class="muteSmallSubheader">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
+            <h2 class="muteSmallSubheader" style="font-size: 0.7rem; font-weight: bolder !important;">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
           </div>
         </div>
         <div class="flex items-center mt-4">

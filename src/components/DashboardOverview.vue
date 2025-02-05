@@ -53,15 +53,15 @@ export default {
                 class="absolute right-[10%] bg-red-700 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Stopped
             </div>
-            <p class="text-gray-700 font-bold text-sm">My Blog</p>
-            <p class="muteSmallSubheader">Wordpress</p>
+            <p class="text-gray-700 font-bold text-sm">HOSTING-001</p>
+            <p class="muteSmallSubheader">Python(FastAPI)</p>
           </li>
           <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2 justify-center">
             <div
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
             </div>
-            <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
+            <p class="text-gray-700 font-bold text-sm">HOSTING-002</p>
             <p class="muteSmallSubheader">Wordpress</p>
           </li>
           <li class="flex flex-col justify-center bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
@@ -69,7 +69,7 @@ export default {
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
             </div>
-            <p class="text-gray-700 font-bold text-sm">Restaurant inventory app</p>
+            <p class="text-gray-700 font-bold text-sm">HOSTING-003</p>
             <p class="muteSmallSubheader">Wordpress</p>
           </li>
         </ul>
@@ -92,7 +92,7 @@ export default {
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
             </div>
-            <p class="text-gray-700 font-bold text-sm">Atari Cloud Server</p>
+            <p class="text-gray-700 font-bold text-sm">CLOUD-01</p>
             <p class="muteSmallSubheader">G3 Instance</p>
           </li>
           <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
@@ -100,7 +100,7 @@ export default {
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               Running
             </div>
-            <p class="text-gray-700 font-bold text-sm">Ballr API</p>
+            <p class="text-gray-700 font-bold text-sm">CLOUD-02</p>
             <p class="muteSmallSubheader">G2 Instance</p>
           </li>
         </ul>
@@ -127,7 +127,7 @@ export default {
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               In Use
             </div>
-            <p class="text-gray-700 font-bold text-sm">Todo List Database</p>
+            <p class="text-gray-700 font-bold text-sm">PG-001</p>
             <p class="muteSmallSubheader">PostgreSQL</p>
           </li>
           <li
@@ -136,7 +136,7 @@ export default {
                 class="absolute right-[10%] bg-green-600 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
               In Use
             </div>
-            <p class="text-gray-700 font-bold text-sm">NewDB</p>
+            <p class="text-gray-700 font-bold text-sm">REDIS-001</p>
             <p class="muteSmallSubheader">Redis</p>
           </li>
         </ul>

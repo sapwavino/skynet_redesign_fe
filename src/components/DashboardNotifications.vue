@@ -63,8 +63,8 @@ export default {
       <div class="border-r w-1/3 mr-2">
         <ul>
           <li v-for="(notification, index) in mockNotifications" :key="index"
-              class="py-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl rounded-2xl w-5/6 mx-auto">
-            <div class="flex items-start gap-2 font-semibold hover:text-customGold">
+              class="py-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl rounded-2xl w-5/6 mx-auto dark:border-0">
+            <div class="flex items-start gap-2 font-semibold hover:text-customGold muteSubheader">
               {{ notification.title }}
             </div>
             <div class="text-sm text-gray-600 truncate">{{ notification.message }}</div>
@@ -72,7 +72,7 @@ export default {
         </ul>
       </div>
       <div class="w-full">
-        <div>Notification details</div>
+        <div class="muteSubheader">Notification details</div>
       </div>
     </div>
 

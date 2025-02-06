@@ -19,7 +19,6 @@ const openSupportModal = () => {
 
 <template>
   <div class="min-h-screen">
-    <!-- Your dashboard overview content goes here -->
     <h1 class="header uppercase">Support</h1>
     <div class="flex items-center justify-between">
       <h1 class="muteSubheader capitalize">Need an answer? We are here to help!</h1>

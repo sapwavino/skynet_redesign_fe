@@ -7,60 +7,114 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: () => import('../views/HomeView.vue'),
-            meta: { layout: "DefaultLayout" }, // Assign layout
+            meta: {
+                layout: "DefaultLayout",
+                title: "Home"
+            },
         },
         {
             path: '/dashboard',
             component: () => import('../views/DashboardView.vue'),
-            meta: { layout: "DashboardLayout" }, // Assign layout
+            meta: {
+                layout: "DashboardLayout",
+                title: "Dashboard"
+            }, // Assign layout
             children: [
                 {
                     path: '',
-                    component: () => import('../components/DashboardOverview.vue')
+                    component: () => import('../components/DashboardOverview.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Dashboard Overview"
+                    },
                 },
                 {
                     path: 'domains',
-                    component: () => import('../components/DashboardDomains.vue')
+                    component: () => import('../components/DashboardDomains.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Domains"
+                    },
                 },
                 {
                     path: 'hosting',
-                    component: () => import('../components/DashboardHosting.vue')
+                    component: () => import('../components/DashboardHosting.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Hosting"
+                    },
                 },
                 {
                     path: 'cloud',
-                    component: () => import('../components/DashboardCloud.vue')
+                    component: () => import('../components/DashboardCloud.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Cloud"
+                    },
                 },
                 {
                     path: 'email',
-                    component: () => import('../components/DashboardEmail.vue')
+                    component: () => import('../components/DashboardEmail.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Email Services"
+                    },
                 },
                 {
                     path: 'database',
-                    component: () => import('../components/DashboardDatabase.vue')
+                    component: () => import('../components/DashboardDatabase.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Databases"
+                    },
                 },
                 {
                     path: 'my-orders',
-                    component: () => import('../components/DashboardOrders.vue')
+                    component: () => import('../components/DashboardOrders.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Orders"
+                    },
                 },
                 {
                     path: 'invoices',
-                    component: () => import('../components/DashboardInvoices.vue')
+                    component: () => import('../components/DashboardInvoices.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Invoices"
+                    },
                 },
                 {
                     path: 'wallet',
-                    component: () => import('../components/DashboardWallet.vue')
+                    component: () => import('../components/DashboardWallet.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Wallet"
+                    },
                 },
                 {
                     path: 'notifications',
-                    component: () => import('../components/DashboardNotifications.vue')
+                    component: () => import('../components/DashboardNotifications.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "My Notifications"
+                    },
                 },
                 {
                     path: 'support',
-                    component: () => import('../components/DashboardSupport.vue')
+                    component: () => import('../components/DashboardSupport.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Support"
+                    },
                 },
                 {
                     path: 'profile-settings',
-                    component: () => import('../components/DashboardProfileSettings.vue')
+                    component: () => import('../components/DashboardProfileSettings.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Profile Settings"
+                    },
                 },
             ],
         },
@@ -68,24 +122,31 @@ const router = createRouter({
             path: '/cart',
             name: 'cart',
             component: () => import('../views/CartView.vue'),
-            meta: { layout: "DashboardLayout" },
+            meta: {
+                layout: "DashboardLayout",
+                title: "My Cart"
+            },
         },
         {
             path: '/auth/login',
             name: 'login',
             component: () => import('../views/LoginView.vue'),
+            meta: {
+                layout: "DashboardLayout",
+                title: "Login"
+            },
         },
         {
             path: '/auth/signup',
             name: 'signup',
             component: () => import('../views/SignUpView.vue'),
-        },
-        {
-            path: '/about',
-            name: 'about',
-            component: () => import('../views/AboutView.vue'),
-        },
+            meta: {
+                layout: "DashboardLayout",
+                title: "Sign Up"
+            },
+        }
     ],
+
     scrollBehavior(to, from, savedPosition) {
         if (to.hash) {
             return {
@@ -94,5 +155,11 @@ const router = createRouter({
         }
     }
 })
+
+router.beforeEach((to, from, next) => {
+    const title = 'Skynet Web Services'
+    document.title = to.meta.title ? title + ' | ' + to.meta.title : title;
+    next();
+});
 
 export default router

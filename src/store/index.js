@@ -6,27 +6,27 @@ const store = createStore({
         domainToSearch: "",
         cart: {
             items: [
-                {
-                    name: "anewdomain.com",
-                    price: 90,
-                    quantity: 1,
-                    description: "Domain registration",
-                    type: "domain"
-                },
-                {
-                    name: "Product 2",
-                    description: 'G3 VPS',
-                    price: 100,
-                    quantity: 2,
-                    type: "cloud"
-                },
-                {
-                    name: "Product 3",
-                    description: 'CPanel Hosting',
-                    price: 700,
-                    quantity: 1,
-                    type: "hosting"
-                }
+                // {
+                //     name: "anewdomain.com",
+                //     price: 90,
+                //     quantity: 1,
+                //     description: "Domain registration",
+                //     type: "domain"
+                // },
+                // {
+                //     name: "Product 2",
+                //     description: 'G3 VPS',
+                //     price: 100,
+                //     quantity: 2,
+                //     type: "cloud"
+                // },
+                // {
+                //     name: "Product 3",
+                //     description: 'CPanel Hosting',
+                //     price: 700,
+                //     quantity: 1,
+                //     type: "hosting"
+                // }
             ],
             total: 0,
         },

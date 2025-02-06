@@ -25,15 +25,17 @@ export default {
       <a href="/#apps" class="text-btn-base">Apps</a>
       <a href="/#database" class="text-btn-base">Database</a>
       <router-link to="#" class="text-btn-base">Help & Support</router-link>
-      <router-link to="/cart"
-                   class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
-        🛒
-        <div class="absolute top-0 right-0 bg-red-600 px-1 rounded-full text-xs text-white text-center">1</div>
-      </router-link>
-      <ThemeDropdown/>
 
     </div>
-    <div class="flex gap-x-2" v-show="!dashboardNav">
+    <div class="flex gap-x-2 items-center" v-show="!dashboardNav">
+      <ThemeDropdown/>
+      <router-link to="/cart"
+                   class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out mr-1">
+        🛒
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+          {{ $store.state.cart.items.length }}
+        </div>
+      </router-link>
       <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
         Log In
       </router-link>
@@ -46,14 +48,27 @@ export default {
       <router-link to="/cart"
                    class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒
-        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">{{$store.state.cart.items.length}}</div>
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+          {{ $store.state.cart.items.length }}
+        </div>
       </router-link>
-      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px" v-if="$route.path === '/cart' && $store.state.isLoggedIn">
+      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px"
+                   v-if="$route.path === '/cart' && $store.state.isLoggedIn">
         Dashboard
       </router-link>
-      <button @click="$store.dispatch('logout'); $router.push('/auth/login')" class="btn-base" style="padding: 10px 15px">
+      <button v-if="$store.state.isLoggedIn" @click="$store.dispatch('logout'); $router.push('/auth/login')"
+              class="btn-base" style="padding: 10px 15px">
         Log Out
       </button>
+
+      <div class="flex gap-x-2" v-show="!$store.state.isLoggedIn">
+        <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
+          Log In
+        </router-link>
+        <router-link to="/auth/signup" class="btn-base" style="padding: 10px  15px">
+          Create Account
+        </router-link>
+      </div>
     </div>
   </nav>
 

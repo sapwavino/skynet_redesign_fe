@@ -14,11 +14,16 @@ export default {
 
 <script setup>
 
+import EmptyCart from "@/components/EmptyCart.vue";
 </script>
 
 <template>
   <div class="mb-5 min-h-[85vh]">
+
+    <EmptyCart v-if="cartItems.length < 1"/>
+
     <section
+        v-else
         class=" relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
       <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto relative z-10">
         <div class="grid grid-cols-12">
@@ -97,7 +102,8 @@ export default {
                 </svg>
 
                 <svg
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="dashLinkSVG" height="6rem" v-if="item.type === 'cloud'">
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="dashLinkSVG" height="6rem"
+                    v-if="item.type === 'cloud'">
                   <path
                       d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"/>
                 </svg>
@@ -136,8 +142,8 @@ export default {
                     </button>
                     <input
                         type="text"
-                           class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px]  text-center bg-transparent"
-                           placeholder="1" :value="item.quantity">
+                        class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px]  text-center bg-transparent"
+                        placeholder="1" :value="item.quantity">
                     <button
                         class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 cursor-pointer">
                       <svg

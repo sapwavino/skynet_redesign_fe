@@ -27,7 +27,7 @@ onMounted(() => {
   const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
   if (isLoggedIn) {
     store.dispatch('login')
-    router.push('/dashboard')
+    // router.push('/dashboard')
   }
 })
 

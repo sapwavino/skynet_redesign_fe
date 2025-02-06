@@ -116,6 +116,14 @@ const router = createRouter({
                         title: "Profile Settings"
                     },
                 },
+                {
+                    path: 'docs',
+                    component: () => import('../components/DashboardDocs.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Documentation"
+                    },
+                },
             ],
         },
         {

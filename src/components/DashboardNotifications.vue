@@ -63,7 +63,7 @@ export default {
       <div class="border-r w-1/3 mr-2">
         <ul>
           <li v-for="(notification, index) in mockNotifications" :key="index"
-              class="p-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl">
+              class="py-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl rounded-2xl w-5/6 mx-auto">
             <div class="flex items-start gap-2 font-semibold hover:text-customGold">
               {{ notification.title }}
             </div>

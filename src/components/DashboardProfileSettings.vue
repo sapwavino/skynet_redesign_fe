@@ -13,7 +13,7 @@ export default {
       isOpen: false,
       selectedCountryCode: '+234',
       countries,
-      apiKey: '',
+      apiKey: '5x2k3kjss9232bh2hr9bd09qll2398sds',
       isHidden: true,
     }
   },
@@ -201,7 +201,7 @@ export default {
 
         <!--        PASSWORD-->
         <div
-            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
+            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900 dark:text-gray-500 p-5"
             v-if="activeTab === 'change password'">
           <p class="py-2 text-xl font-semibold">Password</p>
           <div class="flex items-center">
@@ -239,35 +239,34 @@ export default {
 
         <!-- API KEY        -->
         <div
-            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
+            class="mx-auto p-6 bg-white shadow-lg rounded-2xl col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900 w-full dark:text-gray-500 py-5"
             v-if="activeTab === 'api key'">
-          <div class="mx-auto p-6 bg-white shadow-lg rounded-2xl">
-            <label for="api-key" class="block text-lg font-semibold mb-2">API Key</label>
+          <label for="api-key" class="block text-lg font-semibold mb-2">API Key</label>
 
-            <div class="relative">
-              <input
-                  :type="isHidden ? 'password' : 'text'"
-                  id="api-key"
-                  v-model="apiKey"
-                  class="w-full p-3 border-2 border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-2xl"
-                  readonly
-              />
-              <button
-                  @click="toggleVisibility"
-                  class="absolute inset-y-0 right-3 flex items-center text-xl"
-              >
-                {{ isHidden ? '👁️' : '❌' }}
-              </button>
-            </div>
-
+          <div class="relative">
+            <input
+                :type="isHidden ? 'password' : 'text'"
+                id="api-key"
+                v-model="apiKey"
+                class="w-full p-3 border-2 border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-2xl"
+                readonly
+            />
             <button
-                @click="generateApiKey"
-                class="mt-4 w-1/4 mx-auto btn-base transition"
+                @click="toggleVisibility"
+                class="absolute inset-y-0 right-3 flex items-center text-xl cursor-pointer"
             >
-              Generate API Key
+              {{ isHidden ? '👁️' : '❌' }}
             </button>
           </div>
+
+          <button
+              @click="generateApiKey"
+              class="mt-4 w-1/4 mx-auto btn-base transition"
+          >
+            Generate API Key
+          </button>
         </div>
+
 
       </div>
     </div>

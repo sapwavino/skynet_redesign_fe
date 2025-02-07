@@ -12,13 +12,27 @@ export default {
       selectedOption: '',
       isOpen: false,
       selectedCountryCode: '+234',
-      countries
+      countries,
+      apiKey: '',
+      isHidden: true,
     }
   },
   methods: {
     selectOption(option) {
       this.selectedOption = option;
       this.isOpen = false;
+    },
+    toggleVisibility() {
+      this.isHidden = !this.isHidden;
+    },
+    async generateAPIKey() {
+      try {
+        const response = await fetch("/api/generate-key", {method: "POST"});
+        const data = await response.json();
+        this.apiKey = data.api_key;
+      } catch (error) {
+        console.error("Error generating API key:", error);
+      }
     }
   }
 }
@@ -220,6 +234,39 @@ export default {
               class="text-sm font-semibold text-blue-600 underline decoration-2" href="#">Recover Account</a></p>
           <button class="mt-4 rounded-lg btn-base px-4 py-2 text-white">Save Password</button>
           <hr class="mt-4 mb-8"/>
+        </div>
+
+
+        <!-- API KEY        -->
+        <div
+            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
+            v-if="activeTab === 'api key'">
+          <div class="mx-auto p-6 bg-white shadow-lg rounded-2xl">
+            <label for="api-key" class="block text-lg font-semibold mb-2">API Key</label>
+
+            <div class="relative">
+              <input
+                  :type="isHidden ? 'password' : 'text'"
+                  id="api-key"
+                  v-model="apiKey"
+                  class="w-full p-3 border-2 border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-2xl"
+                  readonly
+              />
+              <button
+                  @click="toggleVisibility"
+                  class="absolute inset-y-0 right-3 flex items-center text-xl"
+              >
+                {{ isHidden ? '👁️' : '❌' }}
+              </button>
+            </div>
+
+            <button
+                @click="generateApiKey"
+                class="mt-4 w-1/4 mx-auto btn-base transition"
+            >
+              Generate API Key
+            </button>
+          </div>
         </div>
 
       </div>

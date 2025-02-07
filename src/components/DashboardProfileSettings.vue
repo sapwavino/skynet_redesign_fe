@@ -1,10 +1,24 @@
 <script>
+import countries from "@/utils/countries.js";
+
 export default {
   name: "DashboardProfileSettings",
   data() {
     return {
       tabs: ['personal', 'change password', 'api key', 'currency'],
-      activeTab: 'personal'
+      activeTab: 'personal',
+      date: null,
+      options: ['Male', 'Female', 'Other'],
+      selectedOption: '',
+      isOpen: false,
+      selectedCountryCode: '+234',
+      countries
+    }
+  },
+  methods: {
+    selectOption(option) {
+      this.selectedOption = option;
+      this.isOpen = false;
     }
   }
 }
@@ -48,6 +62,129 @@ export default {
           </ul>
         </div>
 
+        <!--        PERSONAL-->
+        <div
+            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
+            v-if="activeTab === 'personal'">
+          <div class="pt-4">
+            <h1 class="py-2 text-2xl font-semibold">Personal settings</h1>
+            <p class="muteSubheader">View and update your personal details here.</p>
+            <form class="relative border border-gray-100 mx-auto rounded-md bg-white dark:bg-gray-500 mt-5 w-full">
+
+              <div class="grid gap-3 md:grid-cols-2">
+                <div>
+                  <label class=""> First Name </label>
+                  <input type="text" placeholder="Your Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                </div>
+                <div>
+                  <label class=""> Last Name </label>
+                  <input type="text" placeholder="Last  Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                </div>
+              </div>
+              <div class="flex items-center justify-between my-3">
+                <div class="w-1/3">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700"> Gender </label>
+                    <div class="relative w-56 mt-2 bg-gray-100 rounded-lg">
+                      <button
+                          type="button"
+                          @click="isOpen = !isOpen"
+                          class="flex w-full items-center justify-between rounded-lg border p-2 px-3 text-sm text-gray-700 ring-blue-400 focus:outline-none"
+                      >
+                        {{ selectedOption || 'Select Option' }}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 text-gray-600 transition-transform duration-200"
+                            :class="{ 'rotate-180': isOpen }"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                      </button>
+                      <ul
+                          v-show="isOpen"
+                          class="absolute z-10 mt-1 w-full rounded-b-lg bg-white shadow-md transition-all duration-300"
+                      >
+                        <li
+                            v-for="option in options"
+                            :key="option"
+                            @click="selectOption(option)"
+                            class="cursor-pointer px-3 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                        >
+                          {{ option }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-1/2">
+                  <label class=""> Email Address </label>
+                  <input type="email" placeholder="Info@example.com"
+                         class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-1/3">
+                  <label class=""> Birth Date </label>
+                  <VueDatePicker v-model="date"></VueDatePicker>
+                </div>
+                <div class="w-1/2">
+                  <label class=""> Password </label>
+                  <input type="password" placeholder="******" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="">
+                  <label class="capitalize"> Phone country code</label>
+                  <select id="country"
+                          class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center w-3/4"
+                          v-model="selectedCountryCode">
+                    <option v-for="(country, idx) in countries" :key="idx" :value="country.calling_code">{{
+                        country.flag
+                      }}
+                      {{ country.name }} - ({{ country.calling_code }})
+                    </option>
+                  </select>
+                </div>
+                <div class="w-1/2">
+                  <label class=""> Phone: <span class="text-sm text-gray-400">(optional)</span> </label>
+                  <input type="text" placeholder="+543 5445 0543" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <input type="checkbox" id="chekcbox1" checked=""/>
+                <label for="checkbox1">I agree to the <a href="#" target="_blank" class="text-blue-600"> Terms and
+                  Conditions </a> </label>
+              </div>
+
+              <div>
+                <button type="button" class="btn-base mt-5 w-1/3">Update Profile</button>
+              </div>
+            </form>
+
+          </div>
+          <hr class="mt-4 mb-8"/>
+          <div class="mb-10">
+            <p class="font-black text-red-500 text-2xl flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                      clip-rule="evenodd"/>
+              </svg>
+              Danger Zone
+            </p>
+            <p class="py-2 text-xl font-semibold">Delete Account</p>
+            <p class="mt-2">Make sure you have taken backup of your account in case you ever need to get access to your
+              data. We will completely wipe your data. There is no way to access your account after this action.</p>
+            <button class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion
+            </button>
+          </div>
+        </div>
+
         <!--        PASSWORD-->
         <div
             class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
@@ -85,93 +222,6 @@ export default {
           <hr class="mt-4 mb-8"/>
         </div>
 
-<!--        PERSONAL-->
-        <div
-            class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
-             v-if="activeTab === 'personal'">
-          <div class="pt-4">
-            <h1 class="py-2 text-2xl font-semibold">Personal settings</h1>
-            <p class="muteSubheader">View and update your personal details here.</p>
-            <form class="relative border border-gray-100 mx-auto rounded-md bg-white dark:bg-gray-500 mt-5 w-full">
-
-              <div class="grid gap-3 md:grid-cols-2">
-                <div>
-                  <label class=""> First Name </label>
-                  <input type="text" placeholder="Your Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-                </div>
-                <div>
-                  <label class=""> Last Name </label>
-                  <input type="text" placeholder="Last  Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-                </div>
-              </div>
-              <div>
-                <label class=""> Username </label>
-                <input type="text" placeholder="Username" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-              </div>
-              <div>
-                <label class=""> Email Address </label>
-                <input type="email" placeholder="Info@example.com" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-              </div>
-              <div>
-                <label class=""> Password </label>
-                <input type="password" placeholder="******" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-              </div>
-              <div class="grid gap-3 lg:grid-cols-2">
-                <div>
-                  <label class=""> Gender </label>
-                  <div class="relative w-56 mt-2 bg-gray-100 rounded-lg">
-                    <input class="peer hidden" type="checkbox" name="select-1" id="select-1" />
-                    <label for="select-1" class="flex w-full cursor-pointer rounded-lg select-none border p-2 px-3 text-sm text-gray-700 ring-blue-400 peer-checked:ring">Select Option </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-5 top-3 h-4 text-gray-600 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                    <ul class="max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
-                      <li class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">Male</li>
-                      <li class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">Female</li>
-                      <li class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">Other</li>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <label class=""> Phone: <span class="text-sm text-gray-400">(optional)</span> </label>
-                  <input type="text" placeholder="+543 5445 0543" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3" />
-                </div>
-              </div>
-
-              <div class="checkbox">
-                <input type="checkbox" id="chekcbox1" checked="" />
-                <label for="checkbox1">I agree to the <a href="#" target="_blank" class="text-blue-600"> Terms and Conditions </a> </label>
-              </div>
-
-              <div>
-                <button type="button" class="btn-base mt-5 w-1/3">Update</button>
-              </div>
-            </form>
-
-          </div>
-          <hr class="mt-4 mb-8"/>
-          <p class="py-2 text-xl font-semibold">Email Address</p>
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-gray-600">Your email address is <strong>john.doe@company.com</strong></p>
-            <button class="inline-flex text-sm font-semibold text-customGold underline decoration-2">Change</button>
-          </div>
-          <hr class="mt-4 mb-8"/>
-          <div class="mb-10">
-            <p class="font-black text-red-500 text-2xl flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                      clip-rule="evenodd"/>
-              </svg>
-              Danger Zone
-            </p>
-            <p class="py-2 text-xl font-semibold">Delete Account</p>
-            <p class="mt-2">Make sure you have taken backup of your account in case you ever need to get access to your
-              data. We will completely wipe your data. There is no way to access your account after this action.</p>
-            <button class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion
-            </button>
-          </div>
-        </div>
       </div>
     </div>
 

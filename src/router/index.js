@@ -140,7 +140,7 @@ const router = createRouter({
             name: 'login',
             component: () => import('../views/LoginView.vue'),
             meta: {
-                layout: "DashboardLayout",
+                layout: "DefaultLayout",
                 title: "Login"
             },
         },
@@ -152,7 +152,15 @@ const router = createRouter({
                 layout: "DashboardLayout",
                 title: "Sign Up"
             },
-        }
+        },
+        {
+            path: '/policies',
+            component: () => import('../views/PolicyView.vue'),
+            meta: {
+                layout: "DefaultLayout",
+                title: "Policies"
+            },
+        },
     ],
 
     scrollBehavior(to, from, savedPosition) {

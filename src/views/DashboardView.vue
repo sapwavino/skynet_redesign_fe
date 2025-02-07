@@ -245,7 +245,7 @@ defineProps({layout: "DashboardLayout"});
       <section class="flex flex-col p-5 gap-y-1">
         <router-link
             class="dashLink"
-            to="/dashboard/profile-settings"
+            to="/dashboard/profile-settings?tab=personal"
             exact-active-class="dashLinkActive">
           <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="1.5rem"

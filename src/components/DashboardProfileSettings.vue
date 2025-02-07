@@ -81,9 +81,9 @@ export default {
             class="col-span-8 overflow-hidden rounded-3xl sm:bg-gray-50 sm:px-8 sm:shadow dark:bg-gray-900"
             v-if="activeTab === 'personal'">
           <div class="pt-4">
-            <h1 class="py-2 text-2xl font-semibold">Personal settings</h1>
+            <h1 class="py-2 text-2xl font-semibold muteSubheader">Personal settings</h1>
             <p class="muteSubheader">View and update your personal details here.</p>
-            <form class="relative border border-gray-100 mx-auto rounded-md bg-white dark:bg-gray-500 mt-5 w-full">
+            <form class="relative p-5 mx-auto rounded-md bg-white dark:bg-gray-500 mt-5 w-full">
 
               <div class="grid gap-3 md:grid-cols-2">
                 <div>
@@ -169,12 +169,6 @@ export default {
                 </div>
               </div>
 
-              <div class="mt-5">
-                <input type="checkbox" id="chekcbox1" checked=""/>
-                <label for="checkbox1">I agree to the <a href="#" target="_blank" class="text-blue-600"> Terms and
-                  Conditions </a> </label>
-              </div>
-
               <div>
                 <button type="button" class="btn-base mt-5 w-1/3">Update Profile</button>
               </div>
@@ -191,8 +185,8 @@ export default {
               </svg>
               Danger Zone
             </p>
-            <p class="py-2 text-xl font-semibold">Delete Account</p>
-            <p class="mt-2">Make sure you have taken backup of your account in case you ever need to get access to your
+            <p class="py-2 text-xl font-semibold muteSubheader">Delete Account</p>
+            <p class="mt-2 muteSmallSubheader">Make sure you have taken backup of your account in case you ever need to get access to your
               data. We will completely wipe your data. There is no way to access your account after this action.</p>
             <button class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion
             </button>

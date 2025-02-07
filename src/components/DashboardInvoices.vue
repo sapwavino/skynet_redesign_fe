@@ -60,7 +60,7 @@ export default {
 
     <section class="mt-5 w-5/6">
       <div class="overflow-x-auto">
-        <table class="min-w-full bg-white shadow-md rounded-xl" v-if="tab === 'unpaid'">
+        <table class="min-w-full bg-white dark:bg-gray-400 shadow-md rounded-xl" v-if="tab === 'unpaid'">
           <thead>
           <tr class="bg-blue-gray-100 text-gray-700">
             <th class="py-3 px-4 text-left">ID</th>
@@ -102,7 +102,7 @@ export default {
           </tbody>
         </table>
 
-        <table class="min-w-full bg-white shadow-md rounded-xl" v-if="tab === 'paid'">
+        <table class="min-w-full bg-white dark:bg-gray-400 shadow-md rounded-xl" v-if="tab === 'paid'">
           <thead>
           <tr class="bg-blue-gray-100 text-gray-700">
             <th class="py-3 px-4 text-left">ID</th>
@@ -114,7 +114,7 @@ export default {
           </thead>
           <tbody class="text-blue-gray-900">
           </tbody>
-<!--          <h1 class="muteSubheader text-center mt-10">Nothing to see here!</h1>-->
+
         </table>
 
 

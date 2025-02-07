@@ -27,7 +27,7 @@ export default {
       <router-link to="#" class="text-btn-base">Help & Support</router-link>
 
     </div>
-    <div class="flex gap-x-2 items-center" v-show="!dashboardNav">
+    <div class="flex gap-x-2 items-center" v-show="!dashboardNav && !$store.state.isLoggedIn">
       <ThemeDropdown/>
       <router-link to="/cart"
                    class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out mr-1">
@@ -43,7 +43,7 @@ export default {
         Create Account
       </router-link>
     </div>
-    <div class="flex gap-x-4 items-center" v-show="dashboardNav">
+    <div class="flex gap-x-4 items-center" v-show="dashboardNav || $store.state.isLoggedIn">
       <ThemeDropdown/>
       <router-link to="/cart"
                    class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
@@ -53,7 +53,7 @@ export default {
         </div>
       </router-link>
       <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px"
-                   v-if="$route.path === '/cart' && $store.state.isLoggedIn">
+                   v-if="$route.path === '/cart' || $store.state.isLoggedIn && $route.path !== '/dashboard'">
         Dashboard
       </router-link>
       <button v-if="$store.state.isLoggedIn" @click="$store.dispatch('logout'); $router.push('/auth/login')"

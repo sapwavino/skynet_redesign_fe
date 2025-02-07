@@ -146,7 +146,8 @@
 
         </p>
       </div>
-      <div v-if="currentTab === 'refund'" class="flex flex-col gap-y-5 mt-5">
+      <div
+          v-if="currentTab === 'refund'" class="flex flex-col gap-y-5 mt-5 dark:text-gray-500">
         <h2 class="header text-center">Refund Policy</h2>
         <p class="muteSmallSubheader">
           Skynet will process all refund requests in accordance with this Policy
@@ -239,10 +240,11 @@
           Once we have received your request, it will be dealt with in accordance with this Refund Policy.
         </p>
       </div>
-      <div v-if="currentTab === 'tos'" class="flex flex-col gap-y-5 mt-5">
+      <div
+          v-if="currentTab === 'tos'" class="flex flex-col gap-y-5 mt-5 dark:text-gray-500">
         <h2 class="header text-center">Terms of Service</h2>
 
-        <div class="container mx-auto p-4">
+        <div class="container mx-auto p-4 dark:text-gray-500">
           <h1 class="text-2xl font-bold mb-4">Terms and Conditions</h1>
           <section class="mb-6">
             <h2 class="text-2xl font-semibold mb-2">Policies and Agreements</h2>
@@ -349,7 +351,7 @@
 
 <script>
 import {useRoute} from 'vue-router';
-import {computed, onMounted, ref} from 'vue';
+import {computed} from 'vue';
 
 export default {
   name: 'Policies',
@@ -372,12 +374,6 @@ export default {
 
 }
 
-.tabs {
-  display: flex;
-  justify-content: center; /* Center the tabs */
-  margin-bottom: 20px;
-}
-
 .tabs a {
   padding: 10px 15px;
   margin: 0 5px;
@@ -385,17 +381,6 @@ export default {
   border-radius: 5px;
   transition: background-color 0.3s; /* Smooth transition for hover effect */
   font-weight: bolder;
-}
-
-.tabs a.active {
-  background-color: #007bff; /* Blue background for active tab */
-  color: white;
-  border-color: #007bff; /* Blue border for active tab */
-}
-
-
-.policy-content {
-  /* Add styling for your policy content as needed */
 }
 
 .policy-content h2 {
@@ -412,11 +397,6 @@ export default {
   .policies-container {
     width: 95%; /* Adjust width on smaller screens */
     padding: 10px;
-  }
-
-  .tabs {
-    flex-direction: column; /* Stack tabs vertically on smaller screens */
-    align-items: center; /* Center tabs horizontally */
   }
 
   .tabs a {

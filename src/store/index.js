@@ -32,6 +32,81 @@ const store = createStore({
         },
         showCookieModal: true,
         isLoggedIn: false,
+        user:{
+            info:{},
+            services:{
+                domain: [
+                    {
+                        id: '123',
+                        name: "anewdomain.com",
+                        price: 90,
+                        description: "Domain registration",
+                    },
+                    {
+                        id: '456',
+                        name: "anotherdomain.com",
+                        price: 90,
+                        description: "Domain registration",
+                    },
+
+                ],
+                hosting: [
+                    {
+                        id: '789',
+                        name: "Hosting-001",
+                        type: "Python",
+                        price: 500,
+                        description: "CPanel Hosting",
+                        active: true,
+                        domain: 'anewdomain.com'
+                    },
+                    {
+                        id: '234',
+                        name: "Hosting-002",
+                        type: "Wordpress",
+                        price: 500,
+                        description: "CPanel Hosting",
+                        active: true,
+                        domain: 'anotherdomain.com'
+                    }
+                ],
+                cloud: [
+                    {
+                        id: '345',
+                        name: "Cloud-001",
+                        type: "G3 VPS",
+                        price: 2000,
+                        description: "G3 VPS",
+                        active: true
+                    },
+                    {
+                        id: '345',
+                        name: "Cloud-002",
+                        type: "G2 VPS",
+                        price: 2000,
+                        description: "G2 VPS",
+                        active: false
+                    },
+                    {
+                        id: '456',
+                        name: "Cloud-003",
+                        type: "G3 VPS",
+                        price: 2000,
+                        description: "G3 VPS",
+                        active: true
+                    }
+                ],
+                email: [],
+                database: [],
+            },
+            orders: [],
+            invoices: [],
+            wallet: [],
+            notifications: [],
+            support: {
+                tickets: [],
+            }
+        }
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {

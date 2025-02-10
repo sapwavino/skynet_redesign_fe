@@ -93,14 +93,14 @@ export default {
                          :key="service.id">
               <li
                   class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
-                  :class="{ 'bg-white border-2 hover:bg-white': id === service.id }"
+                  :class="{ 'bg-white border-2 border-gray-400 hover:border-black hover:bg-white': id === service.id }"
               >
                 <div v-if="!service.active"
-                     class="absolute right-[10%] top-2 text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+                     class="absolute right-[10%] top-[30%] text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
                   Stopped
                 </div>
                 <div v-else
-                     class="absolute right-[10%] top-2 text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+                     class="absolute right-[10%] top-[30%] text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
                   Running
                 </div>
                 <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>

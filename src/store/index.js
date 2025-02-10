@@ -76,7 +76,7 @@ const store = createStore({
                         type: "Python",
                         price: 500,
                         description: "CPanel Hosting",
-                        active: false,
+                        active: true,
                         domain: 'anewdomain.com',
                         billing_cycle: "monthly",
                         created_at: new Date('2022-01-01'),
@@ -159,11 +159,15 @@ const store = createStore({
             support: {
                 tickets: [],
             }
-        }
+        },
+        preferredCurrency: "NGN",
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
             state.domainToSearch = domain;
+        },
+        UPDATE_PREFERRED_CURRENCY(state, currency) {
+            state.preferredCurrency = currency;
         },
         ADD_ITEM_TO_CART(state, item) {
             state.cart.items.push(item);
@@ -184,6 +188,9 @@ const store = createStore({
     actions: {
         updateSearchDomain({commit}, domain) {
             commit("UPDATE_DOMAIN_TO_SEARCH", domain);
+        },
+        updatePreferredCurrency({commit}, currency) {
+            commit("UPDATE_PREFERRED_CURRENCY", currency);
         },
         showCookieModal({commit}) {
             commit("SHOW_COOKIE_MODAL", true);

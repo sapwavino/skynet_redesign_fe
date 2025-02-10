@@ -34,15 +34,6 @@ export default {
           Domain
         </a>
       </li>
-      <li class="me-2" @click="setTab('cloud')">
-        <a
-            href="#"
-            class="inline-block p-4 rounded-t-lg w-full sm:w-auto"
-            :class="{ 'text-customGold font-bold bg-gray-800 dark:bg-customGold dark:text-gray-900': tab === 'cloud' }"
-        >
-          Cloud
-        </a>
-      </li>
       <li class="me-2" @click="setTab('hosting')">
         <a
             href="#"
@@ -50,6 +41,15 @@ export default {
             :class="{ 'text-customGold font-bold bg-gray-800 dark:bg-customGold dark:text-gray-900': tab === 'hosting' }"
         >
           Hosting
+        </a>
+      </li>
+      <li class="me-2" @click="setTab('cloud')">
+        <a
+            href="#"
+            class="inline-block p-4 rounded-t-lg w-full sm:w-auto"
+            :class="{ 'text-customGold font-bold bg-gray-800 dark:bg-customGold dark:text-gray-900': tab === 'cloud' }"
+        >
+          Cloud
         </a>
       </li>
       <li class="me-2" @click="setTab('email')">
@@ -87,7 +87,7 @@ export default {
             <p class="muteBoldSubheader text-sm">{{ service.type }}</p>
             <p class="muteSmallSubheader italic">{{ service.description }}</p>
             <p class="muteSmallSubheader "><strong>Cost: </strong>{{ service.price }}</p>
-            <p class="muteSmallSubheader "><strong>Billing Cycle: </strong>{{ service.billing_cycle }}</p>
+            <p class="muteSmallSubheader capitalize"><strong>Billing Cycle: </strong>{{ service.billing_cycle }}</p>
             <p class="muteSmallSubheader "><strong>Created on: </strong>{{ service.created_at }}</p>
             <hr class="my-5"/>
             <button v-if="!service.active"

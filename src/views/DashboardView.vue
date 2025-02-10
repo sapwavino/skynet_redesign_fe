@@ -17,7 +17,7 @@ export default {
 </script>
 
 <script setup>
-import {onMounted} from "vue";
+import {onMounted,} from "vue";
 import {getLastLogin} from "../utils/helper_functions.js";
 
 onMounted(() => {
@@ -164,7 +164,7 @@ defineProps({layout: "DashboardLayout"});
       <section class="flex flex-col p-5 gap-y-1">
         <router-link
             class="dashLink"
-            to="/dashboard/my-orders"
+            to="/dashboard/my-orders?tab=domain"
             exact-active-class="dashLinkActive">
 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" height="1.2rem"
@@ -209,7 +209,7 @@ defineProps({layout: "DashboardLayout"});
             to="/dashboard/notifications"
             exact-active-class="dashLinkActive">
 
-          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm">1</div>
+          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm animate-pulse">1</div>
 
           <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="dashLinkSVG" height="1.5rem"

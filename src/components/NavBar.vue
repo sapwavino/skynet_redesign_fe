@@ -52,8 +52,12 @@ export default {
           {{ $store.state.cart.items.length }}
         </div>
       </router-link>
-      <router-link to="/dashboard" class="btn-base" style="padding: 10px 15px"
-                   v-if="$route.path === '/cart' || $store.state.isLoggedIn && $route.path !== '/dashboard'">
+      <router-link
+          to="/dashboard"
+          class="btn-base"
+          style="padding: 10px 15px"
+          v-if="$store.state.isLoggedIn"
+      >
         Dashboard
       </router-link>
       <button v-if="$store.state.isLoggedIn" @click="$store.dispatch('logout'); $router.push('/auth/login')"

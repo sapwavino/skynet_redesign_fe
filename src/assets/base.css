@@ -59,6 +59,10 @@
     @apply px-3 py-2 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
 }
 
+.text-btn-base-sm {
+    @apply px-3 py-2 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-xs tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
+}
+
 .text-input-base {
     @apply outline-customGold dark:outline-customGold dark:border-customGold ring-customGold border border-customGold dark:ring-customGold focus:outline-2 dark:focus:bg-gray-50 dark:bg-gray-200;
 }

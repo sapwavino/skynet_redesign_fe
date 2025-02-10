@@ -63,7 +63,7 @@ export default {
     </svg>
     <h1 class="text-4xl font-bold text-center muteSubheader">Your cart is empty!</h1>
     <h2 class="muteSmallSubheader text-center">Your purchases will appear here.</h2>
-    <router-link to="/#hosting" class="text-center">
+    <router-link to="/" class="text-center">
       <button class="text-btn-base">
         Continue Shopping
       </button>

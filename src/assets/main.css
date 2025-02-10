@@ -50,6 +50,10 @@ html {
     @apply text-xl font-bold dark:text-gray-200;
 }
 
+.smallerHeader {
+    @apply text-sm font-bold dark:text-gray-200;
+}
+
 .muteSubheader {
     @apply font-medium text-gray-500
 }

@@ -8,18 +8,24 @@ export default {
       tabs: ['personal', 'change password', 'api key', 'currency'],
       activeTab: 'personal',
       date: null,
-      options: ['Male', 'Female', 'Other'],
-      selectedOption: '',
+      options: ['male', 'female', 'other'],
+      gender: '',
       isOpen: false,
       selectedCountryCode: '+234',
       countries,
       apiKey: '5x2k3kjss9232bh2hr9bd09qll2398sds',
       isHidden: true,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      country: '',
     }
   },
   methods: {
     selectOption(option) {
-      this.selectedOption = option;
+      this.gender = option;
       this.isOpen = false;
     },
     toggleVisibility() {
@@ -34,6 +40,19 @@ export default {
         console.error("Error generating API key:", error);
       }
     }
+  },
+  mounted() {
+    const user = this.$store.state.user.info;
+    this.date = new Date();
+    this.firstName = user.first_name;
+    this.lastName = user.last_name;
+    this.email = user.email;
+    this.phone = user.phone;
+    this.address = user.address;
+    this.country = user.country;
+    this.gender = user.gender;
+    this.selectedCountryCode = countries.find(country => country.name === user.country).calling_code;
+    console.log(this.selectedCountryCode);
   }
 }
 </script>
@@ -88,11 +107,13 @@ export default {
               <div class="grid gap-3 md:grid-cols-2">
                 <div>
                   <label class=""> First Name </label>
-                  <input type="text" placeholder="Your Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                  <input type="text" placeholder="Your Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
+                         v-model="firstName"/>
                 </div>
                 <div>
                   <label class=""> Last Name </label>
-                  <input type="text" placeholder="Last  Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                  <input type="text" placeholder="Last  Name" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
+                         v-model="lastName"/>
                 </div>
               </div>
               <div class="flex items-center justify-between my-3">
@@ -103,9 +124,9 @@ export default {
                       <button
                           type="button"
                           @click="isOpen = !isOpen"
-                          class="flex w-full items-center justify-between rounded-lg border p-2 px-3 text-sm text-gray-700 ring-blue-400 focus:outline-none"
+                          class="flex w-full items-center justify-between rounded-lg border p-2 px-3 text-sm text-gray-700 ring-blue-400 focus:outline-none capitalize"
                       >
-                        {{ selectedOption || 'Select Option' }}
+                        {{ gender || 'Select Gender' }}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-4 text-gray-600 transition-transform duration-200"
@@ -126,7 +147,7 @@ export default {
                             v-for="option in options"
                             :key="option"
                             @click="selectOption(option)"
-                            class="cursor-pointer px-3 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
+                            class="cursor-pointer px-3 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white capitalize"
                         >
                           {{ option }}
                         </li>
@@ -136,7 +157,7 @@ export default {
                 </div>
                 <div class="w-1/2">
                   <label class=""> Email Address </label>
-                  <input type="email" placeholder="Info@example.com"
+                  <input type="email" placeholder="Info@example.com" v-model="email"
                          class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
                 </div>
               </div>
@@ -165,7 +186,8 @@ export default {
                 </div>
                 <div class="w-1/2">
                   <label class=""> Phone: <span class="text-sm text-gray-400">(optional)</span> </label>
-                  <input type="text" placeholder="+543 5445 0543" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
+                  <input type="text" placeholder="+543 5445 0543" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
+                         v-model="phone"/>
                 </div>
               </div>
 
@@ -186,7 +208,8 @@ export default {
               Danger Zone
             </p>
             <p class="py-2 text-xl font-semibold muteSubheader">Delete Account</p>
-            <p class="mt-2 muteSmallSubheader">Make sure you have taken backup of your account in case you ever need to get access to your
+            <p class="mt-2 muteSmallSubheader">Make sure you have taken backup of your account in case you ever need to
+              get access to your
               data. We will completely wipe your data. There is no way to access your account after this action.</p>
             <button class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion
             </button>

@@ -34,7 +34,9 @@ const store = createStore({
         isLoggedIn: false,
         user:{
             info:{
-                name: "John Doe",
+                full_name: "John Doe",
+                first_name: "John",
+                last_name: "Doe",
                 email: "johndoe@example.com",
                 phone: "+1234567890",
                 country: "United States",
@@ -48,12 +50,22 @@ const store = createStore({
                         name: "anewdomain.com",
                         price: 90,
                         description: "Domain registration",
+                        active: true,
+                        billing_cycle: "annually",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
                     },
                     {
                         id: '456',
                         name: "anotherdomain.com",
                         price: 90,
                         description: "Domain registration",
+                        active: false,
+                        billing_cycle: "annually",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
                     },
 
                 ],

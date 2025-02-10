@@ -18,6 +18,7 @@ export default {
 
 <script setup>
 import {onMounted} from "vue";
+import {getLastLogin} from "../utils/helper_functions.js";
 
 onMounted(() => {
   const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'))
@@ -31,7 +32,7 @@ defineProps({layout: "DashboardLayout"});
 <template>
   <section class="flex">
     <!--      SIDEBAR-->
-    <div class="h-[85vh] w-1/4 px-5 pt-1 border-r border-r-gray-700 overflow-y-auto">
+    <div class="h-[85vh] w-1/4 px-5 pt-1 border-r border-r-gray-700 overflow-y-auto hidden md:block">
 
 
       <!--        OVERVIEW, DOMAINS, HOSTING, CLOUD, EMAIL, DATABASE-->
@@ -287,10 +288,10 @@ defineProps({layout: "DashboardLayout"});
 
           <h2 class="header">John Doe</h2>
           <h2 class="muteSubheader">john@doe.com</h2>
-          <h2 class="muteSmallSubheader" style="font-size: 0.7rem; font-weight: bolder !important;">Last login: Tue, 15th Jan. 2025 4:40pm</h2>
+          <h2 class="muteSmallSubheader" style="font-size: 0.6rem; font-weight: bolder !important;">Last login: {{getLastLogin()}}</h2>
         </div>
       </div>
-      <div class="flex items-center mt-4">
+      <div class="flex items-center mt-5">
         <div class="block w-1/2">
           <select id="country"
                   class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"

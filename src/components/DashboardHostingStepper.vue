@@ -22,9 +22,9 @@ export default {
       domain: ""
     };
   },
-  methods:{
+  methods: {
     checkDomain() {
-      if(this.domain === ''){
+      if (this.domain === '') {
         console.log('Domain is empty');
         createToast(
             `Please enter a valid domain`,
@@ -382,13 +382,13 @@ export default {
           </section>
         </transition>
 
-        <button @click="currentStep = 1; preferredPanel = ''" class="btn-base mt-3 mr-3">Go back</button>
         <transition name="slowFade">
           <router-link to="/cart">
             <button class="btn-base mt-3" v-show="domainChecked">Review & Finish</button>
           </router-link>
         </transition>
       </section>
+      <button @click="currentStep = 1; preferredPanel = ''" class="btn-base mt-3 mr-3">Go back</button>
     </section>
   </transition>
 

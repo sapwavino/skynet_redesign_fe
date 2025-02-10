@@ -33,9 +33,16 @@ const store = createStore({
         showCookieModal: true,
         isLoggedIn: false,
         user:{
-            info:{},
+            info:{
+                name: "John Doe",
+                email: "johndoe@example.com",
+                phone: "+1234567890",
+                country: "United States",
+                address: "123 Main St, Anytown, USA",
+                gender: 'male'
+            },
             services:{
-                domain: [
+                domains: [
                     {
                         id: '123',
                         name: "anewdomain.com",
@@ -57,8 +64,12 @@ const store = createStore({
                         type: "Python",
                         price: 500,
                         description: "CPanel Hosting",
-                        active: true,
-                        domain: 'anewdomain.com'
+                        active: false,
+                        domain: 'anewdomain.com',
+                        billing_cycle: "monthly",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
                     },
                     {
                         id: '234',
@@ -67,7 +78,37 @@ const store = createStore({
                         price: 500,
                         description: "CPanel Hosting",
                         active: true,
-                        domain: 'anotherdomain.com'
+                        domain: 'anotherdomain.com',
+                        billing_cycle: "monthly",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
+                    },
+                    {
+                        id: '345',
+                        name: "Hosting-003",
+                        type: "Node",
+                        price: 500,
+                        description: "CPanel Hosting",
+                        active: false,
+                        domain: 'anewdomain2.com',
+                        billing_cycle: "monthly",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
+                    },
+                    {
+                        id: '678',
+                        name: "Hosting-012",
+                        type: "Undecided",
+                        price: 500,
+                        description: "Plesk",
+                        active: true,
+                        domain: 'anotherdomain4.com',
+                        billing_cycle: "monthly",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2022-02-01'),
                     }
                 ],
                 cloud: [

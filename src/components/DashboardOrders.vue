@@ -11,7 +11,16 @@ export default {
       this.$router.push({query: {tab}});
       this.tab = tab;
     },
-  }
+  },
+  watch: {
+    // Watch the route query for changes
+    ["$route.query.tab"]: {
+      immediate: true, // Run on component mount
+      handler(newTab) {
+        this.tab = newTab || "domain"; // Fallback to 'new' if no tab is set
+      },
+    },
+  },
 }
 </script>
 

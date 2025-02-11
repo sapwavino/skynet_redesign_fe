@@ -1,9 +1,14 @@
 <script>
 import DashCloudRadioCards from "@/components/DashCloudRadioCards.vue";
+import DashCloudOSCArds from "@/components/DashCloudOSCArds.vue";
+import centos from '../assets/img/centos.svg'
+import ubuntu from '../assets/img/ubuntu.svg'
+import debian from '../assets/img/debian.svg'
+import windows from '../assets/img/windows.svg'
 
 export default {
   name: "DashboardCloud",
-  components: {DashCloudRadioCards},
+  components: {DashCloudOSCArds, DashCloudRadioCards},
   data() {
     return {
       series: [{
@@ -47,8 +52,30 @@ export default {
           features: ['4Gb RAM', '2 vCPU', '100GB SSD']
         },
         {
-          name: 'G3',
+          name: 'G4',
           features: ['8Gb RAM', '4 vCPU', '100GB SSD']
+        },
+      ],
+      operatingSystems: [
+        {
+          name: 'centos',
+          image: centos,
+          versions: ['CentOS 7', 'CentOS 8']
+        },
+        {
+          name: 'debian',
+          image: debian,
+          versions: ['Debian 10', 'Debian 11', 'Debian 12']
+        },
+        {
+          name: 'ubuntu',
+          image: ubuntu,
+          versions: ['Ubuntu 18.04', 'Ubuntu 20.04', 'Ubuntu 22.04']
+        },
+        {
+          name: 'windows',
+          image: windows,
+          versions: ['Windows Server 2016', 'Windows Server 2019', 'Windows Server 2022']
         },
       ]
     }
@@ -104,10 +131,10 @@ export default {
 
     <div v-if="tab === 'new'">
       <DashCloudRadioCards :services="cloudServices"/>
-
-
-      <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Access Modes</h3>
-      <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <DashCloudOSCArds :systems="operatingSystems"/>
+      <h3 class="mt-4 muteBoldSubheader text-gray-900 dark:text-white">Access Modes</h3>
+      <ul
+          class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <li
             class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
           <div class="flex items-center ps-3">
@@ -131,12 +158,11 @@ export default {
           <div class="flex items-center ps-3">
             <input id="vnc-checkbox" type="checkbox" value=""
                    class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="vnc-checkbox" class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">VNC</label>
+            <label for="vnc-checkbox"
+                   class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">VNC</label>
           </div>
         </li>
       </ul>
-
-
     </div>
     <div v-if="tab === 'manage'">
       <apexchart width="500" type="line" :options="options" :series="series"></apexchart>

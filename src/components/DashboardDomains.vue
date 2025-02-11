@@ -65,7 +65,6 @@ export default {
   </div>
 
   <div v-if="tab === 'manage'">
-    <h1 class="muteSubheader">Manage your domains</h1>
     <div>
       <img src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain" />
       <p class="mt-4 text-center text-gray-500 dark:text-gray-400">

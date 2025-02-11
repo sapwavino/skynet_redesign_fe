@@ -44,9 +44,10 @@ export default {
 
 <template>
 
-  <div class="container mx-auto p-4"><h1 class="header uppercase text-2xl font-bold sm:text-3xl">Hosting</h1>
+  <div class=" mx-auto">
+    <h1 class="header uppercase text-2xl font-bold sm:text-3xl">Hosting</h1>
     <h1 class="muteSubheader capitalize mb-5 text-base sm:text-lg">All your hosting packages in one place</h1>
-    <ul class="mt-5 mb-1 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+    <ul class="mt-5 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
       <li class="me-2" @click="setTab('new')">
         <a
             href="#"
@@ -73,8 +74,6 @@ export default {
     </div>
 
     <div v-show="tab === 'manage'">
-      <p class="muteSubheader">Manage your hosting packages here.</p>
-
       <div v-if="id === null && $store.state.user.services.hosting.length === 0" class="text-center"><img
           src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain"/>
         <p class="mt-4 text-gray-500 dark:text-gray-400">
@@ -88,7 +87,7 @@ export default {
 
       <div v-else>
         <section class="flex flex-col sm:flex-row">
-          <div class="w-full sm:w-1/3 border-b sm:border-r border-gray-500 pb-5 sm:pr-5 mb-5 sm:mb-0">
+          <div class="w-full sm:w-1/3 pb-5 sm:pr-5 mb-5 sm:mb-0">
             <router-link :to="`/dashboard/hosting?tab=manage&id=${service.id}`" v-for="service in hostingServices"
                          :key="service.id">
               <li

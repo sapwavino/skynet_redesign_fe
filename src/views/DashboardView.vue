@@ -116,7 +116,7 @@ defineProps({layout: "DashboardLayout"});
 
         <router-link
             class="dashLink"
-            to="/dashboard/cloud"
+            to="/dashboard/cloud?tab=new"
             exact-active-class="dashLinkActive">
 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="dashLinkSVG" height="1.2rem"

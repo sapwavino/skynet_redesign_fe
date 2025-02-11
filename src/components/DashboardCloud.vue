@@ -58,6 +58,11 @@ export default {
       ],
       operatingSystems: [
         {
+          name: 'ubuntu',
+          image: ubuntu,
+          versions: ['Ubuntu 18.04', 'Ubuntu 20.04', 'Ubuntu 22.04']
+        },
+        {
           name: 'centos',
           image: centos,
           versions: ['CentOS 7', 'CentOS 8']
@@ -68,16 +73,12 @@ export default {
           versions: ['Debian 10', 'Debian 11', 'Debian 12']
         },
         {
-          name: 'ubuntu',
-          image: ubuntu,
-          versions: ['Ubuntu 18.04', 'Ubuntu 20.04', 'Ubuntu 22.04']
-        },
-        {
           name: 'windows',
           image: windows,
           versions: ['Windows Server 2016', 'Windows Server 2019', 'Windows Server 2022']
         },
-      ]
+      ],
+      service:{}
     }
   },
   watch: {
@@ -94,6 +95,15 @@ export default {
       this.$router.push({query: {tab}});
       this.tab = tab;
     },
+    setService(service) {
+      this.service.name = service.name;
+    },
+    setOS(os) {
+      this.service.os = os;
+    },
+    setOSVersion(version) {
+      this.service.os_version = version;
+    }
   },
 }
 </script>
@@ -129,40 +139,52 @@ export default {
       </li>
     </ul>
 
-    <div v-if="tab === 'new'">
-      <DashCloudRadioCards :services="cloudServices"/>
-      <DashCloudOSCArds :systems="operatingSystems"/>
-      <h3 class="mt-4 muteBoldSubheader text-gray-900 dark:text-white">Access Modes</h3>
-      <ul
-          class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-        <li
-            class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-          <div class="flex items-center ps-3">
-            <input id="root-checkbox" type="checkbox" value=""
-                   class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="root-checkbox" class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">Root
-              Password</label>
-          </div>
-        </li>
-        <li
-            class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-          <div class="flex items-center ps-3">
-            <input id="ssh-checkbox" type="checkbox" value=""
-                   class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500 ">
-            <label for="ssh-checkbox"
-                   class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">SSH</label>
-          </div>
-        </li>
-        <li
-            class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-          <div class="flex items-center ps-3">
-            <input id="vnc-checkbox" type="checkbox" value=""
-                   class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="vnc-checkbox"
-                   class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">VNC</label>
-          </div>
-        </li>
-      </ul>
+    <div v-if="tab === 'new'" class="flex">
+      <div class="w-9/12">
+        <DashCloudRadioCards :services="cloudServices" @selectService="setService"/>
+        <DashCloudOSCArds :systems="operatingSystems" @selectOS="setOS" @selectOSVersion="setOSVersion"/>
+        <h3 class="mt-4 muteBoldSubheader text-gray-900 dark:text-white">Access Modes</h3>
+        <ul
+            class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          <li
+              class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="root-checkbox" type="checkbox" value=""
+                     class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="root-checkbox" class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">Root
+                Password</label>
+            </div>
+          </li>
+          <li
+              class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="ssh-checkbox" type="checkbox" value=""
+                     class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500 ">
+              <label for="ssh-checkbox"
+                     class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">SSH</label>
+            </div>
+          </li>
+          <li
+              class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="vnc-checkbox" type="checkbox" value=""
+                     class="w-4 h-4 text-customGold bg-gray-100 border-gray-300 rounded-sm focus:ring-customGold dark:focus:ring-customGold dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="vnc-checkbox"
+                     class="w-full py-3 ms-2 text-sm font-bold text-gray-900 dark:text-gray-300">VNC</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="w-3/12 shadow rounded-2xl border-2 border-gray-300 h-[25vh] p-5 relative">
+        <h3 class="header">Summary</h3>
+        <div class="flex flex-col mt-5">
+          <h2 class="muteSubheader"><strong>Type: </strong><span v-if="service">{{service.name}}</span></h2>
+          <h2 class="muteSubheader"><strong>Operating System: </strong><span v-if="service">{{service.os}}</span></h2>
+          <h2 class="muteSubheader"><strong>OS Version: </strong><span v-if="service">{{service.os_version}}</span></h2>
+<!--          <h2 class="muteSubheader"><strong>Access Modes: </strong><span v-if="service">{{service.os}}</span></h2>-->
+        </div>
+        <button class="absolute btn-base bottom-2">Add to cart</button>
+      </div>
     </div>
     <div v-if="tab === 'manage'">
       <apexchart width="500" type="line" :options="options" :series="series"></apexchart>

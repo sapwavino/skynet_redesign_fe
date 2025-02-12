@@ -3,6 +3,7 @@
 import {createToast} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import Recents from "@/components/Recents.vue";
+import {DomainCartItem} from '@/utils/helper_classes.js'
 
 export default {
   name: "DomainNameSearch",
@@ -42,9 +43,11 @@ export default {
       searchResults: [],
       exchangeRates: {
         NGN: 1,
-        USD: 0.00066,  // 1 NGN = 0.0022 USD
-        GBP: 0.00051,  // 1 NGN = 0.0017 GBP
-        EUR: 0.00061,  // 1 NGN = 0.0020 EUR
+        USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
+        GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
+        EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
+        KSH: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
+        GHS: 0.012,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
       },
       recents: [],
       showMore: false,
@@ -64,7 +67,13 @@ export default {
         this.searchResults = []
         this.loading = false
       }
-    }
+    },
+    ["$store.state.preferredCurrency"]: {
+      immediate: true, // Run on component mount
+      handler(newCurrency) {
+        this.selectedCurrency = newCurrency || null; // Fallback to 'new' if no tab is set
+      },
+    },
   },
   methods: {
     fetchSearchResults() {
@@ -164,9 +173,16 @@ export default {
     },
     setRecent(domain) {
       this.searchTerm = domain;
+    },
+    addDomainToCart() {
+      console.log(new DomainCartItem("name", "100",))
     }
   },
   mounted() {
+    let preferredCurrency = JSON.parse(window.localStorage.getItem('preferredCurrency'));
+    if (preferredCurrency) {
+      this.selectedCurrency = preferredCurrency;
+    }
     this.recents = window.localStorage.getItem('recents')
         ? JSON.parse(window.localStorage.getItem('recents'))
         : [];
@@ -211,8 +227,10 @@ export default {
               class="h-12 border-2 border-gray-400 dark:text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold cursor-pointer"
               v-model="selectedCurrency">
         <option value="NGN">Nigerian Naira (NGN) - ₦</option>
+        <option value="KSH">Kenyan Shilling (KSh) - KSh</option>
+        <option value="GHS">Ghanaian Cedis (GHS) - ₵</option>
         <option value="USD">United States Dollar (USD) - $</option>
-        <option value="GBP">British Pound Sterling (GBP) - £</option>
+        <option value="GBP">Great Britain Pound (GBP) - £</option>
         <option value="EUR">European Euro (EUR) - €</option>
       </select>
     </div>
@@ -226,6 +244,8 @@ export default {
         <hr class="border-gray-300 border w-1/2"/>
         <span class="text-sm text-customGold font-bold tracking-wider">
           <span v-if="selectedCurrency === 'NGN'">₦</span>
+          <span v-if="selectedCurrency === 'KSH'">KSh</span>
+          <span v-if="selectedCurrency === 'GHS'">₵</span>
           <span v-else-if="selectedCurrency === 'USD'">$</span>
           <span v-else-if="selectedCurrency === 'GBP'">£</span>
           <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
@@ -269,6 +289,8 @@ export default {
                   <span class="font-bold">
                     <span v-if="selectedCurrency === 'NGN'">₦</span>
                     <span v-else-if="selectedCurrency === 'USD'">$</span>
+                    <span v-else-if="selectedCurrency === 'KSH'">KSh</span>
+                    <span v-else-if="selectedCurrency === 'GHS'">₵</span>
                     <span v-else-if="selectedCurrency === 'GBP'">£</span>
                     <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
                   </span>

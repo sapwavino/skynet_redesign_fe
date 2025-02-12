@@ -1,6 +1,22 @@
+export const exchangeRates = {
+    NGN: 1,
+    USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
+    GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
+    EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
+    KSH: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
+    GHS: 0.012,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
+}
+
+export function convertPrice(currency, price) {
+    price = parseFloat(price);
+    const rate = exchangeRates[currency];
+    console.log(currency, price)
+    return (price * rate).toFixed(2);
+}
+
 export const getLastLogin = () => {
     const date = new Date();
-    const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+    const options = {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'};
     const formattedDate = date.toLocaleDateString('en-GB', options);
 
     const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
@@ -10,4 +26,21 @@ export const getLastLogin = () => {
     const suffix = ["th", "st", "nd", "rd"][(date.getDate() % 10 > 3) ? 0 : (date.getDate() % 10)];
     return formattedDate.replace(/\d+/, `${date.getDate()}${suffix}`) + ` ${hours}:${minutes}${ampm}`;
 };
+
+export function getCurrencySymbol(currencyCode) {
+    switch (currencyCode) {
+        case 'USD':
+            return '$';
+        case 'NGN':
+            return '₦';
+        case 'KSH':
+            return 'KSh'; // Or 'S' if you prefer a shorter symbol
+        case 'GBP':
+            return '£';
+        case 'GHS':
+            return '₵'; // Or 'GH₵' if you prefer a longer symbol
+        default:
+            return ''; // Or a default symbol like '¤' or display the currency code
+    }
+}
 

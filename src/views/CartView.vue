@@ -15,6 +15,7 @@ export default {
 <script setup>
 
 import EmptyCart from "@/components/EmptyCart.vue";
+import {convertPrice, getCurrencySymbol} from "../utils/helper_functions.js";
 </script>
 
 <template>
@@ -34,15 +35,12 @@ import EmptyCart from "@/components/EmptyCart.vue";
               <h2 class="font-bold text-xl leading-8 text-gray-600">{{ $store.state.cart.items.length }} Items</h2>
             </div>
             <div class="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-gray-200">
-              <div class="col-span-12 md:col-span-7">
+              <div class="col-span-12 md:col-span-5">
                 <p class="font-normal text-lg leading-8 muteSubheader">Product Details</p>
               </div>
-              <div class="col-span-12 md:col-span-5">
+              <div class="col-span-12 md:col-span-7">
                 <div class="grid grid-cols-5">
-                  <div class="col-span-3">
-                    <p class="font-normal text-lg leading-8 muteSubheader text-center">Quantity</p>
-                  </div>
-                  <div class="col-span-2">
+                  <div class="col-span-5">
                     <p class="font-normal text-lg leading-8 muteSubheader text-center">Total</p>
                   </div>
                 </div>
@@ -53,12 +51,12 @@ import EmptyCart from "@/components/EmptyCart.vue";
             <div
                 class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-gray-400 group pr-5"
                 v-for="(item, idx) in cartItems">
-              <!--              SVG-->
+              <!--              SVG ICONS-->
               <div class="w-full md:max-w-[126px]">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 64 80" x="0px" y="0px"
-                    height="8rem" v-if="item.type === 'domain'">
+                    height="8rem" v-if="item.order_type === 'domain'">
                   <path
                       d="M18.23169,17.66718c3.91748,2.18512,8.36151,3.43494,13.01831,3.55701V2.26904c-.98059,.02448-1.94916,.09583-2.9043,.21344-4.3717,2.04559-8.03448,7.66602-10.11401,15.18469Z"/>
                   <path
@@ -96,14 +94,14 @@ import EmptyCart from "@/components/EmptyCart.vue";
                 </svg>
 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                     height="6rem" v-if="item.type === 'hosting'">
+                     height="6rem" v-if="item.order_type === 'hosting'">
                   <path
                       d="M480 160H32c-17.673 0-32-14.327-32-32V64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24z"/>
                 </svg>
 
                 <svg
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="dashLinkSVG" height="6rem"
-                    v-if="item.type === 'cloud'">
+                    v-if="item.order_type === 'cloud'">
                   <path
                       d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"/>
                 </svg>
@@ -114,55 +112,16 @@ import EmptyCart from "@/components/EmptyCart.vue";
               <!--              OTHER DETAILS-->
               <div class="grid grid-cols-1 md:grid-cols-4 w-full">
                 <div class="md:col-span-2">
-                  <div class="flex flex-col max-[500px]:items-center gap-3">
+                  <div class="flex flex-col max-[500px]:items-center">
                     <h6 class="font-semibold text-base text-black">{{ item.name }}</h6>
-                    <h6 class="font-normal text-base text-gray-500 italic">{{ item.type }}</h6>
-                    <h6 class="font-normal text-base text-gray-500 italic">{{ item.description }}</h6>
-                    <h6 class="font-medium text-base text-gray-600 transition-all duration-300 group-hover:text-indigo-600">
-                      $120.00</h6>
+                    <h6 class="font-normal text-base text-gray-500 italic"><strong>Type: </strong>{{ item.service_type }}</h6>
+                    <h6 class="font-normal text-base text-gray-500 italic"><strong>Description: </strong>{{ item.description }}</h6>
                     <p class="text-red-500 font-black tracking-wider text-sm cursor-pointer">🗑️ Remove</p>
-                  </div>
-                </div>
-                <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
-                  <div class="flex items-center h-full"></div>
-                  <div class="flex items-center h-full" v-show="item.type !== 'domain'">
-                    <button
-                        class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 cursor-pointer">
-                      <svg
-                          class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
-                          xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                          viewBox="0 0 22 22" fill="none">
-                        <path d="M16.5 11H5.5" stroke="" stroke-width="1.6"
-                              stroke-linecap="round"/>
-                        <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                              stroke-linecap="round"/>
-                        <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                              stroke-linecap="round"/>
-                      </svg>
-                    </button>
-                    <input
-                        type="text"
-                        class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px]  text-center bg-transparent"
-                        placeholder="1" :value="item.quantity">
-                    <button
-                        class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 cursor-pointer">
-                      <svg
-                          class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
-                          xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                          viewBox="0 0 22 22" fill="none">
-                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6"
-                              stroke-linecap="round"/>
-                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                              stroke-width="1.6" stroke-linecap="round"/>
-                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                              stroke-width="1.6" stroke-linecap="round"/>
-                      </svg>
-                    </button>
                   </div>
                 </div>
                 <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
                   <p class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">
-                    $120.00</p>
+                    {{ getCurrencySymbol($store.state.preferredCurrency)}} {{ convertPrice($store.state.preferredCurrency, item.price)}}</p>
 
                 </div>
               </div>
@@ -181,7 +140,7 @@ import EmptyCart from "@/components/EmptyCart.vue";
             <div class="mt-8">
               <div class="flex items-center justify-between pb-6">
                 <p class="font-normal text-lg leading-8 text-black">{{ $store.state.cart.items.length }} Items</p>
-                <p class="font-medium text-lg leading-8 text-black">$480.00</p>
+                <p class="font-medium text-lg leading-8 text-black">{{ getCurrencySymbol($store.state.preferredCurrency)}} {{$store.getters.cartTotal}}</p>
               </div>
               <form>
                 <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Promo/Coupon Code
@@ -210,16 +169,16 @@ import EmptyCart from "@/components/EmptyCart.vue";
                   <!--                  PAYPAL-->
                   <div
                       class="relative flex w-56 items-center justify-center rounded-xl bg-gray-50 px-4 py-3 font-medium text-gray-700">
-                    <input class="peer hidden" type="radio" name="radio" id="radio1" disabled/>
+                    <input class="peer hidden" type="radio" name="radio" id="paypal" />
                     <label
-                        class="peer-checked:border-blue-400 peer-checked:bg-blue-200 absolute top-0 h-full w-full cursor-not-allowed rounded-xl border"
-                        for="radio1"> </label>
+                        class="peer-checked:border-blue-400 peer-checked:bg-blue-200 absolute top-0 h-full w-full rounded-xl border cursor-pointer"
+                        for="paypal"> </label>
                     <div
                         class="peer-checked:border-transparent peer-checked:bg-blue-400 peer-checked:ring-2 absolute left-4 h-5 w-5 rounded-full border-2 border-gray-300 bg-gray-200 ring-blue-400 ring-offset-2 "></div>
                     <span class="pointer-events-none z-10">
                       <svg
                           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 188 49" height="2rem"
-                          class="ml-5 grayscale-100">
+                          class="ml-5">
                          <path fill="#0070E0"
                                d="M164.01 11.446l-4.012 25.207a.643.643 0 0 0 .642.746h4.748a.701.701 0 0 0 .698-.589l4.012-25.207a.643.643 0 0 0-.642-.746h-4.748a.692.692 0 0 0-.698.589zm-5.07 7.356h-4.505a.699.699 0 0 0-.697.588l-.149.928s-3.499-3.794-9.694-1.23c-3.554 1.468-5.26 4.501-5.986 6.723 0 0-2.304 6.753 2.907 10.47 0 0 4.832 3.575 10.273-.22l-.094.592a.644.644 0 0 0 .37.686c.085.04.178.06.272.06h4.508a.692.692 0 0 0 .698-.589l2.742-17.262a.632.632 0 0 0-.149-.521.643.643 0 0 0-.496-.226zm-6.629 9.54a5.005 5.005 0 0 1-1.715 3.095 5.073 5.073 0 0 1-3.345 1.203 4.602 4.602 0 0 1-1.416-.206c-1.945-.62-3.055-2.474-2.736-4.484a5.01 5.01 0 0 1 1.717-3.093 5.08 5.08 0 0 1 3.343-1.207 4.6 4.6 0 0 1 1.416.208c1.957.616 3.062 2.473 2.741 4.485h-.005zm-24.056.477c2.443 0 4.806-.868 6.662-2.446a10.147 10.147 0 0 0 3.456-6.158c.789-4.993-3.14-9.351-8.71-9.351h-8.973a.699.699 0 0 0-.697.589L115.98 36.66a.644.644 0 0 0 .37.686c.086.04.178.06.272.06h4.751a.699.699 0 0 0 .697-.589l1.178-7.402a.692.692 0 0 1 .698-.59l4.309-.006zm3.974-8.831c-.293 1.846-1.731 3.205-4.482 3.205h-3.517l1.068-6.713h3.454c2.844.005 3.77 1.67 3.477 3.513v-.005z">
                          </path>
@@ -323,7 +282,7 @@ import EmptyCart from "@/components/EmptyCart.vue";
 
                 <button
                     class="btn-base w-full mx-auto">
-                  Pay $485.00
+                  Pay {{ getCurrencySymbol($store.state.preferredCurrency)}} {{ convertPrice($store.state.preferredCurrency, $store.getters.cartTotal)}}
                 </button>
 
               </form>

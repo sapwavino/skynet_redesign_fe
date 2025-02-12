@@ -65,11 +65,16 @@ export default {
   </div>
 
   <div v-if="tab === 'manage'">
-    <div>
+    <div v-if="$store.state.user.services.domains.length < 1">
       <img src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain" />
       <p class="mt-4 text-center text-gray-500 dark:text-gray-400">
         You haven't registered any domains yet. Go to the "Buy" tab to register your domain.
       </p>
+    </div>
+    <div v-else>
+      <div class="flex flex-wrap gap-4">
+        <div v-for="domain in $store.state.user.services.domains" :key="domain.id">{{domain.name}}</div>
+      </div>
     </div>
   </div>
 </template>

@@ -1,6 +1,15 @@
 <script>
+import {getLastLogin} from "../utils/helper_functions.js";
+import {createToast} from "mosha-vue-toastify";
+
 export default {
   name: "Dashboard",
+  props: {
+    layout: {
+      type: String, // Or the appropriate type for your layout prop
+      default: "DashboardLayout", // Provide a default value if needed
+    },
+  },
   data() {
     return {
       countries: [
@@ -10,24 +19,38 @@ export default {
         {name: "GBP", flag: "🇬🇧"},
         {name: "USD", flag: "🇺🇸"}
       ],
-      selectedCurrency: 'NGN'
+      selectedCurrency: 'NGN',
+      getLastLogin
     };
+  },
+  methods: {
+    changePreferredCurrency() {
+      this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);
+      window.localStorage.setItem('preferredCurrency', JSON.stringify(this.selectedCurrency))
+      createToast(
+          "Your preferred currency is now " + this.selectedCurrency,
+          {
+            type: 'info',
+            duration: 500,
+          }
+      )
+    }
+  },
+  mounted() {
+    const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'))
+    const preferredCurrency = JSON.parse(window.localStorage.getItem('preferredCurrency'))
+    if (!preferredCurrency) {
+      window.localStorage.setItem('preferredCurrency', JSON.stringify(this.selectedCurrency))
+    }
+    this.selectedCurrency = preferredCurrency;
+    this.$store.dispatch('updatePreferredCurrency', preferredCurrency);
+    if (!isLoggedIn) {
+      window.location.href = '/auth/login';
+    }
   }
 }
 </script>
 
-<script setup>
-import {onMounted,} from "vue";
-import {getLastLogin} from "../utils/helper_functions.js";
-
-onMounted(() => {
-  const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'))
-  if (!isLoggedIn) {
-    window.location.href = '/auth/login';
-  }
-})
-defineProps({layout: "DashboardLayout"});
-</script>
 
 <template>
   <section class="flex">
@@ -209,7 +232,8 @@ defineProps({layout: "DashboardLayout"});
             to="/dashboard/notifications"
             exact-active-class="dashLinkActive">
 
-          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm animate-pulse">1</div>
+          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm animate-pulse">1
+          </div>
 
           <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="dashLinkSVG" height="1.5rem"
@@ -288,14 +312,17 @@ defineProps({layout: "DashboardLayout"});
 
           <h2 class="header">John Doe</h2>
           <h2 class="muteSubheader">john@doe.com</h2>
-          <h2 class="muteSmallSubheader" style="font-size: 0.6rem; font-weight: bolder !important;">Last login: {{getLastLogin()}}</h2>
+          <h2 class="muteSmallSubheader" style="font-size: 0.6rem; font-weight: bolder !important;">Last login:
+            {{ getLastLogin() }}</h2>
         </div>
       </div>
       <div class="flex items-center mt-5">
         <div class="block w-1/2">
           <select id="country"
                   class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
-                  v-model="selectedCurrency">
+                  v-model="selectedCurrency"
+                  @change="changePreferredCurrency"
+          >
             <option v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
               {{ country.name }}
             </option>

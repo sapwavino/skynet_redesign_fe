@@ -1,4 +1,7 @@
 import {createStore} from "vuex";
+import {createToast} from "mosha-vue-toastify";
+import 'mosha-vue-toastify/dist/style.css'
+import {v4 as uuidv4} from "uuid";
 // Create a new store instance or import from module.
 const store = createStore({
 
@@ -28,12 +31,11 @@ const store = createStore({
                 //     type: "hosting"
                 // }
             ],
-            total: 0,
         },
         showCookieModal: true,
         isLoggedIn: false,
-        user:{
-            info:{
+        user: {
+            info: {
                 full_name: "John Doe",
                 first_name: "John",
                 last_name: "Doe",
@@ -43,7 +45,7 @@ const store = createStore({
                 address: "123 Main St, Anytown, USA",
                 gender: 'male'
             },
-            services:{
+            services: {
                 domains: [
                     {
                         id: '123',
@@ -125,9 +127,9 @@ const store = createStore({
                 ],
                 cloud: [
                     {
-                        id: '345',
-                        name: "Cloud-001",
-                        type: "G3",
+                        id: 'f163d394-800d-40a3-b07f-9262cc9b4034',
+                        name: "CL_G3_001",
+                        type: "cloud",
                         price: 2000,
                         description: "G3 VPS",
                         active: true,
@@ -137,9 +139,9 @@ const store = createStore({
                         renewal_date: new Date('2022-02-01'),
                     },
                     {
-                        id: '345',
-                        name: "Cloud-002",
-                        type: "G2",
+                        id: "63a97cf6-51f1-4a7c-b50e-f5d5cbbbac53",
+                        name: "CL_G2_002",
+                        type: "cloud",
                         price: 2000,
                         description: "G2 VPS",
                         active: false,
@@ -149,9 +151,9 @@ const store = createStore({
                         renewal_date: new Date('2022-02-01'),
                     },
                     {
-                        id: '456',
-                        name: "Cloud-003",
-                        type: "G3",
+                        id: "e25fa6c0-0393-45ac-8cd1-723f80bb6524",
+                        name: "CL_G3_003",
+                        type: "cloud",
                         price: 2000,
                         description: "G3 VPS",
                         active: true,
@@ -218,8 +220,25 @@ const store = createStore({
         logout({commit}) {
             commit("LOGOUT");
             window.localStorage.removeItem('isLoggedIn');
+        },
+        addItemToCart({commit}, item) {
+            commit("ADD_ITEM_TO_CART", item);
+            createToast(
+                "Item added to cart: " + item.name,
+                {
+                    type: 'info',
+                    duration: 2000,
+                }
+            )
         }
     },
+    getters: {
+        cartTotal: (state) => {
+            return state.cart.items.reduce((total, item) => {
+                return (parseFloat(total + item.price)).toFixed(2);
+            }, 0); // Start with a total of 0
+        }
+    }
 });
 
 export default store;

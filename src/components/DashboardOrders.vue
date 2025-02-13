@@ -127,8 +127,9 @@ export default {
           <li
               class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
           >
+            <p class="text-gray-700 text-xs font-medium"><strong>Order ID#: </strong>{{ service.id }}</p>
+            <hr class="my-5"/>
             <p class="text-gray-700 font-bold">{{ service.name }}</p>
-            <p class="muteBoldSubheader text-sm">{{ service.type }}</p>
             <p class="muteSmallSubheader italic">{{ service.description }}</p>
             <p class="muteSmallSubheader "><strong>Cost: </strong>{{ service.price }}</p>
             <p class="muteSmallSubheader capitalize"><strong>Billing Cycle: </strong>{{ service.billing_cycle }}</p>
@@ -157,6 +158,8 @@ export default {
           <li
               class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
           >
+            <p class="text-gray-700 text-xs font-medium"><strong>Order ID#: </strong>{{ service.id }}</p>
+            <hr class="my-5"/>
             <p class="text-gray-700 font-bold uppercase">{{ service.name }}</p>
             <p class="muteBoldSubheader text-sm">{{ service.type }}</p>
             <p class="muteSmallSubheader italic">{{ service.description }}</p>

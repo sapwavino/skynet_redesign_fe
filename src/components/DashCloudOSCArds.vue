@@ -4,12 +4,26 @@ export default {
     systems: {
       type: Array,
       required: true,
+    },
+    reset: {
+      type: Boolean,
     }
   },
   data() {
     return {
       selectedOS: "",
-      selectedOsVersion: ''
+      selectedOsVersion: '',
+    }
+  },
+  watch: {
+    reset(newVal) {
+      if (newVal) {
+        this.selectedOS = "";
+        this.selectedOsVersion = "";
+        console.log("Resetting...///")
+        // Important: Emit an event back to the parent to acknowledge the reset
+        this.$emit('resetComplete'); // Or a more descriptive name
+      }
     }
   }
 }

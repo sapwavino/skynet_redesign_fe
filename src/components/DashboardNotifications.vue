@@ -6,49 +6,24 @@ export default {
   components: {},
   data() {
     return {
-      mockNotifications: [
-        {
-          id: 1,
-          title: "New Message",
-          message: "You have a new message from John Doe.",
-          type: "message",
-          read: false,
-          timestamp: "2025-02-06T10:30:00Z",
-        },
-        {
-          id: 2,
-          title: "System Update",
-          message: "A new system update is available. Click here to update. Lorem20 ipsum dolor sit amet, consectetur adipiscing elit.",
-          type: "system",
-          read: false,
-          timestamp: "2025-02-06T09:15:00Z",
-        },
-        {
-          id: 3,
-          title: "Reminder",
-          message: "Your meeting with the product team starts in 30 minutes.",
-          type: "reminder",
-          read: true,
-          timestamp: "2025-02-05T16:45:00Z",
-        },
-        {
-          id: 4,
-          title: "Payment Received",
-          message: "You received a payment of $250.00 from Jane Doe.",
-          type: "payment",
-          read: false,
-          timestamp: "2025-02-06T12:00:00Z",
-        },
-        {
-          id: 5,
-          title: "Security Alert",
-          message: "Unusual login activity detected on your account.",
-          type: "security",
-          read: true,
-          timestamp: "2025-02-04T22:10:00Z",
-        },
-      ]
+      id: this.$route.query.id || null, // Set initial ID from URL or default to null
+      mockNotifications: this.$store.state.user.notifications
     };
+  },
+  watch: {
+    ["$route.query.id"]: {
+      immediate: true, // Run on component mount
+      handler(newID) {
+        this.id = newID || null; // Fallback to 'new' if no tab is set
+      },
+    },
+  },
+  methods: {
+    getNotificationByID() {
+      return this.mockNotifications.find((one) => {
+        return one.id === parseInt(this.id);
+      })
+    }
   }
 }
 </script>
@@ -62,17 +37,40 @@ export default {
     <div class="flex mt-5">
       <div class="border-r w-1/3 mr-2">
         <ul>
-          <li v-for="(notification, index) in mockNotifications" :key="index"
-              class="py-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl rounded-2xl w-5/6 mx-auto dark:border-0">
-            <div class="flex items-start gap-2 font-semibold hover:text-customGold muteSubheader">
-              {{ notification.title }}
-            </div>
-            <div class="text-sm text-gray-600 truncate">{{ notification.message }}</div>
-          </li>
+          <router-link
+              v-for="(notification, index) in mockNotifications"
+              :key="index"
+              :to="`/dashboard/notifications?id=${notification.id}`">
+            <li
+                class="py-5 border-b last:border-none border-b-gray-300 cursor-pointer mb-1 hover:shadow-2xl rounded-2xl w-5/6 mx-auto dark:border-0 relative" @click="$store.dispatch('markNotificationAsRead', notification.id)">
+              <div v-if="!notification.read" class="h-3 w-3 rounded-full bg-green-600 absolute right-0"></div>
+              <div class="flex items-start gap-2 font-semibold hover:text-customGold" :class="{
+                'text-gray-400': notification.read,
+                'muteBoldSubheader text-black': !notification.read,
+              }">
+                {{ notification.title }}
+              </div>
+              <div class="text-sm truncate"
+                   :class="{
+                'text-gray-400': notification.read,
+                'muteBoldSubheader text-black': !notification.read,
+              }">{{ notification.message }}
+              </div>
+            </li>
+          </router-link>
         </ul>
       </div>
-      <div class="w-full">
-        <div class="muteSubheader">Notification details</div>
+      <div class="w-full" v-if="id">
+        <section class="dashGroupCard w-3/4">
+          <div class="header">{{ getNotificationByID().title }}</div>
+          <p class="muteSmallSubheader mb-10">{{ new Date(getNotificationByID().timestamp) }}</p>
+          <div class="muteBoldSubheader">{{ getNotificationByID().message }}</div>
+          <div class="flex items-center gap-x-2 mt-10">
+            <button class="btn-base-error">Delete</button>
+            <button class="btn-base-success">Resend</button>
+            <button class="btn-base">Forward</button>
+          </div>
+        </section>
       </div>
     </div>
 

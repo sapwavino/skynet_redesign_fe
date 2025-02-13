@@ -102,6 +102,7 @@ export default {
 
 
       ],
+      resetOSOptions: false
     }
   },
   watch: {
@@ -134,14 +135,18 @@ export default {
       this.tab = tab;
     },
     setService(service) {
+      this.billing_frequency = 1
+      this.resetOSOptions = true;
       this.service = service;
       this.service.selectedAccessOptions = this.selectedAccessOptions;
     },
     setOS(os) {
+      this.resetOSOptions = false;
       this.service.os_version = ''
       this.service.os = os;
     },
     setOSVersion(version) {
+      this.resetOSOptions = false
       this.service.os_version = version;
     },
     addToCart() {
@@ -238,7 +243,7 @@ export default {
     <div v-if="tab === 'new'" class="flex">
       <div class="w-9/12">
         <DashCloudRadioCards :services="cloudServices" @selectService="setService"/>
-        <DashCloudOSCArds :systems="operatingSystems" @selectOS="setOS" @selectOSVersion="setOSVersion"/>
+        <DashCloudOSCArds :systems="operatingSystems" @selectOS="setOS" @selectOSVersion="setOSVersion" :reset="resetOSOptions"/>
         <h3 class="mt-4 muteBoldSubheader text-gray-900 dark:text-white">Access Modes</h3>
         <ul
             class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">

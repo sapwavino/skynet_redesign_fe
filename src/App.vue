@@ -35,9 +35,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <announcement-banner></announcement-banner>
-<!--  <nav-bar :dashboard-nav="true"></nav-bar>-->
-
   <component :is="layoutComponent">
     <RouterView/>
   </component>

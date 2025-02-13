@@ -169,7 +169,48 @@ const store = createStore({
             orders: [],
             invoices: [],
             wallet: [],
-            notifications: [],
+            notifications: [
+                {
+                    id: 1,
+                    title: "New Message",
+                    message: "You have a new message from John Doe.",
+                    type: "message",
+                    read: false,
+                    timestamp: "2025-02-06T10:30:00Z",
+                },
+                {
+                    id: 2,
+                    title: "System Update",
+                    message: "A new system update is available. Click here to update. Lorem20 ipsum dolor sit amet, consectetur adipiscing elit.",
+                    type: "system",
+                    read: false,
+                    timestamp: "2025-02-06T09:15:00Z",
+                },
+                {
+                    id: 3,
+                    title: "Reminder",
+                    message: "Your meeting with the product team starts in 30 minutes.",
+                    type: "reminder",
+                    read: true,
+                    timestamp: "2025-02-05T16:45:00Z",
+                },
+                {
+                    id: 4,
+                    title: "Payment Received",
+                    message: "You received a payment of $250.00 from Jane Doe.",
+                    type: "payment",
+                    read: false,
+                    timestamp: "2025-02-06T12:00:00Z",
+                },
+                {
+                    id: 5,
+                    title: "Security Alert",
+                    message: "Unusual login activity detected on your account.",
+                    type: "security",
+                    read: true,
+                    timestamp: "2025-02-04T22:10:00Z",
+                },
+            ],
             support: {
                 tickets: [],
             }
@@ -198,6 +239,12 @@ const store = createStore({
         LOGOUT(state) {
             state.isLoggedIn = false
         },
+        MARK_NOTIFICATION_READ(state, id) {
+            const notification = state.user.notifications.find(one => one.id === id);
+            if (notification) {
+                notification.read = true;
+            }
+        }
     },
     actions: {
         updateSearchDomain({commit}, domain) {
@@ -230,6 +277,9 @@ const store = createStore({
                     duration: 2000,
                 }
             )
+        },
+        markNotificationAsRead({commit}, id){
+            commit("MARK_NOTIFICATION_READ", id)
         }
     },
     getters: {

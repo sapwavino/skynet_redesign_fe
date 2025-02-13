@@ -268,22 +268,23 @@ export default {
     <div
         class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
       <span class="text-2xl font-bold text-center dark:text-gray-200">Results</span>
+      <span v-if="$store.state.domainToSearch.length > 20"
+            class="text-xs text-green-600 dark:text-gray-700 text-center">We are showing a shorter name because domain name is longer than 20 characters</span>
       <ul class="w-full">
-        <li class="list-none resultListItem flex items-center justify-between"
+        <li class="list-none resultListItem flex items-center justify-between gap-2"
             v-for="(tld, idx) in toggleTldPrices" :key="idx">
           <div class="flex flex-col gap-y-1">
             <h2 class="font-bold text-xs md:text-lg">
               {{
-                ($store.state.domainToSearch.length > 30
-                    ? $store.state.domainToSearch.substring(0, 30) + '***'
+                ($store.state.domainToSearch.length > 15
+                    ? $store.state.domainToSearch.substring(0, 15) + '***'
                     : $store.state.domainToSearch)
                 + '.' + tld.tld
               }}
             </h2>
-            <span v-if="$store.state.domainToSearch.length > 30" class="text-xs text-green-600 dark:text-gray-700">We are showing a shorter name because domain name is longer than 30 characters</span>
-
           </div>
-          <div class="flex items-center gap-x-1">
+
+          <div class="flex items-center gap-x-1 ">
             <div class="flex flex-col text-right mr-1">
               <h1 class="font-black text-xs md:text-lg">
                   <span class="font-bold">
@@ -297,7 +298,7 @@ export default {
               </h1>
               <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
             </div>
-            <button class="resultListAddBtn">🛒 Add to cart</button>
+            <button class="resultListAddBtn">🛒 Buy</button>
           </div>
         </li>
         <li class="list-none resultListItem flex items-center justify-center">

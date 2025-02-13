@@ -15,10 +15,11 @@ export default {
 
 <template>
   <nav class="navbar-base">
+
     <router-link to="/">
       <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16"/>
     </router-link>
-    <!--    <div></div>-->
+
     <div class="flex items-center gap-x-5 font-bold" v-show="!dashboardNav">
       <a href="/#hosting" class="text-btn-base">Hosting</a>
       <a href="/#email" class="text-btn-base">Email</a>

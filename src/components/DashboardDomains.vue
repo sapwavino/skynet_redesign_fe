@@ -36,9 +36,8 @@ export default {
   <ul
       class="my-5 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
   >
-    <li class="me-2" @click="setTab('buy')">
-      <a
-          href="#"
+    <li class="me-2" @click.prevent="setTab('buy')">
+      <button
           class="inline-block p-4 rounded-t-lg"
           :class="{
           'text-customGold font-bold bg-gray-800 active dark:bg-customGold dark:text-gray-900':
@@ -46,21 +45,20 @@ export default {
         }"
       >
         Buy
-      </a>
+      </button>
     </li>
-    <li class="me-2" @click="setTab('manage')">
-      <a
-          href="#"
+    <li class="me-2" @click.prevent="setTab('manage')">
+      <button
           class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-300"
           :class="{ 'text-customGold font-bold bg-gray-800 active': tab === 'manage' }"
       >
         Manage
-      </a>
+      </button>
     </li>
   </ul>
 
   <!-- Tab Content -->
-  <div class="w-1/2 mt-5 mx-auto" v-if="tab === 'buy'">
+  <div class="md:w-1/2 mt-5 mx-auto" v-if="tab === 'buy'">
     <DomainNameSearch/>
   </div>
 

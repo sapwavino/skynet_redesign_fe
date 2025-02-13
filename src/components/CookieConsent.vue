@@ -31,7 +31,7 @@ export default {
 <template>
   <transition name="slowFade" mode="in-out">
     <div
-        class="hidden md:flex flex-col gap-3 fixed bottom-10 left-5 w-1/4 bg-white shadow-2xl rounded-2xl p-5 dark:bg-gray-900 dark:text-white"
+        class="md:flex flex-col gap-3 fixed bottom-10 left-5 md:w-1/4 bg-gray-200 shadow-2xl rounded-2xl p-5 dark:bg-gray-900 dark:text-white"
         v-show="$store.state.showCookieModal">
       <h1 class="smallHeader dark:text-gray-200">Cookie Consent</h1>
       <p class="dark:text-gray-200" v-if="!showPrefs">

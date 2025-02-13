@@ -11,9 +11,8 @@ export default {
 <template>
   <section class="hero">
     <h2 class="bigHeader"><span class="text-5xl tracking-wider">Do more online,</span> <br/> for much less</h2>
-    <div class="mx-auto w-1/3">
+    <div class="mx-auto md:w-1/3">
       <DomainNameSearch/>
-
     </div>
   </section>
 </template>

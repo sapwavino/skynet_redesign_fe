@@ -236,7 +236,7 @@ export default {
     </div>
 
     <!--    TLD PRICES -->
-    <section class="grid grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
+    <section class="grid grid-cols-3 md:grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
       <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20 "
            v-for="(tld, idx) in tldPrices"
            :key="idx">
@@ -272,7 +272,7 @@ export default {
         <li class="list-none resultListItem flex items-center justify-between"
             v-for="(tld, idx) in toggleTldPrices" :key="idx">
           <div class="flex flex-col gap-y-1">
-            <h2 class="font-bold text-lg">
+            <h2 class="font-bold text-xs md:text-lg">
               {{
                 ($store.state.domainToSearch.length > 30
                     ? $store.state.domainToSearch.substring(0, 30) + '***'
@@ -285,7 +285,7 @@ export default {
           </div>
           <div class="flex items-center gap-x-1">
             <div class="flex flex-col text-right mr-1">
-              <h1 class="font-black text-lg">
+              <h1 class="font-black text-xs md:text-lg">
                   <span class="font-bold">
                     <span v-if="selectedCurrency === 'NGN'">₦</span>
                     <span v-else-if="selectedCurrency === 'USD'">$</span>

@@ -69,19 +69,19 @@ html {
 
 /*ELEMENTS*/
 .hero {
-    @apply p-5 hidden md:flex flex-col items-center ;
+    @apply p-5 md:flex flex-col items-center ;
 }
 
 .announcement-banner {
-    @apply hidden md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-customGold;
+    @apply hidden md:flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-customGold;
 }
 
 .resultListItem {
-    @apply bg-white p-5 shadow-md hover:shadow transition-all duration-300 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300 dark:bg-gray-400 dark:border-0 dark:hover:border-0;
+    @apply p-2 md:p-5 shadow-md hover:shadow transition-all duration-300 ease-in-out border-gray-200 border my-2 rounded-xl hover:scale-105 hover:border-2 hover:border-gray-300 dark:bg-gray-400 dark:border-0 dark:hover:border-0;
 }
 
 .resultListAddBtn {
-    @apply bg-customGold text-gray-900 dark:bg-gray-900 dark:text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-gray-900 hover:text-customGold transform transition-all duration-300 ease-in-out dark:hover:bg-customGold dark:hover:text-gray-900;
+    @apply capitalize bg-customGold text-gray-900 dark:bg-gray-900 dark:text-customGold px-1 md:px-3 py-2 rounded-xl font-bold text-xs md:text-lg tracking-wider hover:cursor-pointer hover:bg-gray-900 hover:text-customGold transform transition-all duration-300 ease-in-out dark:hover:bg-customGold dark:hover:text-gray-900;
 }
 
 .tab-selector-active {

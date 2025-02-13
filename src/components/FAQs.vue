@@ -38,7 +38,7 @@ const faqs = [
 </script>
 
 <template>
-  <div class="w-1/2 mx-auto dark:text-gray-300">
+  <div class="md:w-1/2 mx-auto dark:text-gray-300">
     <div class="mt-10 min-h-10" id="apps"></div>
     <h2 class="header text-center mb-5">Frequently Asked Questions</h2>
     <div v-for="(faq, index) in faqs" :key="index" class="border-b cursor-pointer mb-5">

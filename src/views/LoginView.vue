@@ -55,7 +55,7 @@ export default {
 <template>
   <div class="min-h-[83vh]">
     <form @submit.prevent="login"
-          class="dark:bg-gray-400 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto w-1/3 p-10 my-5">
+          class="dark:bg-gray-400 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10 my-5">
       <h2 class="header text-center mb-5">Log in</h2>
       <label class="muteSubheader mb-1">Email</label>
       <input

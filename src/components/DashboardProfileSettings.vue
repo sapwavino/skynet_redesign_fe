@@ -62,7 +62,6 @@ export default {
     <div class="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
       <h1 class="header uppercase border-b pb-6 text-4xl font-semibold">Settings</h1>
       <div class="grid grid-cols-8 pt-3 sm:grid-cols-10">
-        <!--        NAV DROPDOWN-->
         <div class="relative my-4 w-56 sm:hidden">
           <input class="peer hidden" type="checkbox" name="select-1" id="select-1"/>
           <label for="select-1"

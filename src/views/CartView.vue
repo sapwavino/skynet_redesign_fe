@@ -32,7 +32,9 @@ import {convertPrice, getCurrencySymbol} from "../utils/helper_functions.js";
               class="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-10 w-full max-xl:max-w-3xl max-xl:mx-auto">
             <div class="flex items-center justify-between pb-8 border-b border-gray-300">
               <h2 class="font-bold text-3xl text-black">Cart</h2>
-              <h2 class="font-bold text-xl leading-8 text-gray-600">{{ $store.state.cart.items.length }} {{ $store.state.cart.items.length <= 1 ? 'Item' : 'Items' }}</h2>
+              <h2 class="font-bold text-xl leading-8 text-gray-600">
+                {{ $store.state.cart.items.length }} {{ $store.state.cart.items.length <= 1 ? 'Item' : 'Items' }}
+              </h2>
             </div>
             <div class="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-gray-200">
               <div class="col-span-12 md:col-span-5">
@@ -107,7 +109,6 @@ import {convertPrice, getCurrencySymbol} from "../utils/helper_functions.js";
                 </svg>
 
               </div>
-
 
               <!--              OTHER DETAILS-->
               <div class="grid grid-cols-1 md:grid-cols-4 w-full">

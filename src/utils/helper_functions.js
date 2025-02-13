@@ -10,7 +10,6 @@ export const exchangeRates = {
 export function convertPrice(currency, price) {
     price = parseFloat(price);
     const rate = exchangeRates[currency];
-    console.log(currency, price)
     return (price * rate).toFixed(2);
 }
 
@@ -44,3 +43,23 @@ export function getCurrencySymbol(currencyCode) {
     }
 }
 
+/**
+ * Formats a number (float or integer) into a comma-separated currency string.
+ *
+ * @param {number} amount The number to format.
+ * @returns {string} The formatted currency string.
+ */
+export function formatCurrency(amount) {
+
+    // Convert the number to a string and split it at the decimal point.
+    let [integerPart, decimalPart] = String(amount).split('.');
+
+    // Add commas to the integer part.
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Add the decimal part (if it exists). Pad with zeros if needed.
+    decimalPart = decimalPart ? '.' + decimalPart.padEnd(2, '0') : '.00';
+
+    // Return the combined string.
+    return integerPart + decimalPart;
+}

@@ -175,7 +175,8 @@ export default {
 
             </ul>
 
-            <section class="dashGroupCard w-full md:w-3/4" style="padding: 0">
+            <section
+                class="dashGroupCard w-full md:w-3/4" style="padding: 0" v-if="detailsTab === 'info'">
               <div class="header">{{ getServiceFromStateWithID.name }}</div>
               <p class="muteSmallSubheader">Registered on: {{
                   new Date(getServiceFromStateWithID.created_at)
@@ -223,6 +224,16 @@ export default {
                         @click.prevent="updatingNameservers = false">Submit
                 </button>
               </div>
+            </section>
+
+            <section class="dashGroupCard w-full md:w-3/4" style="padding: 0" v-if="detailsTab === 'security'">
+              <h2 class="font-bold text-black text-lg mb-1">Domain Protection</h2>
+              <p class="muteSubheader">Domain locking is a security feature which prevents your domain from being transferred without first unlocking it. When enabled, the domain cannot be transferred even with the transfer code</p>
+              <button class="btn-base mt-3">🔒 Lock</button>
+              <hr class="my-5"/>
+              <h2 class="font-bold text-black text-lg mb-1">Domain Privacy Settings</h2>
+              <p class="muteSubheader">If you would like to hide the contact information that is shown on WHOIS you can enable privacy protection. Once enabled, no one will know who registered this domain. Once disabled the information in "Update Domain Contact Details" will be visible on WHOIS.</p>
+              <button class="btn-base mt-3">Enable Privacy Protection</button>
             </section>
           </div>
           <div v-else>

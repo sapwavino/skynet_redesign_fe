@@ -9,37 +9,42 @@
         <router-link to="/">
           <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16 "/>
         </router-link>
+        <hr class="my-5 border border-gray-300"/>
         <ul class="flex flex-col gap-y-1 mt-5">
           <li class="">
             <h2 class="muteBoldSubheader">Dashboard</h2>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/dashboard/domains?tab=buy">Domains</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard')">
+            <button class="mobile-nav-link">Overview</button>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/dashboard/hosting?tab=new">Hosting</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/domains?tab=buy')">
+            <button class="mobile-nav-link">Domains</button>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/dashboard/cloud/tab=new">Cloud</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/hosting?tab=new')">
+            <button class="mobile-nav-link">Hosting</button>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/dashboard/email">Email</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/cloud?tab=new')">
+            <button class="mobile-nav-link">Cloud</button>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/dashboard/database">Database</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/email')">
+            <button class="mobile-nav-link">Email</button>
           </li>
-          <hr class="my-5"/>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/database')">
+            <button class="mobile-nav-link">Database</button>
+          </li>
+          <hr class="my-5 border border-gray-300"/>
           <li class="">
             <h2 class="muteBoldSubheader">Account</h2>
           </li>
-          <li class="mobile-nav-item">
-            <router-link to="/profile-settings">Settings</router-link>
+          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+            <button class="mobile-nav-link">Settings</button>
           </li>
           <li class="mobile-nav-item">
-            <router-link to="/profile">Log Out</router-link>
+            <button class="mobile-nav-link">Log Out</button>
           </li>
         </ul>
-        <button @click="$store.commit('SET_SHOW_MOBILE_NAV', false)" class="absolute top-10 right-5 text-3xl">✖️</button>
+        <button @click="$store.commit('SET_SHOW_MOBILE_NAV', false)" class="absolute top-10 right-5 text-3xl">✖️
+        </button>
       </div>
     </transition>
   </div>
@@ -47,9 +52,16 @@
 
 <script setup>
 import {useStore} from 'vuex';
+import {useRouter} from 'vue-router'; // Import useRouter
 import {computed} from 'vue';
 
 const store = useStore();
+const router = useRouter(); // Get the router instance
+
+const navigateTo = (route) => {
+  store.commit('SET_SHOW_MOBILE_NAV', false); // Close the drawer
+  router.push(route); // Navigate to the route
+};
 
 // Example of how to access the showMobileNav state (if needed in this component)
 const showMobileNav = computed(() => store.state.showMobileNav);
@@ -82,8 +94,6 @@ const closeNav = () => store.commit('SET_SHOW_MOBILE_NAV', false);
   overflow-y: auto; /* Allow scrolling within the drawer */
   z-index: 1001; /* Above the overlay */
 }
-
-
 
 
 .mobile-nav-close {

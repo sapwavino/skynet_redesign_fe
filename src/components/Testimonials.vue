@@ -11,7 +11,7 @@ export default {
 <template>
   <div>
     <div class="mt-10 min-h-10" id="testimonials"></div>
-    <h2 class="header text-center">Trusted by 1000+ website owners worldwide</h2>
+    <h2 class="header text-center">Trusted by 1500+ website owners worldwide</h2>
     <div class="mx-auto">
       <Vue3Marquee pause-on-hover>
         <TestimonialsCard role="App Developer" name="Garid Hamid"
@@ -23,7 +23,7 @@ export default {
         <TestimonialsCard role="AI Engineer" name="Jamila Kabir"
                           quote="Incredible performance.Our startup app is going great"
                           img="https://www.shutterstock.com/image-photo/studio-shot-photo-black-woman-260nw-2559358989.jpg"/>
-        <TestimonialsCard role="Web Developer" name="Vino Samari" quote="Great price point for my hosting needs"
+        <TestimonialsCard role="Web Developer" name="Kwesi Boateng" quote="Great price point for my hosting needs"
                           img="https://static.vecteezy.com/system/resources/thumbnails/043/171/636/small/ai-generated-man-with-glasses-smiling-at-laptop-free-photo.jpeg"/>
       </Vue3Marquee>
     </div>

@@ -66,14 +66,14 @@
             <button class="mobile-nav-link">Notifications</button>
           </li>
           <li
-              :class="{'mobile-nav-item' : $route.path === '/dashboard/profile-settings', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/profile-settings'}" @click="navigateTo('/dashboard/profile-settings')">
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/wallet', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/wallet'}" @click="navigateTo('/dashboard/wallet')">
             <button class="mobile-nav-link">Wallet</button>
           </li>
           <li
-              :class="{'mobile-nav-item' : $route.path === '/dashboard', 'mobile-nav-item-inactive' : $route.path !== '/dashboard'}" @click="navigateTo('/dashboard/profile-settings')">
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/support', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/support'}" @click="navigateTo('/dashboard/support')">
             <button class="mobile-nav-link">Support</button>
           </li>
-          <li :class="{'mobile-nav-item' : $route.path === '/dashboard', 'mobile-nav-item-inactive' : $route.path !== '/dashboard'}" @click="navigateTo('/dashboard/profile-settings')">
+          <li :class="{'mobile-nav-item' : $route.path === '/dashboard/profile-settings', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/profile-settings'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Settings</button>
           </li>
           <li class="mobile-nav-item col-span-2">

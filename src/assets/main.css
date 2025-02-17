@@ -161,3 +161,7 @@ button{
 .mobile-nav-item {
     @apply rounded-2xl shadow-2xl p-3 m-1 font-bold border-4 border-customGold
 }
+
+.mobile-nav-item-inactive {
+    @apply rounded-2xl shadow-2xl p-3 m-1 font-bold border-4 border-gray-400
+}

@@ -16,50 +16,72 @@
           <li class="col-span-2">
             <h2 class="muteBoldSubheader ">Dashboard</h2>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard')">
-            <button class="mobile-nav-link">Overview</button>
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard', 'mobile-nav-item-inactive' : $route.path !== '/dashboard'}" @click="navigateTo('/dashboard')">
+            <button class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class=""
+                   :class="{'dark:fill-gray-800': $route.path === '/dashboard', 'fill-gray-400 dark:fill-customGold': $route.path !== '/dashboard'}"
+                   viewBox="5.0 -20.0 110.0 135.0" height="1.5rem">
+                <path
+                    d="m16.461 56.406c-3.1602 0-3.1602-4.8008 0-4.8008h25.32c3.1602 0 3.1602 4.8008 0 4.8008zm0-30.449c-3.1602 0-3.1602-4.8008 0-4.8008h52.199c3.1602 0 3.1602 4.8008 0 4.8008zm64.68 15.277h-16.562v10.32h16.559zm-18.961-4.8008h21.359c1.3242 0 2.3984 1.0742 2.3984 2.3984v15.121c0 1.3242-1.0742 2.3984-2.3984 2.3984h-21.359c-1.3242 0-2.3984-1.0742-2.3984-2.3984v-15.121c0-1.3242 1.0742-2.3984 2.3984-2.3984zm29.16-29.035h-82.68c-2.3594 0-4.2617 1.9336-4.2617 4.2617v54.242c0 1.168 0.48047 2.2344 1.2539 3.0078l-0.003906 0.003906c0.77344 0.76953 1.8398 1.2461 3.0117 1.2461h82.68c1.168 0 2.2344-0.48047 3.0078-1.2539l0.003906 0.003906c0.76953-0.77344 1.2461-1.8398 1.2461-3.0117l0.003906-54.238c0-2.3398-1.9219-4.2617-4.2617-4.2617zm-35.977 67.562h-10.727c-1.5117 8.7812-5.4414 13.781-9.5547 17.641h29.836c-4.1133-3.8594-8.043-8.8594-9.5547-17.641zm-38.902-33.781c-3.1602 0-3.1602-4.8008 0-4.8008h25.32c3.1602 0 3.1602 4.8008 0 4.8008z"
+                    fill-rule="evenodd"/>
+              </svg>
+              Overview
+            </button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/domains?tab=buy')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/domains', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/domains'}" @click="navigateTo('/dashboard/domains?tab=buy')">
             <button class="mobile-nav-link">Domains</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/hosting?tab=new')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/hosting', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/hosting'}" @click="navigateTo('/dashboard/hosting?tab=new')">
             <button class="mobile-nav-link">Hosting</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/cloud?tab=new')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/cloud', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/cloud'}" @click="navigateTo('/dashboard/cloud?tab=new')">
             <button class="mobile-nav-link">Cloud</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/email')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/email', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/email'}" @click="navigateTo('/dashboard/email')">
             <button class="mobile-nav-link">Email</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/database')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/database', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/database'}" @click="navigateTo('/dashboard/database')">
             <button class="mobile-nav-link">Database</button>
           </li>
           <hr class="mt-5 border border-gray-300 col-span-2"/>
           <li class="col-span-2">
             <h2 class="muteBoldSubheader">Account</h2>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/orders')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-orders', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-orders'}" @click="navigateTo('/dashboard/orders')">
             <button class="mobile-nav-link">Orders</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-orders', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-orders'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Invoices</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/notifications', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/notifications'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Notifications</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/profile-settings', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/profile-settings'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Wallet</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+          <li
+              :class="{'mobile-nav-item' : $route.path === '/dashboard', 'mobile-nav-item-inactive' : $route.path !== '/dashboard'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Support</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/dashboard/profile-settings')">
+          <li :class="{'mobile-nav-item' : $route.path === '/dashboard', 'mobile-nav-item-inactive' : $route.path !== '/dashboard'}" @click="navigateTo('/dashboard/profile-settings')">
             <button class="mobile-nav-link">Settings</button>
           </li>
           <li class="mobile-nav-item col-span-2">
             <button class="mobile-nav-link">Log Out</button>
           </li>
-          <li class="col-span-2">
+
+          <!--          USER PROFILE-->
+          <li class="col-span-2 mt-5">
             <div class="flex items-center">
               <img
                   src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4="

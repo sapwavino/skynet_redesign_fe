@@ -47,6 +47,11 @@ export default {
     if (!isLoggedIn) {
       window.location.href = '/auth/login';
     }
+  },
+  computed:{
+    unreadNotifications(){
+      return this.$store.state.user.notifications.filter((ones) => (ones.read === false)).length
+    }
   }
 }
 </script>
@@ -232,7 +237,7 @@ export default {
             to="/dashboard/notifications"
             exact-active-class="dashLinkActive">
 
-          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm animate-pulse">1
+          <div class="absolute right-[5%] bg-green-500 text-gray-50 rounded-full py-1 px-3 text-sm" v-show="unreadNotifications > 0">{{ unreadNotifications }}
           </div>
 
           <svg

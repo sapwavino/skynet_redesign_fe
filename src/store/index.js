@@ -49,14 +49,14 @@ const store = createStore({
                 domains: [
                     {
                         id: '123',
-                        name: "anewdomain.com",
+                        name: "anewdomain.com.ng",
                         price: 90,
                         description: "Domain registration",
                         active: true,
                         billing_cycle: "annually",
                         created_at: new Date('2022-01-01'),
                         activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
+                        renewal_date: new Date('2023-01-01'),
                     },
                     {
                         id: '456',

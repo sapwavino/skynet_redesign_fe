@@ -1,6 +1,5 @@
 <script>
 import DashboardHostingStepper from "@/components/DashboardHostingStepper.vue";
-
 export default {
   name: "DashboardHosting",
   components: {DashboardHostingStepper},
@@ -43,7 +42,6 @@ export default {
 </script>
 
 <template>
-
   <div class=" mx-auto">
     <h1 class="header uppercase text-2xl font-bold sm:text-3xl">Hosting</h1>
     <h1 class="muteSubheader capitalize mb-5 text-base sm:text-lg">All your hosting packages in one place</h1>

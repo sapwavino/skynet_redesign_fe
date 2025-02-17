@@ -10,7 +10,9 @@
           <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16 "/>
         </router-link>
         <hr class="my-5 border border-gray-300"/>
-        <ul class="flex flex-col gap-y-1 mt-5">
+
+        <!--        LOGGED IN NAV-->
+        <ul class="flex flex-col gap-y-1 mt-5" v-if="$store.state.isLoggedIn">
           <li class="">
             <h2 class="muteBoldSubheader">Dashboard</h2>
           </li>
@@ -43,6 +45,13 @@
             <button class="mobile-nav-link">Log Out</button>
           </li>
         </ul>
+
+        <ul class="flex flex-col gap-y-1 mt-5" v-else>
+          <li class="mobile-nav-item" @click="navigateTo('/')">
+            <button class="mobile-nav-link">Home</button>
+          </li>
+        </ul>
+
         <button @click="$store.commit('SET_SHOW_MOBILE_NAV', false)" class="absolute top-10 right-5 text-3xl">✖️
         </button>
       </div>

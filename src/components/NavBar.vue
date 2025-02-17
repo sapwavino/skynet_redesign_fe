@@ -82,11 +82,21 @@ export default {
       <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16 mx-auto"/>
     </router-link>
 
+    <div class="flex gap-x-4 items-center">
+      <router-link to="/cart"
+                   class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
+        🛒
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+          {{ $store.state.cart.items.length }}
+        </div>
+      </router-link>
     <svg
         height="2rem"
         class="fill-customGold"
         @click.prevent="$store.commit('SET_SHOW_MOBILE_NAV', true)"
         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+    </div>
+
   </nav>
 </template>
 

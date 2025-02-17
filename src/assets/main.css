@@ -24,6 +24,9 @@ html {
     @apply dark:bg-gray-800
 }
 
+button{
+    @apply cursor-pointer;
+}
 @media (min-width: 1024px) {
     #dash {
         display: grid;
@@ -73,7 +76,7 @@ html {
 }
 
 .announcement-banner {
-    @apply hidden md:flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-customGold;
+    @apply flex md:flex md:flex-row flex-col gap-y-2 md:gap-y-0 text-center justify-center items-center text-xs gap-x-1 py-1.5 px-5 md:px-0 bg-customGold;
 }
 
 .resultListItem {
@@ -153,4 +156,8 @@ html {
 
 .hostingConfigureAppCard {
     @apply flex flex-col items-center shadow rounded-3xl p-5 cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl dark:hover:shadow-2xl dark:hover:scale-110
+}
+
+.mobile-nav-item {
+    @apply rounded-2xl shadow-2xl p-3 m-1 font-bold border-4 border-customGold
 }

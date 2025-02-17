@@ -2,10 +2,11 @@
 import NavBar from "@/components/NavBar.vue";
 import MyFooter from "@/components/MyFooter.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
+import MobileNavDrawer from "@/components/MobileNavDrawer.vue";
 
 export default {
   name: "DefaultLayout",
-  components: {AnnouncementBanner, MyFooter, NavBar}
+  components: {MobileNavDrawer, AnnouncementBanner, MyFooter, NavBar}
 }
 </script>
 
@@ -13,6 +14,7 @@ export default {
   <div class="relative">
     <announcement-banner></announcement-banner>
     <NavBar :dashboard-nav="false"/>
+    <MobileNavDrawer/>
     <main>
       <slot/>
     </main>

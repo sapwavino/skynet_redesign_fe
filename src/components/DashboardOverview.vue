@@ -8,6 +8,9 @@ export default {
     cloud: function () {
       return this.$store.state.user.services.cloud
     },
+    domains: function () {
+      return this.$store.state.user.services.domains
+    },
   }
 }
 </script>
@@ -24,7 +27,7 @@ export default {
         <h1 class="muteBoldSubheader uppercase text-center">Domains</h1>
         <div class="flex flex-wrap justify-center gap-4 mt-5">
           <div class="flex flex-col items-center border-4 border-green-600 p-3 rounded-3xl w-24">
-            <h2 class="text-green-600 font-bold text-2xl">0</h2>
+            <h2 class="text-green-600 font-bold text-2xl">{{domains.filter((one) => one.active === true).length}}</h2>
             <p class="text-xs text-green-600 font-bold tracking-wider capitalize">active</p>
           </div>
           <div class="flex flex-col items-center border-4 border-amber-500 p-3 rounded-3xl w-24">
@@ -32,7 +35,7 @@ export default {
             <p class="text-xs text-amber-500 font-bold tracking-wider capitalize">expiring</p>
           </div>
           <div class="flex flex-col items-center border-4 border-red-700 p-3 rounded-3xl w-24">
-            <h2 class="text-red-700 font-bold text-2xl">0</h2>
+            <h2 class="text-red-700 font-bold text-2xl">{{domains.filter((one) => one.active === false).length}}</h2>
             <p class="text-xs text-red-700 font-bold tracking-wider capitalize">expired</p>
           </div>
         </div>

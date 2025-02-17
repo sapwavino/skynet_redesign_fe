@@ -237,12 +237,12 @@ export default {
 
     <!--    TLD PRICES -->
     <section class="grid grid-cols-3 md:grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
-      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20 "
+      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
            v-for="(tld, idx) in tldPrices"
            :key="idx">
         <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>
         <hr class="border-gray-300 border w-1/2"/>
-        <span class="text-sm text-customGold font-bold tracking-wider">
+        <span class="md:text-base text-sm text-yellow-500 font-bold tracking-wide">
           <span v-if="selectedCurrency === 'NGN'">₦</span>
           <span v-if="selectedCurrency === 'KSH'">KSh</span>
           <span v-if="selectedCurrency === 'GHS'">₵</span>

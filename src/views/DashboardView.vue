@@ -13,11 +13,11 @@ export default {
   data() {
     return {
       countries: [
-        {name: "GHS", flag: "🇬🇭"},
-        {name: "KSH", flag: "🇰🇪"},
-        {name: "NGN", flag: "🇳🇬"},
-        {name: "GBP", flag: "🇬🇧"},
-        {name: "USD", flag: "🇺🇸"}
+        {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
+        {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
+        {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
+        {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
+        {name: "USD", flag: "🇺🇸", text: "United States Dollar"}
       ],
       selectedCurrency: 'NGN',
       getLastLogin
@@ -27,11 +27,15 @@ export default {
     changePreferredCurrency() {
       this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);
       window.localStorage.setItem('preferredCurrency', JSON.stringify(this.selectedCurrency))
+      let selectedCountryText = this.countries.find((one) => {
+        return one.name === this.selectedCurrency
+      }).text
       createToast(
-          "Your preferred currency is now " + this.selectedCurrency,
+          "Your preferred currency is now " + selectedCountryText + ` (${this.selectedCurrency})`,
           {
             type: 'info',
             duration: 500,
+            position: 'bottom-right'
           }
       )
     }

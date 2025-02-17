@@ -69,6 +69,17 @@ const store = createStore({
                         activated_at: new Date('2022-01-01'),
                         renewal_date: new Date('2022-02-01'),
                     },
+                    {
+                        id: '789',
+                        name: "dominatetheweb.net",
+                        price: 90,
+                        description: "Domain registration",
+                        active: true,
+                        billing_cycle: "annually",
+                        created_at: new Date('2022-01-01'),
+                        activated_at: new Date('2022-01-01'),
+                        renewal_date: new Date('2023-01-01'),
+                    },
 
                 ],
                 hosting: [
@@ -216,6 +227,7 @@ const store = createStore({
             }
         },
         preferredCurrency: "NGN",
+        showMobileNav: false
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -244,6 +256,9 @@ const store = createStore({
             if (notification) {
                 notification.read = true;
             }
+        },
+        SET_SHOW_MOBILE_NAV(state, value) {
+            state.showMobileNav = value;
         }
     },
     actions: {
@@ -280,6 +295,9 @@ const store = createStore({
         },
         markNotificationAsRead({commit}, id){
             commit("MARK_NOTIFICATION_READ", id)
+        },
+        setShowMobileNav({commit}, value) {
+            commit("SET_SHOW_MOBILE_NAV", value);
         }
     },
     getters: {

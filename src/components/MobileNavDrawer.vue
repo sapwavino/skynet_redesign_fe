@@ -181,8 +181,8 @@
               </svg>
               <span class="text-sm">Notifications
                 <div
-                  class="absolute -right-4 bg-green-500 text-gray-50 rounded-full py-1 px-2 text-xs"
-                  v-show="unreadNotifications > 0">{{ unreadNotifications }}
+                    class="absolute -right-4 bg-green-500 text-gray-50 rounded-full py-1 px-2 text-xs"
+                    v-show="unreadNotifications > 0">{{ unreadNotifications }}
               </div>
               </span>
 
@@ -269,9 +269,16 @@
           </li>
         </ul>
 
+        <!--        NOT LOGGED IN NAV-->
         <ul class="flex flex-col gap-y-1 mt-5" v-else>
           <li class="mobile-nav-item" @click="navigateTo('/')">
             <button class="mobile-nav-link">Home</button>
+          </li>
+          <li class="mobile-nav-item" @click="navigateTo('/auth/login')">
+            <button class="mobile-nav-link">Login</button>
+          </li>
+          <li class="mobile-nav-item" @click="navigateTo('/auth/signup')">
+            <button class="mobile-nav-link">Signup</button>
           </li>
         </ul>
 

@@ -67,9 +67,9 @@ export default {
 
   <!--  STEP 1-->
   <transition name="fade">
-    <section v-if="currentStep === 1" class="shadow rounded-md p-5">
+    <section v-if="currentStep === 1" class="shadow rounded-md p-5 flex flex-col md:block">
       <p class="muteSmallSubheader text-center">(You can change anytime)</p>
-      <div class="grid grid-cols-3 gap-5 w-3/4 mx-auto p-5">
+      <div class="grid md:grid-cols-3 gap-5 w-3/4 mx-auto p-5">
         <section
             class="hostingConfigureAppCard" @click="appType = 'php'"
             :class="{'border-2 dark:border-customGold' : appType === 'php'}">
@@ -259,7 +259,7 @@ export default {
   <!--  STEP 2-->
   <transition name="fade">
     <section v-if="currentStep === 2">
-      <div class="flex items-center gap-5 w-1/2 mx-auto mb-10">
+      <div class="grid md:grid-cols-2 md:w-1/2 mx-auto mb-10">
         <section
             class="hostingConfigureAppCard" @click="preferredPanel = 'cpanel'"
             :class="{'border-2 dark:border-customGold' : preferredPanel === 'cpanel'}">

@@ -54,11 +54,11 @@
             <h2 class="muteBoldSubheader">Account</h2>
           </li>
           <li
-              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-orders', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-orders'}" @click="navigateTo('/dashboard/orders')">
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-orders', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-orders'}" @click="navigateTo('/dashboard/my-orders')">
             <button class="mobile-nav-link">Orders</button>
           </li>
           <li
-              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-orders', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-orders'}" @click="navigateTo('/dashboard/profile-settings')">
+              :class="{'mobile-nav-item' : $route.path === '/dashboard/my-invoices', 'mobile-nav-item-inactive' : $route.path !== '/dashboard/my-invoices'}" @click="navigateTo('/dashboard/my-invoices')">
             <button class="mobile-nav-link">Invoices</button>
           </li>
           <li

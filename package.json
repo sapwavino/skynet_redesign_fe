@@ -9,13 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@lottiefiles/dotlottie-vue": "^0.5.4",
     "@tailwindcss/vite": "^4.0.0",
     "@vuepic/vue-datepicker": "^11.0.1",
     "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
-    "material-icons": "^1.13.13",
     "mosha-vue-toastify": "^1.0.23",
     "tailwindcss": "^4.0.0",
     "uuid": "^11.0.5",

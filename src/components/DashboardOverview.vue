@@ -20,6 +20,16 @@ export default {
     expiredDomains: function () {
       return this.$store.state.user.services.domains.filter((one) => one.active === false)
     }
+  },
+  data(){
+    return{
+      showBalance: false
+    }
+  },
+  methods: {
+    toggleBalance(){
+      this.showBalance =!this.showBalance
+    }
   }
 }
 </script>
@@ -282,13 +292,15 @@ export default {
         <h1 class="muteBoldSubheader uppercase text-center">Wallet</h1>
         <div class="flex flex-col items-center gap-4 mt-3">
           <div class="flex flex-col items-center bg-gray-300 p-5 rounded-3xl w-full md:w-1/2">
-            <h2 class="text-gray-700 font-bold text-6xl">0.00</h2>
-            <p class="text-xs text-gray-500 font-bold tracking-wider capitalize">Balance</p>
+            <h2 class="text-gray-700 font-bold text-6xl">{{ showBalance ? '0.00' : '**.**' }}</h2>
+            <p class="text-sm text-gray-500 font-bold tracking-wider capitalize">Balance</p>
           </div>
           <div class="w-full flex flex-col gap-2">
-            <button class="dash-card-btn-base w-full">Hide Balance</button>
+            <button class="dash-card-btn-base w-full" @click.prevent="toggleBalance">{{ showBalance ? 'Hide Balance' : 'Show Balance' }}</button>
             <button class="dash-card-btn-base w-full">Top Up</button>
-            <button class="dash-card-btn-base w-full">Open Wallet</button>
+            <router-link to="/dashboard/wallet">
+              <button class="dash-card-btn-base w-full">Open Wallet</button>
+            </router-link>
           </div>
         </div>
       </section>

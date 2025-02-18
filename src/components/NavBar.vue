@@ -82,7 +82,8 @@ export default {
       <img src="../assets/img/Skynet%20Web%20Services%20Logo.png" alt="Logo" class="h-16 mx-auto"/>
     </router-link>
 
-    <div class="flex gap-x-4 items-center">
+    <div class="flex gap-x-3 items-center">
+      <ThemeDropdown/>
       <router-link to="/cart"
                    class="text-2xl p-3 relative hover:scale-125 transform transition-all duration-300 ease-in-out">
         🛒

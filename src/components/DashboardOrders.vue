@@ -90,7 +90,7 @@ export default {
     <section v-if="tab === 'domain'" class="flex">
       <div
           v-if="$store.state.user.services.domains.length > 0"
-          class="grid grid-cols-4 w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
+          class="grid md:grid-cols-4 md:w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
         <router-link :to="`/dashboard/domains?tab=manage&id=${service.id}`"
                      v-for="service in $store.state.user.services.domains"
                      :key="service.id">
@@ -120,8 +120,8 @@ export default {
     <section v-if="tab === 'cloud'" class="flex">
       <div
           v-if="$store.state.user.services.domains.length > 0"
-          class="grid grid-cols-4 w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
-        <router-link :to="`/dashboard/domains?tab=manage&id=${service.id}`"
+          class="grid md:grid-cols-4 md:w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
+        <router-link :to="`/dashboard/cloud?tab=manage&id=${service.id}`"
                      v-for="service in $store.state.user.services.cloud"
                      :key="service.id">
           <li
@@ -151,7 +151,7 @@ export default {
     <section v-if="tab === 'hosting'" class="flex">
       <div
           v-if="$store.state.user.services.hosting.length > 0"
-          class="grid grid-cols-4 w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
+          class="grid md:grid-cols-4 w-full md:w-3/4 pb-5 mb-5 sm:mb-0 gap-3">
         <router-link :to="`/dashboard/hosting?tab=manage&id=${service.id}`"
                      v-for="service in $store.state.user.services.hosting"
                      :key="service.id">

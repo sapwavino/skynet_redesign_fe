@@ -181,7 +181,7 @@
               </svg>
               <span class="text-sm">Notifications
                 <div
-                    class="absolute -right-4 bg-green-500 text-gray-50 rounded-full py-1 px-2 text-xs"
+                    class="absolute -top-6 -right-5 bg-green-500 text-gray-50 rounded-full py-1 px-2 text-xs"
                     v-show="unreadNotifications > 0">{{ unreadNotifications }}
               </div>
               </span>
@@ -242,9 +242,9 @@
             <div class="flex items-center">
               <img
                   src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4="
-                  alt="userImg" class="rounded-full h-14 w-14 object-cover border-4 border-customGold"/>
+                  alt="userImg" class="rounded-full h-16 w-16 object-cover border-4 border-customGold"/>
               <div class="flex flex-col px-5">
-                <h2 class="text-2xl font-bold dark:text-gray-200">John Doe</h2>
+                <h2 class="text-2xl font-bold dark:text-gray-500">John Doe</h2>
                 <h2 class="muteSubheader">john@doe.com</h2>
                 <h2 class="muteSmallSubheader" style="font-size: 0.6rem; font-weight: bolder !important;">Last login:
                   {{ getLastLogin() }}</h2>
@@ -253,7 +253,7 @@
             <div class="flex mt-5 gap-x-2">
               <div class="block mx-auto">
                 <select id="country"
-                        class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-1 px-3 focus:outline-none font-bold cursor-pointer text-center text-sm"
+                        class="h-12 border-2 border-customGold dark:text-gray-500 rounded-2xl block py-1 px-3 focus:outline-none font-bold cursor-pointer text-center text-sm"
                         v-model="selectedCurrency"
                         @change="changePreferredCurrency"
                         @click.stop
@@ -263,7 +263,7 @@
                   </option>
                 </select>
               </div>
-              <button class="flat-border-btn-base-small rounded-2xl">Balance: <span
+              <button class="border-2 border-customGold dark:text-gray-500 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center rounded-2xl dark:text-gray-500">Balance: <span
                   class="text-base">0.00</span></button>
             </div>
           </li>

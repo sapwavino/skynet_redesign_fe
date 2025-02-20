@@ -251,34 +251,32 @@
               </div>
             </div>
             <div class="flex mt-5 gap-x-2">
-              <div class="block mx-auto">
-                <select id="country"
-                        class="h-12 border-2 border-customGold dark:text-gray-500 rounded-2xl block py-1 px-3 focus:outline-none font-bold cursor-pointer text-center text-sm"
-                        v-model="selectedCurrency"
-                        @change="changePreferredCurrency"
-                        @click.stop
-                >
-                  <option v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
-                    {{ country.name }}
-                  </option>
-                </select>
-              </div>
-              <button class="border-2 border-customGold dark:text-gray-500 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center rounded-2xl dark:text-gray-500">Balance: <span
+              <CurrencyDropdown :show-text="true"/>
+              <button
+                  class="border-2 border-customGold dark:text-gray-500 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center rounded-2xl dark:text-gray-500">
+                Balance: <span
                   class="text-base">0.00</span></button>
             </div>
           </li>
         </ul>
 
         <!--        NOT LOGGED IN NAV-->
-        <ul class="flex flex-col gap-y-1 mt-5" v-else>
+        <ul class="flex flex-col gap-y-1 mt-5 text-center" v-else>
           <li class="mobile-nav-item" @click="navigateTo('/')">
             <button class="mobile-nav-link">Home</button>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/auth/login')">
-            <button class="mobile-nav-link">Login</button>
+          <li class="flex">
+            <li class="mobile-nav-item w-1/2" @click="navigateTo('/auth/login')">
+              <button class="mobile-nav-link">Login</button>
+            </li>
+            <li class="mobile-nav-item w-1/2" @click="navigateTo('/auth/signup')">
+              <button class="mobile-nav-link">Signup</button>
+            </li>
           </li>
-          <li class="mobile-nav-item" @click="navigateTo('/auth/signup')">
-            <button class="mobile-nav-link">Signup</button>
+          <li>
+            <div class="flex mt-5 gap-x-2">
+              <CurrencyDropdown :show-text="true"/>
+            </div>
           </li>
         </ul>
 
@@ -293,6 +291,7 @@
 import {useStore} from 'vuex';
 import {useRouter} from 'vue-router'; // Import useRouter
 import {computed, ref} from 'vue';
+import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 
 const store = useStore();
 const router = useRouter(); // Get the router instance
@@ -321,7 +320,8 @@ export default {
         {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
         {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
         {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
-        {name: "USD", flag: "🇺🇸", text: "United States Dollar"}
+        {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
+        {name: "EUR", flag: "🇪🇺", text: "European Euro"},
       ],
       selectedCurrency: 'NGN',
       getLastLogin

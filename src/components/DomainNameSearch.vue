@@ -3,11 +3,12 @@
 import {createToast} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import Recents from "@/components/Recents.vue";
-import {DomainCartItem} from '@/utils/helper_classes.js'
+import {convertPrice} from "../utils/helper_functions.js";
+import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 
 export default {
   name: "DomainNameSearch",
-  components: {Recents},
+  components: {CurrencyDropdown, Recents},
   setup() {
     return {}
   },
@@ -37,7 +38,6 @@ export default {
         'GBP',
         'EUR'
       ],
-      selectedCurrency: 'NGN',
       loading: false,
       searchTerm: '',
       searchResults: [],
@@ -51,6 +51,14 @@ export default {
       },
       recents: [],
       showMore: false,
+      countries: [
+        {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
+        {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
+        {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
+        {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
+        {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
+        {name: "EUR", flag: "🇪🇺", text: "European Euro"},
+      ],
 
     }
   },
@@ -76,6 +84,7 @@ export default {
     },
   },
   methods: {
+    convertPrice,
     fetchSearchResults() {
       const removeTLD = (str) => str.replace(/\..*$/, '');
       const removeWhitespace = (str) => str.replace(/\s+/g, '');
@@ -174,8 +183,28 @@ export default {
     setRecent(domain) {
       this.searchTerm = domain;
     },
-    addDomainToCart() {
-      console.log(new DomainCartItem("name", "100",))
+    buyDomain(domain, price) {
+      // console.log(new DomainCartItem("name", "100",))
+      console.log(
+          domain,
+          convertPrice(this.$store.state.preferredCurrency, price),
+          this.$store.state.preferredCurrency
+      )
+    },
+    changePreferredCurrency() {
+      this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);
+      window.localStorage.setItem('preferredCurrency', JSON.stringify(this.selectedCurrency))
+      let selectedCountryText = this.countries.find((one) => {
+        return one.name === this.selectedCurrency
+      }).text
+      createToast(
+          "Your preferred currency is now " + selectedCountryText + ` (${this.selectedCurrency})`,
+          {
+            type: 'info',
+            duration: 500,
+            position: 'bottom-right'
+          }
+      )
     }
   },
   mounted() {
@@ -194,6 +223,14 @@ export default {
         return this.tldPrices
       }
       return this.tldPricesShort
+    },
+    selectedCurrency: {
+      get() {
+        return this.$store.state.preferredCurrency
+      },
+      set(value) {
+        this.$store.dispatch('updatePreferredCurrency', value)
+      }
     }
   }
 }
@@ -223,16 +260,7 @@ export default {
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
-      <select id="currency"
-              class="h-12 border-2 border-gray-400 dark:text-gray-300 text-base rounded-lg block w-3/4 mx-auto py-2.5 px-4 focus:outline-none font-bold cursor-pointer"
-              v-model="selectedCurrency">
-        <option value="NGN">Nigerian Naira (NGN) - ₦</option>
-        <option value="KSH">Kenyan Shilling (KSh) - KSh</option>
-        <option value="GHS">Ghanaian Cedis (GHS) - ₵</option>
-        <option value="USD">United States Dollar (USD) - $</option>
-        <option value="GBP">Great Britain Pound (GBP) - £</option>
-        <option value="EUR">European Euro (EUR) - €</option>
-      </select>
+      <CurrencyDropdown :show-text="true"/>
     </div>
 
     <!--    TLD PRICES -->
@@ -293,12 +321,16 @@ export default {
                     <span v-else-if="selectedCurrency === 'KSH'">KSh</span>
                     <span v-else-if="selectedCurrency === 'GHS'">₵</span>
                     <span v-else-if="selectedCurrency === 'GBP'">£</span>
-                    <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
+                    <span v-else-if="selectedCurrency === 'EUR'">€</span>{{
+                      formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
+                    }}
                   </span>
               </h1>
               <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
             </div>
-            <button class="resultListAddBtn">🛒 Buy</button>
+            <button class="resultListAddBtn"
+                    @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)">🛒 Buy
+            </button>
           </div>
         </li>
         <li class="list-none resultListItem flex items-center justify-center">

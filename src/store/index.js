@@ -1,7 +1,8 @@
 import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
-import {v4 as uuidv4} from "uuid";
+const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
+
 // Create a new store instance or import from module.
 const store = createStore({
 
@@ -226,7 +227,7 @@ const store = createStore({
                 tickets: [],
             }
         },
-        preferredCurrency: "NGN",
+        preferredCurrency: preferredCurrencyFromStorage || "NGN",
         showMobileNav: false
     },
     mutations: {
@@ -235,6 +236,7 @@ const store = createStore({
         },
         UPDATE_PREFERRED_CURRENCY(state, currency) {
             state.preferredCurrency = currency;
+            localStorage.setItem('preferredCurrency', JSON.stringify(currency));
         },
         ADD_ITEM_TO_CART(state, item) {
             state.cart.items.push(item);

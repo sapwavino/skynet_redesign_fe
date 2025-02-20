@@ -1,15 +1,56 @@
 <script>
 import ThemeDropdown from "@/components/ThemeDropdown.vue";
+import {createToast} from "mosha-vue-toastify";
+import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 
 export default {
   name: "NavBar",
-  components: {ThemeDropdown},
+  components: {CurrencyDropdown, ThemeDropdown},
   props: {
     dashboardNav: {
       type: Boolean,
       required: true
     }
-  }
+  },
+  data() {
+    return {
+      countries: [
+        {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
+        {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
+        {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
+        {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
+        {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
+        {name: "EUR", flag: "🇪🇺", text: "European Euro"},
+      ],
+    };
+  },
+  methods: {
+    changePreferredCurrency() {
+      console.log("changePreferredCurrency", this.selectedCurrency)
+      this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);
+      window.localStorage.setItem('preferredCurrency', JSON.stringify(this.selectedCurrency))
+      let selectedCountryText = this.countries.find((one) => {
+        return one.name === this.selectedCurrency
+      }).text
+      createToast(
+          "Your preferred currency is now " + selectedCountryText + ` (${this.selectedCurrency})`,
+          {
+            type: 'info',
+            duration: 500,
+            position: 'bottom-right'
+          }
+      )
+    }
+  },
+  computed: {
+    selectedCurrency() {
+      return this.$store.state.preferredCurrency
+    }
+  },
+  mounted() {
+    const preferredCurrency = JSON.parse(window.localStorage.getItem('preferredCurrency'))
+    this.selectedCurrency = preferredCurrency || this.$store.state.preferredCurrency;
+  },
 }
 </script>
 
@@ -37,6 +78,7 @@ export default {
           {{ $store.state.cart.items.length }}
         </div>
       </router-link>
+      <CurrencyDropdown :show-text="false"/>
       <router-link to="/auth/login" class="border-btn-base" style="padding: 10px 15px">
         Log In
       </router-link>
@@ -91,11 +133,14 @@ export default {
           {{ $store.state.cart.items.length }}
         </div>
       </router-link>
-    <svg
-        height="2rem"
-        class="fill-customGold"
-        @click.prevent="$store.commit('SET_SHOW_MOBILE_NAV', true)"
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+      <svg
+          height="2rem"
+          class="fill-customGold"
+          @click.prevent="$store.commit('SET_SHOW_MOBILE_NAV', true)"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path
+            d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/>
+      </svg>
     </div>
 
   </nav>

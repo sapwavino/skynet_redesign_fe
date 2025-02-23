@@ -56,12 +56,12 @@ export default {
 <template>
   <div class="block mx-auto">
     <select id="country"
-            class="border-2 border-customGold dark:text-gray-500 rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center"
+            class="border-2 border-customGold dark:text-customGold rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center "
             v-model="selectedCurrency"
             @change="changePreferredCurrency"
             @click.stop
     >
-      <option v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
+      <option  v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
         {{ country.name }}<span v-if="showText"> - {{country.text}}</span>
       </option>
     </select>

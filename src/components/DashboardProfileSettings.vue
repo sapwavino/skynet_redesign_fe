@@ -165,10 +165,6 @@ export default {
                   <label class=""> Birth Date </label>
                   <VueDatePicker v-model="date"></VueDatePicker>
                 </div>
-                <div class="w-1/2">
-                  <label class=""> Password </label>
-                  <input type="password" placeholder="******" class="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"/>
-                </div>
               </div>
               <div class="flex items-center justify-between">
                 <div class="">

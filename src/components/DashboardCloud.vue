@@ -9,11 +9,12 @@ import {CloudCartItem} from "@/utils/helper_classes.js";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import {convertPrice, formatCurrency, getCurrencySymbol} from "@/utils/helper_functions.js";
+import Modal from "@/components/Modal.vue";
 
 
 export default {
   name: "DashboardCloud",
-  components: {DashCloudOSCArds, DashCloudRadioCards},
+  components: {Modal, DashCloudOSCArds, DashCloudRadioCards},
   data() {
     return {
       series: [{
@@ -29,6 +30,17 @@ export default {
             show: false
           }
         },
+        markers: {
+          size: 10,
+          colors: ['#EABE63ff'],
+          strokeColors: 'green',
+          strokeWidth: 4,
+          strokeOpacity: 0.9,
+          strokeDashArray: 0,
+          fillOpacity: 1,
+          discrete: [],
+          shape: "circle"
+        },
         stroke: {
           curve: 'smooth',
         },
@@ -37,6 +49,7 @@ export default {
         },
         fill: {
           type: 'gradient',
+          colors: ['teal']
         },
         xaxis: {
           categories: ['1 day', '12 hrs', '6 hrs', '3 hrs', '1 hr', '30 mins']
@@ -100,9 +113,11 @@ export default {
         {text: 'annually (12 months)', value: 12},
 
 
-
       ],
-      resetOSOptions: false
+      resetOSOptions: false,
+      updatedPassword: "",
+      confirmPassword: "",
+      showPasswordChangeModal: false
     }
   },
   watch: {
@@ -196,6 +211,18 @@ export default {
             }
         )
       }
+    },
+    updateBilling() {
+      console.log("Updated billing...#TODO")
+      // if(this.billing_frequency === 1){
+      //   this.service.price = this.$store.state.user.services.hosting.find((one) => {
+      //     return one.name === this.service.name
+      //   }).price
+      // }
+      // console.log("Changed back to 1", this.service)
+    },
+    closePasswordChangeModal(){
+      this.showPasswordChangeModal = false
     }
   },
   computed: {
@@ -240,10 +267,12 @@ export default {
       </li>
     </ul>
 
-    <div v-if="tab === 'new'" class="flex">
+    <div
+        v-if="tab === 'new'" class="flex md:flex-row flex-col gap-y-5 items-center md:items-start">
       <div class="w-9/12">
         <DashCloudRadioCards :services="cloudServices" @selectService="setService"/>
-        <DashCloudOSCArds :systems="operatingSystems" @selectOS="setOS" @selectOSVersion="setOSVersion" :reset="resetOSOptions"/>
+        <DashCloudOSCArds :systems="operatingSystems" @selectOS="setOS" @selectOSVersion="setOSVersion"
+                          :reset="resetOSOptions"/>
         <h3 class="mt-4 muteBoldSubheader text-gray-900 dark:text-white">Access Modes</h3>
         <ul
             class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -278,7 +307,8 @@ export default {
       </div>
 
 
-      <div class="w-3/12 shadow rounded-2xl border-2 border-gray-300 p-5 relative h-[60vh]">
+      <div
+          class="md:w-3/12 shadow rounded-2xl border-2 border-gray-300 p-5 relative h-[60vh]">
         <h3 class="header text-center">Order Summary</h3>
 
         <div v-if="Object.keys(service).length === 0 || service.name === ''"
@@ -301,7 +331,7 @@ export default {
                 service.os_version
               }}</span>
             </h2>
-            <div class="">
+            <div class="dark:text-gray-300">
               <h2 class="muteBoldSubheader underline mt-1">Access Modes</h2>
               <h2 :class="{ 'line-through': !selectedAccessOptions.includes('root') }">
                 Root Password
@@ -322,7 +352,7 @@ export default {
             <h2 class="muteBoldSubheader">Billing Frequency</h2>
             <select id="country"
                     class="h-12 w-full border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center capitalize"
-                    v-model="billing_frequency">
+                    v-model="billing_frequency" @change="updateBilling">
               <option
                   :key="idx"
                   v-for="(option, idx) in billing_frequency_options"
@@ -477,19 +507,18 @@ export default {
               <router-link :to="`/dashboard/cloud?tab=manage&id=${service.id}`" v-for="service in storeCloudServices"
                            :key="service.id">
                 <li
-                    class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
+                    class="flex flex-col bg-gray-300 dark:bg-gray-900 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
                     :class="{ 'bg-white border-2 border-gray-400 hover:border-black hover:bg-white': id === service.id }"
                 >
                   <div v-if="!service.active"
                        class="absolute right-[10%] top-[30%] text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                    Stopped
+                    Offline
                   </div>
                   <div v-else
                        class="absolute right-[10%] top-[30%] text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                    Running
+                    Online
                   </div>
-                  <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
-                  <p class="muteBoldSubheader">{{ service.type }}</p>
+                  <p class="text-gray-700 font-bold text-sm uppercase dark:text-gray-500">{{ service.name }}</p>
                   <p class="muteSmallSubheader italic">{{ service.description }}</p>
                 </li>
               </router-link>
@@ -500,29 +529,44 @@ export default {
                 <div
                     v-if="id && storeCloudServices.find((one) => one.id === id)">
                   <h2 class="header">{{ getServiceFromStateWithID.name }}</h2>
-                  <h2 class="muteSubheader mb-1">{{ getServiceFromStateWithID.type }}</h2>
-                  <div class="flex items-center">
+                  <div class="flex items-center mt-2">
                     <button v-if="!getServiceFromStateWithID.active"
-                            class="text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider mr-2">
-                      Stopped
+                            class="text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-xs font-bold tracking-wider mr-2">
+                      Offline
                     </button>
                     <button v-else
-                            class="text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                      Running
+                            class="text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-xs font-bold tracking-wider">
+                      Online
                     </button>
                   </div>
                   <hr class="my-5"/>
                   <div>
-                    <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
-                    <p><strong>ID#:</strong> {{ getServiceFromStateWithID.id }}</p>
-                    <p><strong>Purchased:</strong> {{ getServiceFromStateWithID.price }}</p>
-                    <p><strong>Created on:</strong> {{ getServiceFromStateWithID.created_at }}</p>
-                    <p><strong>Activated on:</strong> {{ getServiceFromStateWithID.activated_at }}</p>
-                    <p><strong>Renewal date:</strong> {{ getServiceFromStateWithID.renewal_date }}</p>
+                    <apexchart height="300" width="100%" type="line" :options="options" :series="series"></apexchart>
+                    <section class="flex flex-wrap items-center mb-2">
+                      <div class="cloudInfoChip">
+                        RAM: <span>{{ getServiceFromStateWithID.ram }}</span>
+                      </div>
+                      <div class="cloudInfoChip">
+                        Bandwidth: <span>{{ getServiceFromStateWithID.bandwidth }}</span>
+                      </div>
+                      <div class="cloudInfoChip">
+                        Cores: <span>{{ getServiceFromStateWithID.cores }}</span>
+                      </div>
+                      <div class="cloudInfoChip">
+                        Architecture: <span>{{ getServiceFromStateWithID.architecture }}</span>
+                      </div>
+                      <div class="cloudInfoChip">
+                        Storage: <span>{{ getServiceFromStateWithID.storage }}</span>
+                      </div>
+                      <div class="cloudInfoChip">
+                        Location: <span>{{ getServiceFromStateWithID.location }}</span>
+                      </div>
+                    </section>
                   </div>
                   <div class="flex flex-col sm:flex-row gap-3 mt-5">
                     <button class="btn-base-error w-full sm:w-auto">Stop Service</button>
                     <button class="btn-base-success w-full sm:w-auto">Restart Service</button>
+                    <button class="btn-base w-full sm:w-auto" @click="showPasswordChangeModal = true">Change Root Password</button>
                   </div>
                 </div>
               </div>
@@ -533,6 +577,23 @@ export default {
       </div>
     </div>
   </div>
+  <Modal
+      v-if="id"
+      :model-value="showPasswordChangeModal"
+      :persistent="true"
+      title="Change Your Root Password"
+      confirm-text="Submit"
+      cancel-text="Cancel"
+      type="confirm"
+      :on-cancel="closePasswordChangeModal"
+  >
+    <section class="flex flex-col gap-3">
+      <input class="text-input-base border-2 rounded-2xl p-3" type="password" v-model="updatedPassword"
+             placeholder="Enter a new password"/>
+      <input class="text-input-base border-2 rounded-2xl p-3" type="password" v-model="confirmPassword"
+             placeholder="Confirm new password"/>
+    </section>
+  </Modal>
 </template>
 
 

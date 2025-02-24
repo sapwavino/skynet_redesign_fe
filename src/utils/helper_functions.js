@@ -63,3 +63,21 @@ export function formatCurrency(amount) {
     // Return the combined string.
     return integerPart + decimalPart;
 }
+
+export function formatDateWithoutTime(dateString) {
+    const dateObj = new Date(dateString);
+
+    if (isNaN(dateObj.getTime())) {
+        return 'Invalid Date';
+    }
+
+    const dayOfWeek = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+    const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+
+    const timezoneOffset = dateObj.toString().match(/GMT[+-]\d{4}/)[0]; // Extract GMT offset
+    const timezoneName = dateObj.toString().match(/\(([^)]+)\)$/)[1]; // Extract timezone name
+
+    return `${dayOfWeek}, ${month} ${day.toString().padStart(2, '0')} ${year} ${timezoneOffset} (${timezoneName})`;
+}

@@ -43,7 +43,7 @@ export default {
         <span
             class="peer-checked:border-customGold absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
         <label
-            class="peer-checked:border-2 peer-checked:border-customGold peer-checked:bg-blue-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4 pr-20 hover:shadow-2xl hover:border-0"
+            class="peer-checked:border-2 peer-checked:border-customGold peer-checked:bg-gray-700 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4 pr-20 hover:shadow-2xl hover:border-0"
             :for="service.name">
           <div class="flex items-center gap-x-1.5">
             <img :src="service.image" alt="OS" class=""/>

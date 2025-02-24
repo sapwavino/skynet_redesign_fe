@@ -59,7 +59,7 @@ export default {
          class="border-l-2 flex flex-col border-t-0 pl-4 pt-0 border-solid lg:pt-4 lg:border-t-2 lg:border-l-0 lg:pl-0 cursor-not-allowed"
       >
         <span class="text-sm lg:text-base">Step {{ idx + 1 }}</span>
-        <h4 class="text-base lg:text-lg text-black">{{ step.label }}</h4>
+        <h4 class="text-base lg:text-lg text-black dark:text-gray-200">{{ step.label }}</h4>
       </a>
     </li>
   </ol>
@@ -350,7 +350,7 @@ export default {
                   <input
                       v-model="domain"
                       type="text"
-                      class="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-customGold focus:border-customGold sm:text-sm"
+                      class="appearance-none block md:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-customGold focus:border-customGold sm:text-sm dark:text-gray-100"
                   />
                   <button class="btn-base ml-2" @click.prevent="checkDomain">Check</button>
 

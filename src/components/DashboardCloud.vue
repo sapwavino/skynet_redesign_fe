@@ -488,7 +488,8 @@ export default {
         </div>
       </div>
     </div>
-    <div v-if="tab === 'manage'">
+    <div
+        v-if="tab === 'manage'">
       <div v-show="tab === 'manage'">
         <div v-if="id === null && storeCloudServices.length === 0" class="text-center"><img
             src="/noDomain.png" alt="No domains found" class="w-full h-64 object-contain"/>

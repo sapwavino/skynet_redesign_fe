@@ -289,7 +289,38 @@ const store = createStore({
             }
         },
         preferredCurrency: preferredCurrencyFromStorage || "NGN",
-        showMobileNav: false
+        showMobileNav: false,
+        loading: false,
+        loadingMessages: [
+            "Whispering to the network.",
+            "Finding the right frequency.",
+            "Servers sipping coffee.",
+            "Connecting the dots (literally).",
+            "Polishing pixels.",
+            "Decoding the internet whispers...",
+            "Warming up the servers...",
+            "Polishing the pixels...",
+            "Servers dey reason your request.",
+            "Loading, like arranging gala in traffic.",
+            "Fetching the network jollof.",
+            "Servers are doing shakara.",
+            "Loading, like waiting for NEPA.",
+            "Loading, no vex.",
+            "Wetin dey load dey sweet.",
+            "Fetching data, no be juju.",
+            "Fetching data like jollof rice.",
+            "Fetching data, no be beans.",
+            "Data dey come, calm down.",
+            "Server dey do shakara.",
+            "Checking if the server greeted elders.",
+            "Catching the digital molue.",
+            "Checking the village network.",
+            "Loading, no be small thing o!",
+            "Building the bridge to your data.",
+            "Loading, abeg",
+            "Loading, no vex."
+        ],
+        currentLoadingMessage: '' // Add this to store the current message
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -322,6 +353,12 @@ const store = createStore({
         },
         SET_SHOW_MOBILE_NAV(state, value) {
             state.showMobileNav = value;
+        },
+        SET_LOADING(state, value) {
+            state.loading = value;
+        },
+        SET_CURRENT_LOADING_MESSAGE(state, message) {
+            state.currentLoadingMessage = message;
         }
     },
     actions: {
@@ -361,6 +398,14 @@ const store = createStore({
         },
         setShowMobileNav({commit}, value) {
             commit("SET_SHOW_MOBILE_NAV", value);
+        },
+        startLoading({ commit, state }) {
+            commit('SET_LOADING', true);
+            const randomIndex = Math.floor(Math.random() * state.loadingMessages.length);
+            commit('SET_CURRENT_LOADING_MESSAGE', state.loadingMessages[randomIndex]);
+        },
+        stopLoading({ commit }) {
+            commit('SET_LOADING', false);
         }
     },
     getters: {

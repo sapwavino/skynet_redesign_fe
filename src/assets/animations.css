@@ -38,6 +38,20 @@
     content: "Searching domains...";
 }
 
+.appLoader {
+    margin: 0 auto;
+    width: fit-content;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    color: #0000;
+    -webkit-text-stroke: 1px #EABE63ff;
+    background: conic-gradient(#EABE63ff 0 0) 0/0% 100% no-repeat text;
+    animation: l1 2s linear infinite;
+    letter-spacing: 0.2rem;
+    @apply dark:text-customGold dark:animate-pulse;
+}
+
 @keyframes l1 {
     to {
         background-size: 120% 100%

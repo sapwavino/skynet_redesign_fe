@@ -513,7 +513,7 @@ export default {
                 >
                   <div v-if="!service.active"
                        class="absolute right-[10%] top-[30%] text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                    Offline
+                    Suspended
                   </div>
                   <div v-else
                        class="absolute right-[10%] top-[30%] text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
@@ -533,7 +533,7 @@ export default {
                   <div class="flex items-center mt-2">
                     <button v-if="!getServiceFromStateWithID.active"
                             class="text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-xs font-bold tracking-wider mr-2">
-                      Offline
+                      Suspended
                     </button>
                     <button v-else
                             class="text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-xs font-bold tracking-wider">

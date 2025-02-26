@@ -286,8 +286,7 @@ export default {
 
     <!--    LOADING ANIMATION-->
     <section class="mt-3 w-full " v-if="loading">
-      <div class="domainSearchLoader h-40">
-      </div>
+      <div class="domainSearchLoader h-40"></div>
     </section>
   </div>
 

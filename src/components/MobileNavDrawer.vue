@@ -266,12 +266,12 @@
             <button class="mobile-nav-link">Home</button>
           </li>
           <li class="flex">
-            <li class="mobile-nav-item w-1/2" @click="navigateTo('/auth/login')">
+            <section class="mobile-nav-item w-1/2" @click="navigateTo('/auth/login')">
               <button class="mobile-nav-link">Login</button>
-            </li>
-            <li class="mobile-nav-item w-1/2" @click="navigateTo('/auth/signup')">
+            </section>
+            <section class="mobile-nav-item w-1/2" @click="navigateTo('/auth/signup')">
               <button class="mobile-nav-link">Signup</button>
-            </li>
+            </section>
           </li>
           <li>
             <div class="flex mt-5 gap-x-2">

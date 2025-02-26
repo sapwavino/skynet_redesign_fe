@@ -80,13 +80,15 @@ export default {
         <ul class="h-44 overflow-y-auto">
           <router-link v-for="service in hosting" :key="service.id"
                        :to="`/dashboard/hosting?tab=manage&id=${service.id}`">
-            <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
-              <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
-                   class="absolute right-3 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                {{ service.active ? 'Online' : 'Offline' }}
+            <li class="flex items-center justify-between bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
+              <div class="flex flex-col">
+                <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
+                <p class="muteSmallSubheader">{{ service.type }}</p>
               </div>
-              <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
-              <p class="muteSmallSubheader">{{ service.type }}</p>
+              <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
+                   class="absolute right-3 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider text-xs">
+                {{ service.active ? 'Online' : 'Suspended' }}
+              </div>
             </li>
           </router-link>
         </ul>
@@ -106,11 +108,12 @@ export default {
               <div class="flex flex-col">
                 <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
 
-                <p class="text-gray-700 text-xs uppercase">{{ service.ram }} {{ service.os }} {{service.storage}} {{ service.architecture}}</p>
+                <p class="text-gray-700 text-xs uppercase">{{ service.ram }} {{ service.os }} {{ service.storage }}
+                  {{ service.architecture }}</p>
               </div>
               <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
-                   class="text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                {{ service.active ? 'Online' : 'Offline' }}
+                   class="text-gray-50 rounded-full py-1 px-3 text-xs font-bold tracking-wider">
+                {{ service.active ? 'Online' : 'Suspended' }}
               </div>
             </li>
           </router-link>

@@ -12,6 +12,8 @@ export default {
       selectedService: null,
       showUsernameModal: false,
       showDomainModal: false,
+      showStopModal: false,
+      showRestartModal: false,
       updatedUsername: '',
       updatedDomain: '',
     };
@@ -40,6 +42,12 @@ export default {
     },
     closeDomainModal() {
       this.showDomainModal = false
+    },
+    closeStopModal() {
+      this.showStopModal = false
+    },
+    closeRestartModal() {
+      this.showRestartModal = false
     }
   },
   computed: {
@@ -106,7 +114,7 @@ export default {
               >
                 <div v-if="!service.active"
                      class="absolute right-[10%] top-[30%] text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                  Offline
+                  Suspended
                 </div>
                 <div v-else
                      class="absolute right-[10%] top-[30%] text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
@@ -127,7 +135,7 @@ export default {
                 <div class="flex items-center">
                   <button v-if="!getServiceFromStateWithID.active"
                           class="text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider mr-2">
-                    Offline
+                    Suspended
                   </button>
                   <button v-else
                           class="text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
@@ -150,14 +158,16 @@ export default {
                   <p><strong>Billing Cycle:</strong> {{ getServiceFromStateWithID.billing_cycle }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 mt-5">
-                  <button class="btn-base-error w-full sm:w-auto">Stop Service</button>
-                  <button class="btn-base-success w-full sm:w-auto">Restart Service</button>
+                  <button class="btn-base-error w-full sm:w-auto" @click="showStopModal = true">Stop</button>
+                  <button class="btn-base-success w-full sm:w-auto" @click="showRestartModal = true">Restart</button>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 mt-5">
                   <button class="btn-base w-full sm:w-auto" @click="showUsernameModal = true">Change Username</button>
                   <button class="btn-base w-full sm:w-auto" @click="showUsernameModal = true">Change Password</button>
                   <button class="btn-base w-full sm:w-auto" @click="showDomainModal = true">Change Domain</button>
                 </div>
+                <button class="btn-base w-full sm:w-auto mt-5" @click="showDomainModal = true">Login to control panel
+                </button>
               </div>
             </div>
           </div>
@@ -197,6 +207,37 @@ export default {
              :placeholder="getServiceFromStateWithID.domain"/>
     </section>
   </Modal>
+
+  <Modal
+      v-if="id"
+      :model-value="showStopModal"
+      :persistent="true"
+      :title="`Stop ${getServiceFromStateWithID.name}`"
+      confirm-text="Stop"
+      cancel-text="Cancel"
+      type="confirm"
+      :on-cancel="closeStopModal"
+  >
+    <div>
+      <h2>You are about to stop running <strong>{{getServiceFromStateWithID.name}}</strong>. Are you sure you want to continue?</h2>
+    </div>
+  </Modal>
+
+  <Modal
+      v-if="id"
+      :model-value="showRestartModal"
+      :persistent="true"
+      :title="`Restart ${getServiceFromStateWithID.name}`"
+      confirm-text="Restart"
+      cancel-text="Cancel"
+      type="confirm"
+      :on-cancel="closeRestartModal"
+  >
+    <div>
+      <h2>You are about to restart <strong>{{getServiceFromStateWithID.name}}</strong>. This will only take a few minutes. Are you sure?</h2>
+    </div>
+  </Modal>
+
 </template>
 
 <style scoped>

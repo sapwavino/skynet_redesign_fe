@@ -21,14 +21,14 @@ export default {
       return this.$store.state.user.services.domains.filter((one) => one.active === false)
     }
   },
-  data(){
-    return{
+  data() {
+    return {
       showBalance: false
     }
   },
   methods: {
-    toggleBalance(){
-      this.showBalance =!this.showBalance
+    toggleBalance() {
+      this.showBalance = !this.showBalance
     }
   }
 }
@@ -83,7 +83,7 @@ export default {
             <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
               <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
                    class="absolute right-3 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                {{ service.active ? 'Running' : 'Stopped' }}
+                {{ service.active ? 'Online' : 'Offline' }}
               </div>
               <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
               <p class="muteSmallSubheader">{{ service.type }}</p>
@@ -102,13 +102,16 @@ export default {
         <h1 class="muteBoldSubheader uppercase text-center">Cloud</h1>
         <ul class="h-44 overflow-y-auto">
           <router-link v-for="service in cloud" :key="service.id" :to="`/dashboard/cloud?tab=manage&id=${service.id}`">
-            <li class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
-              <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
-                   class="absolute right-3 text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                {{ service.active ? 'Running' : 'Stopped' }}
+            <li class="flex items-center justify-between bg-gray-300 rounded-3xl p-3 hover:bg-gray-50 cursor-pointer my-2 relative border-2">
+              <div class="flex flex-col">
+                <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
+
+                <p class="text-gray-700 text-xs uppercase">{{ service.ram }} {{ service.os }} {{service.storage}} {{ service.architecture}}</p>
               </div>
-              <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
-              <p class="muteSmallSubheader">{{ service.type }}</p>
+              <div :class="service.active ? 'bg-green-600' : 'bg-red-700'"
+                   class="text-gray-50 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
+                {{ service.active ? 'Online' : 'Offline' }}
+              </div>
             </li>
           </router-link>
         </ul>
@@ -296,7 +299,9 @@ export default {
             <p class="text-sm text-gray-500 font-bold tracking-wider capitalize">Balance</p>
           </div>
           <div class="w-full flex flex-col gap-2">
-            <button class="dash-card-btn-base w-full" @click.prevent="toggleBalance">{{ showBalance ? 'Hide Balance' : 'Show Balance' }}</button>
+            <button class="dash-card-btn-base w-full" @click.prevent="toggleBalance">
+              {{ showBalance ? 'Hide Balance' : 'Show Balance' }}
+            </button>
             <button class="dash-card-btn-base w-full">Top Up</button>
             <router-link to="/dashboard/wallet">
               <button class="dash-card-btn-base w-full">Open Wallet</button>

@@ -1,6 +1,7 @@
 <script>
 import DomainNameSearch from "@/components/DomainNameSearch.vue";
 import countries from "@/utils/countries.js";
+import {formatDateWithoutTime} from "@/utils/helper_functions.js";
 
 export default {
   name: "DashboardDomains",
@@ -47,6 +48,7 @@ export default {
     },
   },
   methods: {
+    formatDateWithoutTime,
     setTab(tab) {
       this.$router.push({query: {tab}}); // Update URL when tab changes
     },
@@ -199,12 +201,12 @@ export default {
             <!--            INFO-->
             <section
                 class="dashGroupCard w-full md:w-3/4" style="padding: 0" v-if="detailsTab === 'info'">
-              <div class="header">{{ getServiceFromStateWithID.name }}</div>
-              <p class="muteSmallSubheader">Registered on: {{
-                  new Date(getServiceFromStateWithID.created_at)
+              <div class="header mb-3">{{ getServiceFromStateWithID.name }}</div>
+              <p class="muteSmallSubheader"><strong>Registered on: </strong>{{
+                  formatDateWithoutTime(new Date(getServiceFromStateWithID.created_at))
                 }}</p>
-              <p class="muteSmallSubheader mb-5">Expires on: {{
-                  new Date(getServiceFromStateWithID.renewal_date)
+              <p class="muteSmallSubheader mb-5"><strong>Expires on: </strong>{{
+                  formatDateWithoutTime(new Date(getServiceFromStateWithID.renewal_date))
                 }}</p>
 
               <hr/>

@@ -1,13 +1,19 @@
 <script>
 import DashboardHostingStepper from "@/components/DashboardHostingStepper.vue";
+import Modal from "@/components/Modal.vue";
+
 export default {
   name: "DashboardHosting",
-  components: {DashboardHostingStepper},
+  components: {Modal, DashboardHostingStepper},
   data() {
     return {
-      tab: this.$route.query.tab || "new", // Set initial tab from URL or default to 'new'
-      id: this.$route.query.id || null, // Set initial ID from URL or default to null
-      selectedService: null, // Selected hosting service
+      tab: this.$route.query.tab || "new",
+      id: this.$route.query.id || null,
+      selectedService: null,
+      showUsernameModal: false,
+      showDomainModal: false,
+      updatedUsername: '',
+      updatedDomain: '',
     };
   },
   watch: {
@@ -29,6 +35,12 @@ export default {
     setTab(tab) {
       this.$router.push({query: {tab}}); // Update URL when tab changes
     },
+    closeUsernameModal() {
+      this.showUsernameModal = false
+    },
+    closeDomainModal() {
+      this.showDomainModal = false
+    }
   },
   computed: {
     getServiceFromStateWithID() {
@@ -89,18 +101,18 @@ export default {
             <router-link :to="`/dashboard/hosting?tab=manage&id=${service.id}`" v-for="service in hostingServices"
                          :key="service.id">
               <li
-                  class="flex flex-col bg-gray-300 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
+                  class="flex flex-col bg-gray-300 dark:bg-gray-900 rounded-3xl p-3 hover:bg-gray-400 cursor-pointer my-2 relative justify-center w-full"
                   :class="{ 'bg-white border-2 border-gray-400 hover:border-black hover:bg-white': id === service.id }"
               >
                 <div v-if="!service.active"
                      class="absolute right-[10%] top-[30%] text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                  Stopped
+                  Offline
                 </div>
                 <div v-else
                      class="absolute right-[10%] top-[30%] text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                  Running
+                  Online
                 </div>
-                <p class="text-gray-700 font-bold text-sm uppercase">{{ service.name }}</p>
+                <p class="text-gray-700 font-bold text-sm uppercase dark:text-gray-500">{{ service.name }}</p>
                 <p class="muteBoldSubheader">{{ service.type }}</p>
                 <p class="muteSmallSubheader italic">{{ service.description }}</p>
               </li>
@@ -108,31 +120,43 @@ export default {
           </div>
 
           <div class="w-full sm:w-2/3">
-            <div class="rounded-3xl shadow-2xl mx-auto p-5 pt-0">
+            <div class="rounded-3xl shadow-2xl mx-auto p-5 pt-0 dark:text-gray-300">
               <div v-if="id && $store.state.user.services.hosting.find((one) => one.id === id)">
                 <h2 class="header">{{ getServiceFromStateWithID.name }}</h2>
                 <h2 class="muteSubheader mb-1">{{ getServiceFromStateWithID.type }}</h2>
                 <div class="flex items-center">
                   <button v-if="!getServiceFromStateWithID.active"
                           class="text-red-700 border-2 border-red-700 rounded-full py-1 px-3 text-sm font-bold tracking-wider mr-2">
-                    Stopped
+                    Offline
                   </button>
                   <button v-else
                           class="text-green-700 border-2 border-green-600 rounded-full py-1 px-3 text-sm font-bold tracking-wider">
-                    Running
+                    Online
                   </button>
                 </div>
                 <hr class="my-5"/>
-                <div>
+                <div class="flex flex-col gap-y-2">
+                  <h2 class="muteBoldSubheader">Service Details</h2>
                   <p><strong>ID#:</strong> {{ getServiceFromStateWithID.id }}</p>
-                  <p><strong>Purchased:</strong> {{ getServiceFromStateWithID.price }}</p>
-                  <p><strong>Created on:</strong> {{ getServiceFromStateWithID.created_at }}</p>
-                  <p><strong>Activated on:</strong> {{ getServiceFromStateWithID.activated_at }}</p>
-                  <p><strong>Renewal date:</strong> {{ getServiceFromStateWithID.renewal_date }}</p>
+                  <p><strong>Domain:</strong> {{ getServiceFromStateWithID.domain }}</p>
+                  <p><strong>Server IP:</strong> {{ getServiceFromStateWithID.server_ip }}</p>
+                  <p><strong>Server hostname:</strong> {{ getServiceFromStateWithID.server_hostname }}</p>
+                  <p><strong>Username:</strong> {{ getServiceFromStateWithID.username }}</p>
+                  <p><strong>Password:</strong> ******** </p>
+                  <p><strong>Hosting plan:</strong> {{ getServiceFromStateWithID.hosting_plan }}</p>
+                  <p><strong>Bandwidth:</strong> {{ getServiceFromStateWithID.bandwidth }}</p>
+                  <p><strong>Data Quota:</strong> {{ getServiceFromStateWithID.disk_quota }}</p>
+                  <p><strong>Created On:</strong> {{ getServiceFromStateWithID.created_at }}</p>
+                  <p><strong>Billing Cycle:</strong> {{ getServiceFromStateWithID.billing_cycle }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 mt-5">
                   <button class="btn-base-error w-full sm:w-auto">Stop Service</button>
                   <button class="btn-base-success w-full sm:w-auto">Restart Service</button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 mt-5">
+                  <button class="btn-base w-full sm:w-auto" @click="showUsernameModal = true">Change Username</button>
+                  <button class="btn-base w-full sm:w-auto" @click="showUsernameModal = true">Change Password</button>
+                  <button class="btn-base w-full sm:w-auto" @click="showDomainModal = true">Change Domain</button>
                 </div>
               </div>
             </div>
@@ -142,6 +166,37 @@ export default {
     </div>
   </div>
 
+  <Modal
+      v-if="id"
+      :model-value="showUsernameModal"
+      :persistent="true"
+      title="Change Your Username"
+      confirm-text="Submit"
+      cancel-text="Cancel"
+      type="confirm"
+      :on-cancel="closeUsernameModal"
+  >
+    <section>
+      <input class="text-input-base border-2 rounded-2xl p-3" type="text" v-model="updatedUsername"
+             :placeholder="getServiceFromStateWithID.username"/>
+    </section>
+  </Modal>
+
+  <Modal
+      v-if="id"
+      :model-value="showDomainModal"
+      :persistent="true"
+      title="Update Your Domain"
+      confirm-text="Submit"
+      cancel-text="Cancel"
+      type="confirm"
+      :on-cancel="closeDomainModal"
+  >
+    <section>
+      <input class="text-input-base border-2 rounded-2xl p-3" type="text" v-model="updatedDomain"
+             :placeholder="getServiceFromStateWithID.domain"/>
+    </section>
+  </Modal>
 </template>
 
 <style scoped>

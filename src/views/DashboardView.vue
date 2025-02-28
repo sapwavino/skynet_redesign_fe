@@ -1,9 +1,11 @@
 <script>
 import {getLastLogin} from "../utils/helper_functions.js";
 import {createToast} from "mosha-vue-toastify";
+import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 
 export default {
   name: "Dashboard",
+  components: {CurrencyDropdown},
   props: {
     layout: {
       type: String, // Or the appropriate type for your layout prop
@@ -327,15 +329,7 @@ export default {
       </div>
       <div class="flex items-center mt-5">
         <div class="block w-1/2">
-          <select id="country"
-                  class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
-                  v-model="selectedCurrency"
-                  @change="changePreferredCurrency"
-          >
-            <option v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
-              {{ country.name }}
-            </option>
-          </select>
+          <CurrencyDropdown :show-text="false"/>
         </div>
         <button class="flat-border-btn-base-small w-full rounded-2xl w-1/2 ">Balance: <span
             class="text-base">0.00</span></button>

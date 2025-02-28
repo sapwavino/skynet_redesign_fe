@@ -149,7 +149,7 @@ const router = createRouter({
             name: 'signup',
             component: () => import('../views/SignUpView.vue'),
             meta: {
-                layout: "DashboardLayout",
+                layout: "DefaultLayout",
                 title: "Sign Up"
             },
         },
@@ -173,7 +173,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const title = 'Skynet Web Services'
+    const title = 'Skynet - Cloud Solutions'
     document.title = to.meta.title ? title + ' | ' + to.meta.title : title;
     next();
 });

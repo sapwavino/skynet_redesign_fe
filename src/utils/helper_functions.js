@@ -4,12 +4,13 @@ export const exchangeRates = {
     GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
     EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
     KSH: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
-    GHS: 0.012,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
+    GHS: 0.015,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
 }
 
 export function convertPrice(currency, price) {
     price = parseFloat(price);
     const rate = exchangeRates[currency];
+    console.log("converting...", rate, price)
     return (price * rate).toFixed(2);
 }
 

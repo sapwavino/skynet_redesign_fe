@@ -20,11 +20,11 @@ export function convertPrice(currency, price) {
     //     // return response.data;
     // })
     let url = 'https://skynet.africa/api/guest/currency/get_pairs'
-    axios.get(url, {
-        headers: {}
-    }).then(response => {
-        console.log(response.data);
-    })
+    // axios.get(url, {
+    //     headers: {}
+    // }).then(response => {
+    //     console.log(response.data);
+    // })
     const rate = exchangeRates[currency];
     return (price * rate).toFixed(2);
 }

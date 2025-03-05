@@ -1,7 +1,8 @@
 <script setup>
 import {ref, watch, onMounted} from 'vue'
 import {convertPrice, exchangeRates} from "../utils/helper_functions.js";
-
+import {createToast} from "mosha-vue-toastify";
+import 'mosha-vue-toastify/dist/style.css'
 
 const popularConfigs = ref([
   {
@@ -9,28 +10,42 @@ const popularConfigs = ref([
     features: ['2GB RAM', '2 CPU Cores', '50 GB SSD'],
     price: 18,
     isGPU: false,
-    isPopular: false
+    isPopular: false,
+    ram: 2,
+    cores: 2,
+    storage: 50
   },
   {
     name: 'Business VPS',
     features: ['4GB RAM', '2 CPU Cores', '100 GB SSD'],
     price: 26,
     isGPU: false,
-    isPopular: true
+    isPopular: true,
+    ram: 4,
+    cores: 2,
+    storage: 100
   },
   {
     name: 'Premium VPS',
     features: ['8GB RAM', '4 CPU Cores', '200 GB SSD'],
     price: 52,
     isGPU: false,
-    isPopular: false
+    isPopular: false,
+    ram: 8,
+    cores: 4,
+    storage: 200
   },
   {
     name: 'GPU Accelerated VPS',
     features: ['16GB RAM', '8GB GPU RAM', '8 CPU Cores', '500 GB SSD', 'NVIDIA A100'],
     price: 120,
     isGPU: true,
-    isPopular: false
+    isPopular: false,
+    ram: 16,
+    gpuRAM: 8,
+    gpuCores: 8,
+    cores: 8,
+    storage: 500
   }
 ])
 
@@ -55,26 +70,118 @@ const gpuArchitectures = ref([
   }
 ])
 const gpuConfig = ref(false)
+const showPassword = ref(false)
 const ssh = ref(true)
-const operatingSystem = ref("")
+const operatingSystem = ref("linux")
 const rootPass = ref("")
 const additionalIPs = ref(0)
 const totalCost = ref(0)
 const selectedConfig = ref(popularConfigs.value[1]);
 
+const generateSSHPassword = () => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@-_#*&%$!";
+  return Array.from({length: 10}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+};
+
+const copyToClipboard = () => {
+  if (rootPass.value) {
+    navigator.clipboard.writeText(rootPass.value)
+        .then(() => {
+          console.log("Password copied to clipboard! ✅");
+          createToast(
+              "Root password copied to clipboard! ✅",
+              {
+                type: "info",
+                duration: 2500
+              }
+          )
+        });
+  }
+};
+
+const updateTotalCost = () => {
+  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2)
+};
 onMounted(() => {
-  totalCost.value = selectedConfig.value.price
+  updateTotalCost()
 })
 
 // Watch for changes in additional IPs and update total cost
 watch(additionalIPs, (newVal, oldVal) => {
-  const priceChange = (newVal - oldVal) * 2; // Each IP adds/subtracts $2
+  const priceChange = (newVal - oldVal) * 2;// Each IP adds/subtracts $2
   totalCost.value += priceChange;
+});
+
+// // Watch RAM changes → $2 per unit
+// watch(ram, (newVal, oldVal) => {
+//   const diff = newVal - oldVal;
+//   totalCost.value += diff * 2;
+// });
+//
+// // Watch Cores changes → $2 per unit
+// watch(cores, (newVal, oldVal) => {
+//   const diff = newVal - oldVal;
+//   totalCost.value += diff * 2;
+// });
+//
+// // Watch Storage changes (10GB per unit) → $2 per unit
+// watch(storage, (newVal, oldVal) => {
+//   const diff = (newVal - oldVal) / 10;
+//   totalCost.value += diff * 2;
+// });
+//
+//
+// // Watch GPU RAM changes → $10 per unit
+// watch(gpuRAM, (newVal, oldVal) => {
+//   const diff = (newVal - oldVal);
+//   totalCost.value += diff * 10;
+// });
+//
+// // Watch GPU Cores changes → $10 per unit
+// watch(gpuCores, (newVal, oldVal) => {
+//   const diff = (newVal - oldVal);
+//   totalCost.value += diff * 10;
+// });
+
+
+watch(gpuConfig, (newVal, oldVal) => {
+  if (newVal === true) {
+    selectedConfig.value = popularConfigs.value.find((one) => {
+      return one.isGPU === true;
+    })
+  }
+  else {
+    selectedConfig.value = popularConfigs.value[1]
+  }
 });
 
 // Watch for plan change and reset total cost
 watch(selectedConfig, (newConfig) => {
-  totalCost.value = newConfig.price + additionalIPs.value * 2; // Base price + IP cost
+  if (!newConfig.isGPU) {
+    gpuConfig.value = newConfig.isGPU
+    ram.value = newConfig.ram
+    cores.value = newConfig.cores
+    storage.value = newConfig.storage
+    totalCost.value = newConfig.price + (newConfig.ram * 2) + (newConfig.cores * 2) + ((newConfig.storage / 10) * 2) + (additionalIPs.value * 2)
+  }
+  else {
+    console.log("Before")
+    console.log(newConfig)
+    console.log(totalCost.value)
+    gpuConfig.value = newConfig.isGPU
+    ram.value = newConfig.ram
+    cores.value = newConfig.cores
+    storage.value = newConfig.storage
+    gpuRAM.value = newConfig.gpuRAM
+    gpuCores.value = newConfig.gpuCores
+    totalCost.value = newConfig.price + (newConfig.ram * 2) + (newConfig.cores * 2) + ((newConfig.storage / 10)) + (additionalIPs.value * 2) + (newConfig.gpuRAM * 10) + (newConfig.gpuCores * 10)
+
+    console.log()
+    console.log("After")
+    console.log(newConfig)
+    console.log(totalCost.value)
+  }
+
 });
 
 
@@ -119,7 +226,7 @@ watch(selectedConfig, (newConfig) => {
           </div>
 
           <p class="font-bold text-gray-800 dark:text-gray-400 text-2xl text-center">
-            {{ convertPrice($store.state.preferredCurrency, config.price) }} /month
+            ${{ convertPrice($store.state.preferredCurrency, config.price) }} /month
           </p>
 
           <button class="btn-base w-full">Select</button>
@@ -463,14 +570,39 @@ watch(selectedConfig, (newConfig) => {
           >Enable SSH Access</label>
         </div>
 
-        <div class="flex items-center mt-2">
-          <input id="rootPass"
-                 v-model="rootPass"
-                 class="text-input-base w-1/3 py-2 rounded-md px-3 mr-3"
-                 placeholder="Enter or Generate Password"
-          />
-          <button class="btn-base">Generate</button>
-        </div>
+        <section class="flex items-center">
+          <div class="relative w-1/3 ">
+            <!-- Password Input -->
+            <input
+                id="rootPass"
+                v-model="rootPass"
+                :type="showPassword ? 'text' : 'password'"
+                class="text-input-base w-full py-2 rounded-md px-3 pr-16"
+                placeholder="Enter or Generate Password"
+            />
+
+            <!-- Show/Hide & Copy Buttons -->
+            <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
+              <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
+                      @click="showPassword = !showPassword"
+              >
+                {{ showPassword ? "HIDE" : "SHOW" }}
+              </button>
+              <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
+                      @click="copyToClipboard"
+              >
+                COPY
+              </button>
+            </div>
+          </div>
+
+          <!-- Generate Password Button -->
+          <button class="btn-base px-3 ml-3"
+                  @click="rootPass = generateSSHPassword()"
+          >
+            Generate 🔄
+          </button>
+        </section>
       </section>
 
 
@@ -498,6 +630,46 @@ watch(selectedConfig, (newConfig) => {
 
       <div class="text-center mt-5">
         <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+        <div v-if="selectedConfig">
+          <h2 class="font-bold text-xl">Selected Configuration: {{ selectedConfig.name }}</h2>
+          <ul class="list-none mb-10 ">
+            <li class=""><strong>Operating System:</strong> <span class="muteBoldSubheader capitalize">{{
+                operatingSystem ? operatingSystem : 'Not selected'
+                                                                                                       }}
+            </span>
+            </li>
+            <li class=""><strong>RAM:</strong> <span class="muteBoldSubheader capitalize">{{ ram }}GB
+            </span>
+            </li>
+            <li class=""><strong>CPU Cores:</strong> <span class="muteBoldSubheader capitalize">{{
+                cores
+                                                                                                }} Cores
+            </span>
+            </li>
+            <li class=""><strong>Storage Capacity:</strong>
+              <span class="muteBoldSubheader capitalize">{{ storage }}GB
+            </span>
+            </li>
+            <li><strong>SSH Access:</strong> <span class="muteBoldSubheader capitalize">{{
+                ssh ? '✅' : '❌'
+                                                                                        }}</span>
+            </li>
+            <li>
+              <strong>Additional IP Addresses:</strong>
+              <span class="muteBoldSubheader capitalize"> {{ additionalIPs }}
+              </span>
+            </li>
+            <li v-if="gpuConfig">
+              <h2 class="font-bold mt-2 underline underline-offset-3">GPU Configuration</h2>
+              <h1><strong>Architecture:</strong> <span class="capitalize muteBoldSubheader">{{ gpuArchitecture }}</span>
+              </h1>
+              <h1><strong>GPU RAM:</strong> <span class="capitalize muteBoldSubheader">{{ gpuRAM }}GB</span>
+              </h1>
+              <h1><strong>GPU Cores:</strong> <span class="capitalize muteBoldSubheader">{{ gpuCores }} Cores</span>
+              </h1>
+            </li>
+          </ul>
+        </div>
         <h2 class="header mb-2">Total: ${{ totalCost }}</h2>
         <button class="btn-base">Order Now</button>
       </div>

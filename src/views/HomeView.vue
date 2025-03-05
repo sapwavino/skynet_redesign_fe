@@ -24,7 +24,6 @@ onMounted(() => {
   if (!preferredCurrency) {
     window.localStorage.setItem('preferredCurrency', JSON.stringify('NGN'))
   }
-  console.log("here")
   store.dispatch('updatePreferredCurrency', preferredCurrency);
 })
 

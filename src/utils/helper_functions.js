@@ -10,14 +10,20 @@ export const exchangeRates = {
 
 export function convertPrice(currency, price) {
     price = parseFloat(price);
-    let url = 'https://skynet.africa/api/guest/currency/format'
-    axios.post(url, {
-        price: price,
-        code: currency,
-        without_currency: true
+    // let url = 'https://skynet.africa/api/guest/currency/format'
+    // axios.post(url, {
+    //     price: price,
+    //     code: currency,
+    //     without_currency: true
+    // }).then(response => {
+    //     console.log(response.data);
+    //     // return response.data;
+    // })
+    let url = 'https://skynet.africa/api/guest/currency/get_pairs'
+    axios.get(url, {
+        headers: {}
     }).then(response => {
         console.log(response.data);
-        // return response.data;
     })
     const rate = exchangeRates[currency];
     return (price * rate).toFixed(2);

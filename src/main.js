@@ -23,4 +23,5 @@ app.use(app.config.globalProperties.$apexcharts);
 
 
 app.mount('#app')
+axios.defaults.headers.common = {};
 app.config.globalProperties.axios = axios

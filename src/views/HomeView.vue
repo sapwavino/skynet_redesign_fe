@@ -32,7 +32,7 @@ defineProps({layout: "DefaultLayout"});
 </script>
 
 <template>
-  <main class="min-h-screen dark:bg-gray-800">
+  <main class="min-h-screen dark:bg-gray-800 pb-5">
     <HeroSection />
     <CustomServicePicker />
     <!--    <ServicesTabs/>-->
@@ -41,7 +41,7 @@ defineProps({layout: "DefaultLayout"});
     <!--    <AppsSection/>-->
     <!--    <DatabaseSection/>-->
     <!--    <WhyUsSection/>-->
-    <Testimonials />
-    <FAQs />
+    <!--    <Testimonials />-->
+    <!--    <FAQs />-->
   </main>
 </template>

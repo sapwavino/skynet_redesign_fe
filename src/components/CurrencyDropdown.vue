@@ -4,17 +4,17 @@ import {createToast} from "mosha-vue-toastify";
 export default {
   name: "CurrencyDropdown",
   props: {
-    showText:{
+    showText: {
       type: Boolean,
       required: true,
       default: false
     }
   },
-  data(){
-    return{
+  data() {
+    return {
       countries: [
         {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
-        {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
+        {name: "KES", flag: "🇰🇪", text: "Kenyan Shillings"},
         {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
         {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
         {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
@@ -56,13 +56,16 @@ export default {
 <template>
   <div class="block mx-auto">
     <select id="country"
-            class="border-2 border-customGold dark:text-customGold rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center "
             v-model="selectedCurrency"
+            class="border-2 border-customGold dark:text-customGold rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center "
             @change="changePreferredCurrency"
             @click.stop
     >
-      <option  v-for="(country, idx) in countries" :key="idx" :value="country.name">{{ country.flag }}
-        {{ country.name }}<span v-if="showText"> - {{country.text}}</span>
+      <option v-for="(country, idx) in countries"
+              :key="idx"
+              :value="country.name"
+      >{{ country.flag }}
+       {{ country.name }}<span v-if="showText"> - {{ country.text }}</span>
       </option>
     </select>
   </div>

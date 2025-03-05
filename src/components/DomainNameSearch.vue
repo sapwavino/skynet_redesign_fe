@@ -46,14 +46,14 @@ export default {
         USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
         GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
         EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
-        KSH: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
+        KES: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
         GHS: 0.012,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
       },
       recents: [],
       showMore: false,
       countries: [
         {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
-        {name: "KSH", flag: "🇰🇪", text: "Kenyan Shillings"},
+        {name: "KES", flag: "🇰🇪", text: "Kenyan Shillings"},
         {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
         {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
         {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
@@ -241,65 +241,81 @@ export default {
 
     <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">
-      <input type="search"
+      <input v-model="searchTerm"
+             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0"
              placeholder="Find your domain name"
-             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0" autofocus
-             style="padding: 1rem" v-model="searchTerm"
-             @keydown.enter="fetchSearchResults"/>
+             style="padding: 1rem"
+             type="search"
+             @keydown.enter="fetchSearchResults"
+      />
       <button
+          :disabled="loading"
           class="flat-btn-base rounded-tr-xl rounded-br-xl tracking-wider disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed hover:no-underline"
           @click="fetchSearchResults"
-          :disabled="loading">
+      >
         Search
       </button>
 
     </section>
 
-    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)" @clear="clearRecents"
-             @clickedRecent="setRecent"/>
+    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)"
+             @clear="clearRecents"
+             @clickedRecent="setRecent"
+    />
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
-      <CurrencyDropdown :show-text="true"/>
+      <CurrencyDropdown :show-text="true" />
     </div>
 
     <!--    TLD PRICES -->
-    <section class="grid grid-cols-3 md:grid-cols-5 mt-3" v-if="!loading && searchResults.length === 0">
-      <div class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"
-           v-for="(tld, idx) in tldPrices"
-           :key="idx">
-        <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>
-        <hr class="border-gray-300 border w-1/2"/>
-        <span class="md:text-base text-sm text-yellow-500 font-bold tracking-wide">
-          <span v-if="selectedCurrency === 'NGN'">₦</span>
-          <span v-if="selectedCurrency === 'KSH'">KSh</span>
-          <span v-if="selectedCurrency === 'GHS'">₵</span>
-          <span v-else-if="selectedCurrency === 'USD'">$</span>
-          <span v-else-if="selectedCurrency === 'GBP'">£</span>
-          <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}
-        </span>
-      </div>
-      <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">
-        <span class="text-2xl font-semibold dark:text-gray-300">& much more</span>
-      </div>
-    </section>
+    <!--    <section v-if="!loading && searchResults.length === 0"-->
+    <!--             class="grid grid-cols-3 md:grid-cols-5 mt-3"-->
+    <!--    >-->
+    <!--      <div v-for="(tld, idx) in tldPrices"-->
+    <!--           :key="idx"-->
+    <!--           class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"-->
+    <!--      >-->
+    <!--        <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>-->
+    <!--        <hr class="border-gray-300 border w-1/2" />-->
+    <!--        <span class="md:text-base text-sm text-yellow-500 font-bold tracking-wide">-->
+    <!--          <span v-if="selectedCurrency === 'NGN'">₦</span>-->
+    <!--          <span v-if="selectedCurrency === 'KES'">KSh</span>-->
+    <!--          <span v-if="selectedCurrency === 'GHS'">₵</span>-->
+    <!--          <span v-else-if="selectedCurrency === 'USD'">$</span>-->
+    <!--          <span v-else-if="selectedCurrency === 'GBP'">£</span>-->
+    <!--          <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}-->
+    <!--        </span>-->
+    <!--      </div>-->
+    <!--      <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">-->
+    <!--        <span class="text-2xl font-semibold dark:text-gray-300">& much more</span>-->
+    <!--      </div>-->
+    <!--    </section>-->
 
     <!--    LOADING ANIMATION-->
-    <section class="mt-3 w-full " v-if="loading">
+    <section v-if="loading"
+             class="mt-3 w-full "
+    >
       <div class="domainSearchLoader h-40"></div>
     </section>
   </div>
 
   <!--    SEARCH RESULTS-->
-  <section class="mt-3 mx-auto" v-if="!loading && searchResults.length > 0">
+  <section v-if="!loading && searchResults.length > 0"
+           class="mt-3 mx-auto"
+  >
     <div
-        class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl">
+        class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
+    >
       <span class="text-2xl font-bold text-center dark:text-gray-200">Results</span>
       <span v-if="$store.state.domainToSearch.length > 20"
-            class="text-xs text-green-600 dark:text-gray-700 text-center">We are showing a shorter name because domain name is longer than 20 characters</span>
+            class="text-xs text-green-600 dark:text-gray-700 text-center"
+      >We are showing a shorter name because domain name is longer than 20 characters</span>
       <ul class="w-full">
-        <li class="list-none resultListItem flex items-center justify-between gap-2"
-            v-for="(tld, idx) in toggleTldPrices" :key="idx">
+        <li v-for="(tld, idx) in toggleTldPrices"
+            :key="idx"
+            class="list-none resultListItem flex items-center justify-between gap-2"
+        >
           <div class="flex flex-col gap-y-1">
             <h2 class="font-bold text-xs md:text-lg">
               {{
@@ -317,23 +333,27 @@ export default {
                   <span class="font-bold">
                     <span v-if="selectedCurrency === 'NGN'">₦</span>
                     <span v-else-if="selectedCurrency === 'USD'">$</span>
-                    <span v-else-if="selectedCurrency === 'KSH'">KSh</span>
+                    <span v-else-if="selectedCurrency === 'KES'">KSh</span>
                     <span v-else-if="selectedCurrency === 'GHS'">₵</span>
                     <span v-else-if="selectedCurrency === 'GBP'">£</span>
                     <span v-else-if="selectedCurrency === 'EUR'">€</span>{{
                       formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
-                    }}
+                                                                         }}
                   </span>
               </h1>
               <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
             </div>
             <button class="resultListAddBtn"
-                    @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)">🛒 Buy
+                    @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
+            >🛒 Buy
             </button>
           </div>
         </li>
         <li class="list-none resultListItem flex items-center justify-center">
-          <button class="resultListAddBtn" @click="showMore = true">+ Explore more Domains</button>
+          <button class="resultListAddBtn"
+                  @click="showMore = true"
+          >+ Explore more Domains
+          </button>
         </li>
       </ul>
     </div>

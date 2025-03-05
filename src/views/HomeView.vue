@@ -11,6 +11,7 @@ import WhyUsSection from "@/components/WhyUsSection.vue";
 import Testimonials from "@/components/Testimonials.vue";
 import FAQs from "@/components/FAQs.vue";
 import {useStore} from 'vuex';
+import CustomServicePicker from "@/components/CustomServicePicker.vue";
 
 const store = useStore();
 
@@ -27,19 +28,20 @@ onMounted(() => {
   store.dispatch('updatePreferredCurrency', preferredCurrency);
 })
 
-defineProps({ layout: "DefaultLayout" });
+defineProps({layout: "DefaultLayout"});
 </script>
 
 <template>
   <main class="min-h-screen dark:bg-gray-800">
-    <HeroSection/>
-    <ServicesTabs/>
-    <WebHostingSection/>
-    <EmailSection/>
-    <AppsSection/>
-    <DatabaseSection/>
-    <WhyUsSection/>
-    <Testimonials/>
-    <FAQs/>
+    <HeroSection />
+    <CustomServicePicker />
+    <!--    <ServicesTabs/>-->
+    <!--    <WebHostingSection/>-->
+    <!--    <EmailSection/>-->
+    <!--    <AppsSection/>-->
+    <!--    <DatabaseSection/>-->
+    <!--    <WhyUsSection/>-->
+    <Testimonials />
+    <FAQs />
   </main>
 </template>

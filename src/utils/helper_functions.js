@@ -1,16 +1,25 @@
+import axios from "axios";
+
 export const exchangeRates = {
-    NGN: 1,
-    USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
+    NGN: 1, USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
     GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
     EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
-    KSH: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
+    KES: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
     GHS: 0.015,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
 }
 
 export function convertPrice(currency, price) {
     price = parseFloat(price);
+    let url = 'https://skynet.africa/api/guest/currency/format'
+    axios.post(url, {
+        price: price,
+        code: currency,
+        without_currency: true
+    }).then(response => {
+        console.log(response.data);
+        // return response.data;
+    })
     const rate = exchangeRates[currency];
-    console.log("converting...", rate, price)
     return (price * rate).toFixed(2);
 }
 
@@ -33,8 +42,8 @@ export function getCurrencySymbol(currencyCode) {
             return '$';
         case 'NGN':
             return '₦';
-        case 'KSH':
-            return 'KSh'; // Or 'S' if you prefer a shorter symbol
+        case 'KES':
+            return 'KES'; // Or 'S' if you prefer a shorter symbol
         case 'GBP':
             return '£';
         case 'GHS':
@@ -72,8 +81,8 @@ export function formatDateWithoutTime(dateString) {
         return 'Invalid Date';
     }
 
-    const dayOfWeek = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
-    const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+    const dayOfWeek = dateObj.toLocaleDateString('en-US', {weekday: 'short'});
+    const month = dateObj.toLocaleDateString('en-US', {month: 'short'});
     const day = dateObj.getDate();
     const year = dateObj.getFullYear();
 

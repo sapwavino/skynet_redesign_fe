@@ -1,59 +1,59 @@
 /*TRANSITIONS*/
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.25s ease-in-out;
+    transition:opacity 0.25s ease-in-out;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+    opacity:0;
 }
 
 .slowFade-enter-active,
 .slowFade-leave-active {
-    transition: opacity 0.65s ease-in-out;
+    transition:opacity 0.65s ease-in-out;
 }
 
 .slowFade-enter-from,
 .slowFade-leave-to {
-    opacity: 0;
+    opacity:0;
 }
 
 
 /*LOADING ANIMATIONS*/
 .domainSearchLoader {
-    margin: 0 auto;
-    width: fit-content;
-    font-size: 35px;
-    font-weight: bold;
+    margin:0 auto;
+    width:fit-content;
+    font-size:35px;
+    font-weight:bold;
     /*text-transform: uppercase;*/
-    color: #0000;
-    -webkit-text-stroke: 1px #000;
-    background: conic-gradient(#000 0 0) 0/0% 100% no-repeat text;
-    animation: l1 1s linear infinite;
+    color:#0000;
+    -webkit-text-stroke:1px #000;
+    background:conic-gradient(#000 0 0) 0/0% 100% no-repeat text;
+    animation:l1 1s linear infinite;
     @apply dark:text-customGold dark:animate-pulse;
 }
 
 .domainSearchLoader:before {
-    content: "Searching domains...";
+    content:"Searching domains...";
 }
 
 .appLoader {
-    margin: 0 auto;
-    width: fit-content;
-    font-size: 35px;
-    font-weight: bold;
-    font-family: 'Raleway', sans-serif;
-    color: #0000;
-    -webkit-text-stroke: 1px #EABE63ff;
-    background: conic-gradient(#EABE63ff 0 0) 0/0% 100% no-repeat text;
-    animation: l1 2s linear infinite;
-    letter-spacing: 0.2rem;
+    margin:0 auto;
+    width:fit-content;
+    font-size:20px;
+    font-weight:bold;
+    font-family:"Raleway", sans-serif;
+    color:#0000;
+    -webkit-text-stroke:1px #eabe63ff;
+    background:conic-gradient(#eabe63ff 0 0) 0/0% 100% no-repeat text;
+    animation:l1 2s linear infinite;
+    letter-spacing:0.2rem;
     @apply dark:text-customGold dark:animate-pulse;
 }
 
 @keyframes l1 {
     to {
-        background-size: 120% 100%
+        background-size:120% 100%
     }
 }

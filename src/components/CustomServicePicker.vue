@@ -549,7 +549,7 @@ watch(selectedConfig, (newConfig) => {
               :class="{
                 'border-2 border-customGold text-customGold' : operatingSystem === 'windows'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -708,7 +708,7 @@ watch(selectedConfig, (newConfig) => {
             >-
             </button>
             <input v-model="numberOfWebsites"
-                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-full"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-1/4"
                    min="1"
                    type="number"
             />
@@ -754,7 +754,7 @@ watch(selectedConfig, (newConfig) => {
             >-
             </button>
             <input v-model="numberOfEmails"
-                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-full"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-1/4"
                    min="1"
                    type="number"
             />

@@ -102,46 +102,62 @@ const copyToClipboard = () => {
 const updateTotalCost = () => {
   totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2)
 };
+
+const updateTotalCostWithWindows = () => {
+  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + 10
+};
+
+const updateTotalCostWithGPU = () => {
+  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + (gpuCores.value * 10) + (gpuRAM.value * 10)
+};
+
+const updateTotalCostWithGPUAndWindows = () => {
+  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + (gpuCores.value * 10) + (gpuRAM.value * 10) + 10
+};
+
 onMounted(() => {
   updateTotalCost()
 })
 
 // Watch for changes in additional IPs and update total cost
 watch(additionalIPs, (newVal, oldVal) => {
-  const priceChange = (newVal - oldVal) * 2;// Each IP adds/subtracts $2
-  totalCost.value += priceChange;
+  updateTotalCost()
 });
 
-// // Watch RAM changes → $2 per unit
-// watch(ram, (newVal, oldVal) => {
-//   const diff = newVal - oldVal;
-//   totalCost.value += diff * 2;
-// });
-//
-// // Watch Cores changes → $2 per unit
-// watch(cores, (newVal, oldVal) => {
-//   const diff = newVal - oldVal;
-//   totalCost.value += diff * 2;
-// });
-//
-// // Watch Storage changes (10GB per unit) → $2 per unit
-// watch(storage, (newVal, oldVal) => {
-//   const diff = (newVal - oldVal) / 10;
-//   totalCost.value += diff * 2;
-// });
-//
-//
-// // Watch GPU RAM changes → $10 per unit
-// watch(gpuRAM, (newVal, oldVal) => {
-//   const diff = (newVal - oldVal);
-//   totalCost.value += diff * 10;
-// });
-//
-// // Watch GPU Cores changes → $10 per unit
-// watch(gpuCores, (newVal, oldVal) => {
-//   const diff = (newVal - oldVal);
-//   totalCost.value += diff * 10;
-// });
+watch(operatingSystem, (newVal, oldVal) => {
+  console.log(operatingSystem.value)
+  if (!gpuConfig.value) {
+    newVal === 'windows' ? updateTotalCostWithWindows() : updateTotalCost()
+    return
+  }
+  newVal === 'windows' ? updateTotalCostWithGPUAndWindows() : updateTotalCostWithGPU()
+});
+
+// Watch RAM changes → $2 per unit
+watch(ram, (newVal, oldVal) => {
+  updateTotalCost()
+});
+
+// Watch Cores changes → $2 per unit
+watch(cores, (newVal, oldVal) => {
+  updateTotalCost()
+});
+
+// Watch Storage changes (10GB per unit) → $2 per unit
+watch(storage, (newVal, oldVal) => {
+  updateTotalCost()
+});
+
+
+// Watch GPU RAM changes → $10 per unit
+watch(gpuRAM, (newVal, oldVal) => {
+  updateTotalCostWithGPU()
+});
+
+// Watch GPU Cores changes → $10 per unit
+watch(gpuCores, (newVal, oldVal) => {
+  updateTotalCostWithGPU()
+});
 
 
 watch(gpuConfig, (newVal, oldVal) => {
@@ -162,24 +178,17 @@ watch(selectedConfig, (newConfig) => {
     ram.value = newConfig.ram
     cores.value = newConfig.cores
     storage.value = newConfig.storage
-    totalCost.value = newConfig.price + (newConfig.ram * 2) + (newConfig.cores * 2) + ((newConfig.storage / 10) * 2) + (additionalIPs.value * 2)
+    updateTotalCost()
   }
   else {
-    console.log("Before")
-    console.log(newConfig)
-    console.log(totalCost.value)
     gpuConfig.value = newConfig.isGPU
     ram.value = newConfig.ram
     cores.value = newConfig.cores
     storage.value = newConfig.storage
     gpuRAM.value = newConfig.gpuRAM
     gpuCores.value = newConfig.gpuCores
-    totalCost.value = newConfig.price + (newConfig.ram * 2) + (newConfig.cores * 2) + ((newConfig.storage / 10)) + (additionalIPs.value * 2) + (newConfig.gpuRAM * 10) + (newConfig.gpuCores * 10)
+    updateTotalCostWithGPU()
 
-    console.log()
-    console.log("After")
-    console.log(newConfig)
-    console.log(totalCost.value)
   }
 
 });
@@ -196,15 +205,14 @@ watch(selectedConfig, (newConfig) => {
     <div class="mt-5">
       <h2 class="text-2xl font-bold text-center">Popular Configurations</h2>
       <hr class="mx-80 mb-5 mt-1 border-gray-300" />
-      <section class="grid grid-cols-4">
+      <section class="grid md:grid-cols-4">
         <div
             v-for="(config, idx) in popularConfigs"
             :key="idx"
             :class="{
-              'border-2 border-customGold/50': config.isGPU,
               'ring-4 ring-customGold': config.name === selectedConfig.name
             }"
-            class="m-2 shadow-2xl rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer"
+            class="m-2 shadow-2xl rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out"
             @click="selectedConfig = config"
         >
           <p v-if="config.isGPU"
@@ -225,11 +233,11 @@ watch(selectedConfig, (newConfig) => {
             >{{ feature }}</p>
           </div>
 
-          <p class="font-bold text-gray-800 dark:text-gray-400 text-2xl text-center">
-            ${{ convertPrice($store.state.preferredCurrency, config.price) }} /month
-          </p>
+          <!--          <p class="font-bold text-gray-800 dark:text-gray-400 text-2xl text-center">-->
+          <!--            ${{ convertPrice($store.state.preferredCurrency, config.price) }} /month-->
+          <!--          </p>-->
 
-          <button class="btn-base w-full">Select</button>
+          <!--          <button class="btn-base w-full">Select</button>-->
         </div>
       </section>
     </div>

@@ -73,7 +73,7 @@ export default {
           >
             <button v-for="(button, idx) in slide.buttons"
                     :key="idx"
-                    class="btn-base"
+                    class="md:btn-base btn-base-md"
             >{{ button.text }}
             </button>
           </div>

@@ -24,6 +24,10 @@
     @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-xs tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
+.btn-base-md {
+    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+}
+
 .btn-base-darker {
     @apply bg-black text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
@@ -37,12 +41,13 @@
 }
 
 .flat-btn-base {
-    @apply  bg-customGold text-black px-3 py-2  font-bold text-lg tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
+    @apply bg-customGold text-black px-3 py-2  font-bold text-lg tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
 }
 
 .flat-border-btn-base {
     @apply border border-customGold px-3 py-2 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out dark:text-customGold;
 }
+
 .flat-border-btn-base-small {
     @apply border-2 border-customGold dark:text-gray-300 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center;
 }

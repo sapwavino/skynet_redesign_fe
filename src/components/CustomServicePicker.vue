@@ -75,8 +75,10 @@ const operatingSystem = ref("linux")
 const rootPass = ref("")
 const additionalIPs = ref(0)
 const numberOfWebsites = ref(1)
+const numberOfEmails = ref(5)
 const totalCost = ref(0)
 const websitesTotalCost = ref(0)
+const emailsTotalCost = ref(0)
 const selectedConfig = ref(popularConfigs.value[1]);
 const features = ref([
   "Unlimited storage for all websites",
@@ -85,6 +87,14 @@ const features = ref([
   "24/7 technical support",
   "99.9% uptime guarantee",
   "One-click CMS installation (WordPress, Joomla, Drupal)"
+])
+const emailFeatures = ref([
+  "Custom domain email addresses (you@yourdomain.com)",
+  "50GB storage per mailbox",
+  "Advanced spam and virus protection",
+  "Mobile sync with any device",
+  "Webmail access",
+  "Calendar and contacts integration"
 ])
 
 const generateSSHPassword = () => {
@@ -152,11 +162,17 @@ watch(gpuConfig, (newVal, oldVal) => {
   }
 });
 watch(numberOfWebsites, (newValue, oldValue) => {
-  console.log(numberOfWebsites.value)
-  console.log(oldValue)
-  console.log(newValue)
   websitesTotalCost.value = numberOfWebsites.value * 2
-}, {deep: true, immediate: true})
+}, {
+  deep: true,
+  immediate: true
+})
+watch(numberOfEmails, (newValue, oldValue) => {
+  emailsTotalCost.value = numberOfEmails.value * 5
+}, {
+  deep: true,
+  immediate: true
+})
 
 // Watch for plan change and reset total cost
 watch(selectedConfig, (newConfig) => {
@@ -357,7 +373,7 @@ watch(selectedConfig, (newConfig) => {
               <p class="font-bold text-customGold">{{ gpuCores }} Cores</p>
             </div>
 
-            <div class="grid grid-cols-3 gap-3 py-5">
+            <div class="grid md:grid-cols-3 gap-3 py-5">
               <section
                   v-for="(architecture, idx) in gpuArchitectures"
                   :key="idx"
@@ -378,12 +394,12 @@ watch(selectedConfig, (newConfig) => {
       <section class="my-5">
         <h2 class="font-bold text-xl text-center">Operating System</h2>
         <hr class="mx-80 mb-5 mt-1 border-gray-300" />
-        <div class="grid grid-cols-3">
+        <div class="grid grid-cols-2 md:grid-cols-3">
           <div
               :class="{
                 'border-2 border-customGold' : operatingSystem === 'linux'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer w-1/2 mx-auto hover:border p-3 hover:border-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold"
               @click="operatingSystem = 'linux'"
           >
             <svg
@@ -408,7 +424,7 @@ watch(selectedConfig, (newConfig) => {
               :class="{
                 'border-2 border-customGold text-customGold' : operatingSystem === 'debian'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer w-1/2 mx-auto hover:border p-3 hover:border-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold"
               @click="operatingSystem = 'debian'"
           >
             <svg
@@ -533,7 +549,7 @@ watch(selectedConfig, (newConfig) => {
               :class="{
                 'border-2 border-customGold text-customGold' : operatingSystem === 'windows'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -600,7 +616,6 @@ watch(selectedConfig, (newConfig) => {
           </button>
         </section>
       </section>
-
 
       <section class="mt-10">
         <h2 class="font-bold text-xl text-center">Additional IP Addresses($2 each)</h2>
@@ -670,8 +685,10 @@ watch(selectedConfig, (newConfig) => {
         <button class="btn-base">Order Now</button>
       </div>
 
-
     </div>
+
+
+    <!--    HOSTING SECTION-->
     <section class="mt-10">
       <div id="hosting"
            class="mt-10 min-h-10"
@@ -691,7 +708,7 @@ watch(selectedConfig, (newConfig) => {
             >-
             </button>
             <input v-model="numberOfWebsites"
-                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center px-5"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-full"
                    min="1"
                    type="number"
             />
@@ -712,6 +729,52 @@ watch(selectedConfig, (newConfig) => {
           </li>
         </ul>
         <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}</h2>
+        <button class="btn-base">Order Now</button>
+      </div>
+    </section>
+
+    <!--EMAIL SECTION-->
+    <section class="mt-10">
+      <div id="email"
+           class="mt-10 min-h-10"
+      ></div>
+      <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Professional Email</h2>
+      <h3 class="muteSubheader text-center mb-5">
+        Business-grade email with your own domain name. Enhance your brand's professional image.
+      </h3>
+      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <p class="muteBoldSubheader text-center">Configure Email Plan</p>
+
+      <div class="flex items-center justify-center mt-5">
+        <h2 class="font-bold text-xl text-center mr-3">Email Accounts</h2>
+        <section class="">
+          <div class="text-center">
+            <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+                    @click="numberOfEmails > 0 ? numberOfEmails -= 1 : ''"
+            >-
+            </button>
+            <input v-model="numberOfEmails"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/3 md:w-full"
+                   min="1"
+                   type="number"
+            />
+            <button
+                class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+                @click="numberOfEmails += 1"
+            >+
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="text-center">
+        <h1 class="muteSubheader mt-5">Features</h1>
+        <ul>
+          <li v-for="(feature, index) in emailFeatures"
+              :key="index"
+          >✔️ {{ feature }}
+          </li>
+        </ul>
+        <h2 class="header mb-2 mt-10">Total: ${{ emailsTotalCost }}</h2>
         <button class="btn-base">Order Now</button>
       </div>
     </section>

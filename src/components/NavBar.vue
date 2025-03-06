@@ -77,15 +77,8 @@ export default {
          href="/#email"
       >Email</a>
       <a class="text-btn-base"
-         href="/#apps"
-      >Apps</a>
-      <a class="text-btn-base"
          href="/#database"
       >Database</a>
-      <router-link class="text-btn-base"
-                   to="#"
-      >Help & Support
-      </router-link>
 
     </div>
     <div v-show="!dashboardNav && !$store.state.isLoggedIn"

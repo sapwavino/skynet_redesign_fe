@@ -1,6 +1,6 @@
 <script setup>
 import {ref, watch, onMounted} from 'vue'
-import {convertPrice, exchangeRates} from "../utils/helper_functions.js";
+// import {convertPrice, exchangeRates} from "../utils/helper_functions.js";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 
@@ -74,8 +74,18 @@ const ssh = ref(true)
 const operatingSystem = ref("linux")
 const rootPass = ref("")
 const additionalIPs = ref(0)
+const numberOfWebsites = ref(1)
 const totalCost = ref(0)
+const websitesTotalCost = ref(0)
 const selectedConfig = ref(popularConfigs.value[1]);
+const features = ref([
+  "Unlimited storage for all websites",
+  "Supports PHP, Node.js, Python, and Ruby",
+  "Free SSL certificates",
+  "24/7 technical support",
+  "99.9% uptime guarantee",
+  "One-click CMS installation (WordPress, Joomla, Drupal)"
+])
 
 const generateSSHPassword = () => {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@-_#*&%$!";
@@ -123,9 +133,6 @@ watch(storage, calculateTotalCost);
 watch(gpuRAM, calculateTotalCost);
 watch(gpuCores, calculateTotalCost);
 watch(operatingSystem, calculateTotalCost);
-watch(gpuConfig, calculateTotalCost);
-
-
 watch(gpuConfig, (newVal, oldVal) => {
   if (newVal === true) {
     selectedConfig.value = popularConfigs.value.find((one) => {
@@ -144,6 +151,12 @@ watch(gpuConfig, (newVal, oldVal) => {
     calculateTotalCost()
   }
 });
+watch(numberOfWebsites, (newValue, oldValue) => {
+  console.log(numberOfWebsites.value)
+  console.log(oldValue)
+  console.log(newValue)
+  websitesTotalCost.value = numberOfWebsites.value * 2
+}, {deep: true, immediate: true})
 
 // Watch for plan change and reset total cost
 watch(selectedConfig, (newConfig) => {
@@ -166,8 +179,6 @@ watch(selectedConfig, (newConfig) => {
   }
 
 });
-
-
 </script>
 
 <template>
@@ -656,7 +667,48 @@ watch(selectedConfig, (newConfig) => {
         <button class="btn-base">Order Now</button>
       </div>
 
+
     </div>
+    <section class="mt-10">
+      <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Shared Hosting</h2>
+      <h3 class="muteSubheader text-center mb-5">Affordable and reliable hosting for all your websites. One-click
+                                                 installations and unlimited storage.</h3>
+      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <p class="muteBoldSubheader text-center">Configure Shared Hosting Plan</p>
+
+      <div class="flex items-center justify-center mt-5">
+        <h2 class="font-bold text-xl text-center mr-3">Number of Websites</h2>
+        <section class="">
+          <div class="text-center">
+            <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+                    @click="numberOfWebsites > 0 ? numberOfWebsites -= 1 : ''"
+            >-
+            </button>
+            <input v-model="numberOfWebsites"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center px-5"
+                   min="1"
+                   type="number"
+            />
+            <button
+                class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+                @click="numberOfWebsites += 1"
+            >+
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="text-center">
+        <h1 class="muteSubheader mt-5">Features</h1>
+        <ul>
+          <li v-for="(feature, index) in features"
+              :key="index"
+          >✔️ {{ feature }}
+          </li>
+        </ul>
+        <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}</h2>
+        <button class="btn-base">Order Now</button>
+      </div>
+    </section>
   </section>
 </template>
 

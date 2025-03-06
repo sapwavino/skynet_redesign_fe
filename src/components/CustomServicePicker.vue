@@ -48,7 +48,6 @@ const popularConfigs = ref([
     storage: 500
   }
 ])
-
 const ram = ref("4")
 const cores = ref("2")
 const storage = ref("100")
@@ -99,65 +98,32 @@ const copyToClipboard = () => {
   }
 };
 
-const updateTotalCost = () => {
-  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2)
-};
+const calculateTotalCost = () => {
+  let baseCost = (ram.value * 2) + (cores.value * 2) + ((storage.value / 10) * 2) + (additionalIPs.value * 2);
 
-const updateTotalCostWithWindows = () => {
-  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + 10
-};
+  if (gpuConfig.value) {
+    baseCost += (gpuCores.value * 10) + (gpuRAM.value * 10);
+  }
 
-const updateTotalCostWithGPU = () => {
-  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + (gpuCores.value * 10) + (gpuRAM.value * 10)
-};
+  if (operatingSystem.value === 'windows') {
+    baseCost += 10;
+  }
 
-const updateTotalCostWithGPUAndWindows = () => {
-  totalCost.value = selectedConfig.value.price + (ram.value * 2) + (cores.value * 2) + ((storage.value / 10)) + (additionalIPs.value * 2) + (gpuCores.value * 10) + (gpuRAM.value * 10) + 10
+  totalCost.value = baseCost;
 };
 
 onMounted(() => {
-  updateTotalCost()
+  calculateTotalCost()
 })
 
-// Watch for changes in additional IPs and update total cost
-watch(additionalIPs, (newVal, oldVal) => {
-  updateTotalCost()
-});
-
-watch(operatingSystem, (newVal, oldVal) => {
-  console.log(operatingSystem.value)
-  if (!gpuConfig.value) {
-    newVal === 'windows' ? updateTotalCostWithWindows() : updateTotalCost()
-    return
-  }
-  newVal === 'windows' ? updateTotalCostWithGPUAndWindows() : updateTotalCostWithGPU()
-});
-
-// Watch RAM changes → $2 per unit
-watch(ram, (newVal, oldVal) => {
-  updateTotalCost()
-});
-
-// Watch Cores changes → $2 per unit
-watch(cores, (newVal, oldVal) => {
-  updateTotalCost()
-});
-
-// Watch Storage changes (10GB per unit) → $2 per unit
-watch(storage, (newVal, oldVal) => {
-  updateTotalCost()
-});
-
-
-// Watch GPU RAM changes → $10 per unit
-watch(gpuRAM, (newVal, oldVal) => {
-  updateTotalCostWithGPU()
-});
-
-// Watch GPU Cores changes → $10 per unit
-watch(gpuCores, (newVal, oldVal) => {
-  updateTotalCostWithGPU()
-});
+watch(additionalIPs, calculateTotalCost);
+watch(ram, calculateTotalCost);
+watch(cores, calculateTotalCost);
+watch(storage, calculateTotalCost);
+watch(gpuRAM, calculateTotalCost);
+watch(gpuCores, calculateTotalCost);
+watch(operatingSystem, calculateTotalCost);
+watch(gpuConfig, calculateTotalCost);
 
 
 watch(gpuConfig, (newVal, oldVal) => {
@@ -165,9 +131,17 @@ watch(gpuConfig, (newVal, oldVal) => {
     selectedConfig.value = popularConfigs.value.find((one) => {
       return one.isGPU === true;
     })
+    ram.value = selectedConfig.value.ram
+    cores.value = selectedConfig.value.cores
+    storage.value = selectedConfig.value.storage
+    calculateTotalCost()
   }
   else {
     selectedConfig.value = popularConfigs.value[1]
+    ram.value = selectedConfig.value.ram
+    cores.value = selectedConfig.value.cores
+    storage.value = selectedConfig.value.storage
+    calculateTotalCost()
   }
 });
 
@@ -178,7 +152,7 @@ watch(selectedConfig, (newConfig) => {
     ram.value = newConfig.ram
     cores.value = newConfig.cores
     storage.value = newConfig.storage
-    updateTotalCost()
+    calculateTotalCost()
   }
   else {
     gpuConfig.value = newConfig.isGPU
@@ -187,7 +161,7 @@ watch(selectedConfig, (newConfig) => {
     storage.value = newConfig.storage
     gpuRAM.value = newConfig.gpuRAM
     gpuCores.value = newConfig.gpuCores
-    updateTotalCostWithGPU()
+    calculateTotalCost()
 
   }
 

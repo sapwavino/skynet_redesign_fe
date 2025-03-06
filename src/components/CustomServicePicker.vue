@@ -834,7 +834,7 @@ watch(selectedConfig, (newConfig) => {
                  :key="idx"
                  class="flex flex-col gap-y-5 justify-between shadow-2xl pb-10"
         >
-          <div class="bg-gradient-to-br from-customGold via-yellow-500/80 to-customGold text-center p-5 rounded-tr-3xl rounded-tl-3xl">
+          <div class="bg-gradient-to-br from-customGold via-yellow-500/50 to-customGold text-center p-5 rounded-tr-3xl rounded-tl-3xl">
             <h1 class="header">{{ database.name }}</h1>
             <h2>{{ database.subtitle }}</h2>
           </div>

@@ -60,7 +60,7 @@ const props = defineProps({
   },
   autoPlayInterval: {
     type: Number,
-    default: 3000, // 3 seconds
+    default: 4000, // 4 seconds
   },
 });
 

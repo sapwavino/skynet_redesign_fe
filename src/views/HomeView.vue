@@ -35,7 +35,7 @@ defineProps({layout: "DefaultLayout"});
     <HeroSection />
     <CustomServicePicker />
     <!--    <ServicesTabs/>-->
-    <!--    <WebHostingSection/>-->
+    <!--        <WebHostingSection/>-->
     <!--    <EmailSection/>-->
     <!--    <AppsSection/>-->
     <!--    <DatabaseSection/>-->

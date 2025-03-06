@@ -68,6 +68,9 @@ export default {
          class="flex items-center gap-x-5 font-bold"
     >
       <a class="text-btn-base"
+         href="/#cloud"
+      >Cloud</a>
+      <a class="text-btn-base"
          href="/#hosting"
       >Hosting</a>
       <a class="text-btn-base"

@@ -183,6 +183,9 @@ watch(selectedConfig, (newConfig) => {
 
 <template>
   <section class="w-3/4 mx-auto mt-5">
+    <div id="cloud"
+         class="mt-10 min-h-10"
+    ></div>
     <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Cloud VPS Solutions</h2>
     <h2 class="muteBoldSubheader text-center">Customize your virtual private server with the exact resources you need.
       <br /> Pay only for what you use.
@@ -552,7 +555,7 @@ watch(selectedConfig, (newConfig) => {
       <section class="mt-10">
         <h2 class="font-bold text-xl text-center">Access Configuration</h2>
         <hr class="mx-80 mb-5 mt-1 border-gray-300" />
-        <div class="flex items-center">
+        <div class="flex items-center justify-center">
           <input id="ssh"
                  v-model="ssh"
                  class="mr-3"
@@ -563,7 +566,7 @@ watch(selectedConfig, (newConfig) => {
           >Enable SSH Access</label>
         </div>
 
-        <section class="flex items-center">
+        <section class="flex items-center justify-center my-5">
           <div class="relative w-1/3 ">
             <!-- Password Input -->
             <input
@@ -670,6 +673,9 @@ watch(selectedConfig, (newConfig) => {
 
     </div>
     <section class="mt-10">
+      <div id="hosting"
+           class="mt-10 min-h-10"
+      ></div>
       <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Shared Hosting</h2>
       <h3 class="muteSubheader text-center mb-5">Affordable and reliable hosting for all your websites. One-click
                                                  installations and unlimited storage.</h3>

@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel relative overflow-hidden w-3/4 rounded-2xl mb-5 shadow-2xl">
+  <div class="carousel relative overflow-hidden md:w-3/4 rounded-2xl mb-5 shadow-2xl">
     <transition name="slowFade">
       <div
           :style="{

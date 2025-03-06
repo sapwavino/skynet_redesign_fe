@@ -68,12 +68,12 @@ export default {
           <h2 class="header text-customGold text-center md:text-left">
             {{ slide.header }}
           </h2>
-          <h2>{{ slide.subheader }}</h2>
-          <div class="flex items-center gap-x-3"
+          <h2 class="text-center md:text-left">{{ slide.subheader }}</h2>
+          <div class="flex items-center justify-center md:justify-start gap-x-3"
           >
             <button v-for="(button, idx) in slide.buttons"
                     :key="idx"
-                    class="md:btn-base btn-base-md"
+                    class=" btn-base-md md:btn-base"
             >{{ button.text }}
             </button>
           </div>

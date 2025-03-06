@@ -96,6 +96,44 @@ const emailFeatures = ref([
   "Webmail access",
   "Calendar and contacts integration"
 ])
+const databaseServices = ref([
+  {
+    name: "MySQL",
+    subtitle: "The world's most popular open-source database",
+    price: 15,
+    features: [
+      "Automated backups",
+      "High availability configuration",
+      "Optimized performance",
+      "Scalable storage",
+      "24/7 monitoring"
+    ]
+  },
+  {
+    name: "PostgreSQL",
+    subtitle: "Advanced open-source database",
+    price: 20,
+    features: [
+      "ACID compliance",
+      "JSON support",
+      "Spatial data with PostGIS",
+      "High availability",
+      "Managed updates"
+    ]
+  },
+  {
+    name: "MongoDB",
+    subtitle: "NoSQL document database solution",
+    price: 25,
+    features: [
+      "Document model for flexibility",
+      "Horizontal scaling",
+      "High-performance",
+      "Automated backups",
+      "Monitoring and alerting"
+    ]
+  }
+])
 
 const generateSSHPassword = () => {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@-_#*&%$!";
@@ -776,6 +814,38 @@ watch(selectedConfig, (newConfig) => {
         </ul>
         <h2 class="header mb-2 mt-10">Total: ${{ emailsTotalCost }}</h2>
         <button class="btn-base">Order Now</button>
+      </div>
+    </section>
+
+
+    <!--    DATABASE SECTION-->
+    <section class="my-10">
+      <div id="database"
+           class="mt-10 min-h-10"
+      ></div>
+      <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Database as a service</h2>
+      <h3 class="muteSubheader text-center mb-5">
+        Fully managed database solutions that scale with your application needs.
+      </h3>
+      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+
+      <div class="grid md:grid-cols-3 gap-x-8">
+        <section v-for="(database, idx) in databaseServices"
+                 :key="idx"
+                 class="flex flex-col gap-y-5 justify-between shadow-2xl pb-10"
+        >
+          <div class="bg-gradient-to-br from-customGold via-yellow-500/80 to-customGold text-center p-5 rounded-tr-3xl rounded-tl-3xl">
+            <h1 class="header">{{ database.name }}</h1>
+            <h2>{{ database.subtitle }}</h2>
+          </div>
+          <ul>
+            <li v-for="feature in database.features"
+                :key="feature"
+            >{{ feature }}
+            </li>
+          </ul>
+          <button class="btn-base w-1/2 mx-auto">Get Started</button>
+        </section>
       </div>
     </section>
   </section>

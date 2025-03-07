@@ -684,48 +684,6 @@ watch(selectedConfig, (newConfig) => {
 
       <!--CONFIG SUMMARY-->
       <div class="text-center mt-5">
-        <hr class="mx-80 mb-5 mt-1 border-gray-300" />
-        <div v-if="selectedConfig"
-        >
-          <h2 class="font-bold text-xl dark:text-gray-300">Selected Configuration: {{ selectedConfig.name }}</h2>
-          <ul class="list-none mb-10 dark:text-gray-300">
-            <li class=""><strong>Operating System:</strong> <span class="muteBoldSubheader capitalize">{{
-                operatingSystem ? operatingSystem : 'Not selected'
-                                                                                                       }}
-            </span>
-            </li>
-            <li class=""><strong>RAM:</strong> <span class="muteBoldSubheader capitalize">{{ ram }}GB
-            </span>
-            </li>
-            <li class=""><strong>CPU Cores:</strong> <span class="muteBoldSubheader capitalize">{{
-                cores
-                                                                                                }} Cores
-            </span>
-            </li>
-            <li class=""><strong>Storage Capacity: </strong>
-              <span class="muteBoldSubheader capitalize">{{ storage }}GB
-            </span>
-            </li>
-            <li><strong>SSH Access:</strong> <span class="muteBoldSubheader capitalize">{{
-                ssh ? '✅' : '❌'
-                                                                                        }}</span>
-            </li>
-            <li>
-              <strong>Additional IP Addresses: </strong>
-              <span class="muteBoldSubheader capitalize"> {{ additionalIPs }}
-              </span>
-            </li>
-            <li v-if="gpuConfig">
-              <h2 class="font-bold mt-2 underline underline-offset-3">GPU Configuration</h2>
-              <h1><strong>Architecture:</strong> <span class="capitalize muteBoldSubheader">{{ gpuArchitecture }}</span>
-              </h1>
-              <h1><strong>GPU RAM:</strong> <span class="capitalize muteBoldSubheader">{{ gpuRAM }}GB</span>
-              </h1>
-              <h1><strong>GPU Cores:</strong> <span class="capitalize muteBoldSubheader">{{ gpuCores }} Cores</span>
-              </h1>
-            </li>
-          </ul>
-        </div>
         <h2 class="header mb-2">Total: ${{ totalCost }}</h2>
         <button class="btn-base">Order Now</button>
       </div>
@@ -739,13 +697,16 @@ watch(selectedConfig, (newConfig) => {
            class="mt-10 min-h-10"
       ></div>
       <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Shared Hosting</h2>
-      <h3 class="muteSubheader text-center">Affordable and reliable hosting for all your websites. One-click
-                                            installations and unlimited storage.</h3>
+      <h3 class="muteSubheader text-center">
+        Affordable and reliable hosting for all your websites. One-click
+        installations and unlimited storage.
+      </h3>
       <hr class="mx-80 mt-1 border-gray-300" />
-      <DotLottieVue autoplay
-                    loop
-                    src="/noGPUAnimation.json"
-                    style="height: 300px; width: 300px; margin: 0 auto;"
+      <DotLottieVue
+          autoplay
+          loop
+          src="/noGPUAnimation.json"
+          style="height: 300px; width: 300px; margin: 0 auto;"
       />
       <p class="muteBoldSubheader text-center">Configure Shared Hosting Plan</p>
 

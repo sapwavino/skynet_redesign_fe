@@ -10,21 +10,27 @@ export const exchangeRates = {
 
 export function convertPrice(currency, price) {
     price = parseFloat(price);
-    // let url = 'https://skynet.africa/api/guest/currency/format'
-    // axios.post(url, {
-    //     price: price,
-    //     code: currency,
-    //     without_currency: true
-    // }).then(response => {
-    //     console.log(response.data);
-    //     // return response.data;
-    // })
-    let url = 'https://skynet.africa/api/guest/currency/get_pairs'
-    axios.get(url, {
-        headers: {}
+    let url = 'https://skynet.africa/api/guest/currency/format'
+    axios.post(url, {
+        price: price,
+        code: currency,
+        without_currency: true
     }).then(response => {
         console.log(response.data);
+        // return response.data;
     })
+    const username = 'client';
+    const password = 'er1KM8OcrSJ8byMBWVJrEz2rSzEwlw8R';
+// Encode credentials to Base64
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
+    // let url = 'http://localhost:3001/api/guest/client/login'
+    // let url = 'https://httpbin.org/get'
+    // axios.post(url, {
+    //     "email": "sapwavino@gmail.com",
+    //     "password": "Bl@ckbeat1"
+    // }).then(response => {
+    //     console.log(response.data);
+    // })
     const rate = exchangeRates[currency];
     return (price * rate).toFixed(2);
 }

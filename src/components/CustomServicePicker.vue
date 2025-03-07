@@ -255,7 +255,7 @@ watch(selectedConfig, (newConfig) => {
             :class="{
               'ring-4 ring-customGold': config.name === selectedConfig.name
             }"
-            class="m-2 shadow-2xl rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out"
+            class="m-2 shadow-2xl rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out dark:bg-gray-900"
             @click="selectedConfig = config"
         >
           <p v-if="config.isGPU"
@@ -275,12 +275,6 @@ watch(selectedConfig, (newConfig) => {
                 class="muteBoldSubheader"
             >{{ feature }}</p>
           </div>
-
-          <!--          <p class="font-bold text-gray-800 dark:text-gray-400 text-2xl text-center">-->
-          <!--            ${{ convertPrice($store.state.preferredCurrency, config.price) }} /month-->
-          <!--          </p>-->
-
-          <!--          <button class="btn-base w-full">Select</button>-->
         </div>
       </section>
     </div>
@@ -441,9 +435,10 @@ watch(selectedConfig, (newConfig) => {
         <div class="grid grid-cols-2 md:grid-cols-3">
           <div
               :class="{
-                'border-2 border-customGold' : operatingSystem === 'linux'
+                'border-2 border-customGold dark:bg-gray-900' : operatingSystem === 'linux',
+                'dark:text-gray-500' : operatingSystem !== 'linux',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'linux'"
           >
             <svg
@@ -460,15 +455,16 @@ watch(selectedConfig, (newConfig) => {
             <span :class="{
                 'text-customGold' : operatingSystem === 'linux'
               }"
-                  class="font-bold mt-2 tracking-wider text-lg dark:text-gray-500"
+                  class="font-bold mt-2 tracking-wider text-lg"
             >Linux</span>
           </div>
 
           <div
               :class="{
-                'border-2 border-customGold text-customGold' : operatingSystem === 'debian'
+                'border-2 border-customGold text-customGold dark:bg-gray-900' : operatingSystem === 'debian',
+                'dark:text-gray-500' : operatingSystem !== 'debian',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'debian'"
           >
             <svg
@@ -586,14 +582,15 @@ watch(selectedConfig, (newConfig) => {
                 </g>
               </g>
             </svg>
-            <span class="font-bold mt-2 tracking-wider text-lg dark:text-gray-500">Debian</span>
+            <span class="font-bold mt-2 tracking-wider text-lg ">Debian</span>
           </div>
 
           <div
               :class="{
-                'border-2 border-customGold text-customGold dark:text-customGold' : operatingSystem === 'windows'
+                'border-2 border-customGold text-customGold dark:text-customGold dark:bg-gray-900' : operatingSystem === 'windows',
+                'dark:text-gray-500' : operatingSystem !== 'windows',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 dark:text-gray-500"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -685,11 +682,13 @@ watch(selectedConfig, (newConfig) => {
         </div>
       </section>
 
+      <!--CONFIG SUMMARY-->
       <div class="text-center mt-5">
         <hr class="mx-80 mb-5 mt-1 border-gray-300" />
-        <div v-if="selectedConfig">
-          <h2 class="font-bold text-xl">Selected Configuration: {{ selectedConfig.name }}</h2>
-          <ul class="list-none mb-10 ">
+        <div v-if="selectedConfig"
+        >
+          <h2 class="font-bold text-xl dark:text-gray-300">Selected Configuration: {{ selectedConfig.name }}</h2>
+          <ul class="list-none mb-10 dark:text-gray-300">
             <li class=""><strong>Operating System:</strong> <span class="muteBoldSubheader capitalize">{{
                 operatingSystem ? operatingSystem : 'Not selected'
                                                                                                        }}
@@ -703,7 +702,7 @@ watch(selectedConfig, (newConfig) => {
                                                                                                 }} Cores
             </span>
             </li>
-            <li class=""><strong>Storage Capacity:</strong>
+            <li class=""><strong>Storage Capacity: </strong>
               <span class="muteBoldSubheader capitalize">{{ storage }}GB
             </span>
             </li>
@@ -712,7 +711,7 @@ watch(selectedConfig, (newConfig) => {
                                                                                         }}</span>
             </li>
             <li>
-              <strong>Additional IP Addresses:</strong>
+              <strong>Additional IP Addresses: </strong>
               <span class="muteBoldSubheader capitalize"> {{ additionalIPs }}
               </span>
             </li>
@@ -735,7 +734,7 @@ watch(selectedConfig, (newConfig) => {
 
 
     <!--    HOSTING SECTION-->
-    <section class="mt-10">
+    <section class="mt-10 dark:text-gray-200">
       <div id="hosting"
            class="mt-10 min-h-10"
       ></div>
@@ -785,7 +784,7 @@ watch(selectedConfig, (newConfig) => {
     </section>
 
     <!--EMAIL SECTION-->
-    <section class="mt-10">
+    <section class="mt-10 dark:text-gray-200">
       <div id="email"
            class="mt-10 min-h-10"
       ></div>
@@ -838,7 +837,7 @@ watch(selectedConfig, (newConfig) => {
 
 
     <!--    DATABASE SECTION-->
-    <section class="my-10">
+    <section class="my-10 dark:text-gray-200">
       <div id="database"
            class="mt-10 min-h-10"
       ></div>
@@ -855,7 +854,7 @@ watch(selectedConfig, (newConfig) => {
       <div class="grid md:grid-cols-3 gap-x-8">
         <section v-for="(database, idx) in databaseServices"
                  :key="idx"
-                 class="flex flex-col gap-y-5 justify-between shadow-2xl pb-10"
+                 class="flex flex-col gap-y-5 justify-between shadow-2xl pb-10 dark:bg-gray-900 rounded-2xl"
         >
           <div class="bg-gradient-to-br from-customGold via-yellow-500/50 to-customGold text-center p-5 rounded-tr-3xl rounded-tl-3xl">
             <h1 class="header">{{ database.name }}</h1>

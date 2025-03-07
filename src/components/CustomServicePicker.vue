@@ -305,62 +305,64 @@ watch(selectedConfig, (newConfig) => {
 
 
       <!--      CPU CONFIGURATION-->
-      <div class="flex items-center gap-3 mx-auto">
-        <label
-            class="text-neutral-700 font-bold dark:text-neutral-200"
-            for="ramRange"
-        >
-          RAM
-        </label
-        >
-        <input
-            id="ramRange"
-            v-model="ram"
-            class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-            max="64"
-            min="1"
-            type="range"
-        />
-        <p class="font-bold text-customGold">{{ ram }} GB</p>
-      </div>
+      <div class="pl-10">
+        <div class="flex items-center gap-3 mx-auto">
+          <label
+              class="text-neutral-700 font-bold dark:text-neutral-200"
+              for="ramRange"
+          >
+            RAM
+          </label
+          >
+          <input
+              id="ramRange"
+              v-model="ram"
+              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+              max="64"
+              min="1"
+              type="range"
+          />
+          <p class="font-bold text-customGold">{{ ram }} GB</p>
+        </div>
 
-      <div class="flex items-center gap-3 mx-auto my-5">
-        <label
-            class="text-neutral-700 font-bold dark:text-neutral-200"
-            for="coresRange"
-        >
-          CPU Cores
-        </label
-        >
-        <input
-            id="coresRange"
-            v-model="cores"
-            class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-            max="32"
-            min="1"
-            type="range"
-        />
-        <p class="font-bold text-customGold">{{ cores }} Cores</p>
-      </div>
+        <div class="flex items-center gap-3 mx-auto my-5">
+          <label
+              class="text-neutral-700 font-bold dark:text-neutral-200"
+              for="coresRange"
+          >
+            CPU Cores
+          </label
+          >
+          <input
+              id="coresRange"
+              v-model="cores"
+              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+              max="32"
+              min="1"
+              type="range"
+          />
+          <p class="font-bold text-customGold">{{ cores }} Cores</p>
+        </div>
 
-      <div class="flex items-center gap-3 mx-auto">
-        <label
-            class="text-neutral-700 font-bold dark:text-neutral-200"
-            for="ramRange"
-        >
-          Storage
-        </label
-        >
-        <input
-            id="ramRange"
-            v-model="storage"
-            class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-            max="2000"
-            min="20"
-            step="10"
-            type="range"
-        />
-        <p class="font-bold text-customGold">{{ storage }} GB</p>
+        <div class="flex items-center gap-3 mx-auto">
+          <label
+              class="text-neutral-700 font-bold dark:text-neutral-200"
+              for="ramRange"
+          >
+            Storage
+          </label
+          >
+          <input
+              id="ramRange"
+              v-model="storage"
+              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+              max="2000"
+              min="20"
+              step="10"
+              type="range"
+          />
+          <p class="font-bold text-customGold">{{ storage }} GB</p>
+        </div>
       </div>
 
 

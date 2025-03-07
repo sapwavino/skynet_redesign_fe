@@ -812,7 +812,7 @@ watch(selectedConfig, (newConfig) => {
            src="/db.jpg"
       >
 
-      <div class="grid md:grid-cols-3 gap-x-8">
+      <div class="grid md:grid-cols-3 gap-8">
         <section v-for="(database, idx) in databaseServices"
                  :key="idx"
                  class="flex flex-col gap-y-5 justify-between shadow-2xl pb-10 dark:bg-gray-900 rounded-2xl"

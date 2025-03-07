@@ -624,14 +624,14 @@ watch(selectedConfig, (newConfig) => {
           >Enable SSH Access</label>
         </div>
 
-        <section class="flex items-center justify-center my-5">
-          <div class="relative w-1/3 ">
+        <section class="flex flex-col md:flex-row items-center justify-center my-5">
+          <div class="relative md:w-1/3 w-full ">
             <!-- Password Input -->
             <input
                 id="rootPass"
                 v-model="rootPass"
                 :type="showPassword ? 'text' : 'password'"
-                class="text-input-base w-full py-2 rounded-md px-3 pr-16"
+                class="text-input-base w-full py-2 rounded-md px-3 pr-16 placeholder:text-xs md:placeholder:text-base"
                 placeholder="Enter or Generate Password"
             />
 
@@ -651,7 +651,7 @@ watch(selectedConfig, (newConfig) => {
           </div>
 
           <!-- Generate Password Button -->
-          <button class="btn-base px-3 ml-3"
+          <button class="btn-base px-3 ml-3 mt-3 md:mt-0"
                   @click="rootPass = generateSSHPassword()"
           >
             Generate 🔄

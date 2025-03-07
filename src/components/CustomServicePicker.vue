@@ -745,7 +745,7 @@ watch(selectedConfig, (newConfig) => {
       <DotLottieVue autoplay
                     loop
                     src="/noGPUAnimation.json"
-                    style="height: 300px; width: 400px; margin: 0 auto;"
+                    style="height: 300px; width: 300px; margin: 0 auto;"
       />
       <p class="muteBoldSubheader text-center">Configure Shared Hosting Plan</p>
 

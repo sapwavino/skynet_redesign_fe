@@ -3,6 +3,7 @@ import {ref, watch, onMounted} from 'vue'
 // import {convertPrice, exchangeRates} from "../utils/helper_functions.js";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
+import {DotLottieVue} from "@lottiefiles/dotlottie-vue";
 
 const popularConfigs = ref([
   {
@@ -732,9 +733,14 @@ watch(selectedConfig, (newConfig) => {
            class="mt-10 min-h-10"
       ></div>
       <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Shared Hosting</h2>
-      <h3 class="muteSubheader text-center mb-5">Affordable and reliable hosting for all your websites. One-click
-                                                 installations and unlimited storage.</h3>
-      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <h3 class="muteSubheader text-center">Affordable and reliable hosting for all your websites. One-click
+                                            installations and unlimited storage.</h3>
+      <hr class="mx-80 mt-1 border-gray-300" />
+      <DotLottieVue autoplay
+                    loop
+                    src="/noGPUAnimation.json"
+                    style="height: 300px; width: 400px; margin: 0 auto;"
+      />
       <p class="muteBoldSubheader text-center">Configure Shared Hosting Plan</p>
 
       <div class="flex items-center justify-center mt-5">
@@ -781,6 +787,12 @@ watch(selectedConfig, (newConfig) => {
         Business-grade email with your own domain name. Enhance your brand's professional image.
       </h3>
       <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <DotLottieVue
+          autoplay
+          loop
+          src="emailSectionAnimation.lottie"
+          style="height: 300px;"
+      />
       <p class="muteBoldSubheader text-center">Configure Email Plan</p>
 
       <div class="flex items-center justify-center mt-5">
@@ -828,6 +840,10 @@ watch(selectedConfig, (newConfig) => {
         Fully managed database solutions that scale with your application needs.
       </h3>
       <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <img alt="database"
+           class="rounded-3xl dark:border-8 dark:border-customGold dark:grayscale-75 dark:p-5 mx-auto"
+           src="/db.jpg"
+      >
 
       <div class="grid md:grid-cols-3 gap-x-8">
         <section v-for="(database, idx) in databaseServices"

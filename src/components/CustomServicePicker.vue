@@ -246,8 +246,8 @@ watch(selectedConfig, (newConfig) => {
       <br /> Pay only for what you use.
     </h2>
     <div class="mt-5">
-      <h2 class="text-2xl font-bold text-center">Popular Configurations</h2>
-      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <h2 class="text-2xl font-bold text-center dark:text-gray-300">Popular Configurations</h2>
+      <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
       <section class="grid md:grid-cols-4">
         <div
             v-for="(config, idx) in popularConfigs"
@@ -266,7 +266,7 @@ watch(selectedConfig, (newConfig) => {
              class="bg-customGold font-bold p-1 px-2 rounded-full absolute -top-3 -right-3 text-sm tracking-wider"
           >Popular</p>
 
-          <h2 class="text-2xl font-bold text-center">{{ config.name }}</h2>
+          <h2 class="text-2xl font-bold text-center dark:text-gray-300">{{ config.name }}</h2>
 
           <div class="flex flex-col items-center">
             <p
@@ -286,15 +286,16 @@ watch(selectedConfig, (newConfig) => {
     </div>
 
     <div class="mt-5">
-      <h2 class="text-2xl font-bold text-center">Configure your VPS</h2>
-      <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+      <h2 class="text-2xl font-bold text-center dark:text-gray-300">Configure your VPS</h2>
+      <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
 
 
+      <!--      GPU CONFIG TOGGLE-->
       <div class="flex justify-center mb-5">
         <label class="inline-flex items-center space-x-4 cursor-pointer text-gray-800"
                for="Toggle2"
         >
-          <span class="font-bold">CPU</span>
+          <span class="font-bold dark:text-gray-300">CPU</span>
           <span class="relative">
           <input id="Toggle2"
                  v-model="gpuConfig"
@@ -304,10 +305,12 @@ watch(selectedConfig, (newConfig) => {
           <div class="w-10 h-4 rounded-full shadow bg-gray-400 peer-checked:bg-customGold"></div>
           <div class="absolute left-0 w-6 h-6 rounded-full shadow -inset-y-1 peer-checked:right-0 peer-checked:left-auto bg-customGold"></div>
         </span>
-          <span class="font-bold">GPU-Accelerated</span>
+          <span class="font-bold dark:text-gray-300">GPU-Accelerated</span>
         </label>
       </div>
 
+
+      <!--      CPU CONFIGURATION-->
       <div class="flex items-center gap-3 mx-auto">
         <label
             class="text-neutral-700 font-bold dark:text-neutral-200"
@@ -367,10 +370,11 @@ watch(selectedConfig, (newConfig) => {
       </div>
 
 
+      <!--GPU CONFIG-->
       <transition name="fade">
         <section v-if="gpuConfig">
-          <h2 class="font-bold text-xl text-center mt-5">GPU Configuration</h2>
-          <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+          <h2 class="font-bold text-xl text-center mt-5 dark:text-gray-300">GPU Configuration</h2>
+          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
           <div class="border-l-4 border-customGold rounded-l-2xl py-5 px-3">
 
             <div class="flex items-center gap-3 mx-auto">
@@ -417,9 +421,9 @@ watch(selectedConfig, (newConfig) => {
                   v-for="(architecture, idx) in gpuArchitectures"
                   :key="idx"
                   :class="{
-                    'border-2 border-customGold' : architecture.name === gpuArchitecture
+                    'border-2 border-customGold  p-3 rounded-2xl cursor-pointer' : architecture.name === gpuArchitecture,
+                    'border dark:border-gray-700 p-3 rounded-2xl cursor-pointer' : architecture.name !== gpuArchitecture,
                   }"
-                  class="border dark:border-gray-700 p-3 rounded-2xl cursor-pointer"
                   @click="gpuArchitecture = architecture.name"
               >
                 <h1 class="muteBoldSubheader">{{ architecture.name }}</h1>
@@ -430,15 +434,16 @@ watch(selectedConfig, (newConfig) => {
         </section>
       </transition>
 
+      <!--      OS-->
       <section class="my-5">
-        <h2 class="font-bold text-xl text-center">Operating System</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+        <h2 class="font-bold text-xl text-center dark:text-gray-300">Operating System</h2>
+        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
         <div class="grid grid-cols-2 md:grid-cols-3">
           <div
               :class="{
                 'border-2 border-customGold' : operatingSystem === 'linux'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500"
               @click="operatingSystem = 'linux'"
           >
             <svg
@@ -455,7 +460,7 @@ watch(selectedConfig, (newConfig) => {
             <span :class="{
                 'text-customGold' : operatingSystem === 'linux'
               }"
-                  class="font-bold mt-2 tracking-wider text-lg"
+                  class="font-bold mt-2 tracking-wider text-lg dark:text-gray-500"
             >Linux</span>
           </div>
 
@@ -463,7 +468,7 @@ watch(selectedConfig, (newConfig) => {
               :class="{
                 'border-2 border-customGold text-customGold' : operatingSystem === 'debian'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500"
               @click="operatingSystem = 'debian'"
           >
             <svg
@@ -581,14 +586,14 @@ watch(selectedConfig, (newConfig) => {
                 </g>
               </g>
             </svg>
-            <span class="font-bold mt-2 tracking-wider text-lg">Debian</span>
+            <span class="font-bold mt-2 tracking-wider text-lg dark:text-gray-500">Debian</span>
           </div>
 
           <div
               :class="{
-                'border-2 border-customGold text-customGold' : operatingSystem === 'windows'
+                'border-2 border-customGold text-customGold dark:text-customGold' : operatingSystem === 'windows'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 dark:text-gray-500"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -602,21 +607,22 @@ watch(selectedConfig, (newConfig) => {
               <path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
             </svg>
             <span
-                class="font-bold mt-2 tracking-wider text-lg"
+                class="font-bold mt-2 tracking-wider text-lg "
             >Windows (+$10)</span></div>
         </div>
       </section>
 
+      <!--      ACCESS CONFIG-->
       <section class="mt-10">
-        <h2 class="font-bold text-xl text-center">Access Configuration</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+        <h2 class="font-bold text-xl text-center dark:text-gray-300">Access Configuration</h2>
+        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
         <div class="flex items-center justify-center">
           <input id="ssh"
                  v-model="ssh"
                  class="mr-3"
                  type="checkbox"
           />
-          <label class="font-bold"
+          <label class="font-bold dark:text-gray-300"
                  for="ssh"
           >Enable SSH Access</label>
         </div>
@@ -656,22 +662,23 @@ watch(selectedConfig, (newConfig) => {
         </section>
       </section>
 
+      <!--      ADDITIONAL IP-->
       <section class="mt-10">
-        <h2 class="font-bold text-xl text-center">Additional IP Addresses($2 each)</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300" />
+        <h2 class="font-bold text-xl text-center dark:text-gray-300">Additional IP Addresses($2 each)</h2>
+        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
         <div class="text-center">
-          <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+          <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
                   @click="additionalIPs > 0 ? additionalIPs -= 1 : ''"
           >-
           </button>
           <input v-model="additionalIPs"
-                 class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/8"
+                 class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/8 dark:border-gray-500 dark:text-gray-300"
                  max="10"
                  min="0"
                  type="number"
           />
           <button
-              class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
+              class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
               @click="additionalIPs < 10 ?additionalIPs += 1 : ''"
           >+
           </button>
@@ -841,7 +848,7 @@ watch(selectedConfig, (newConfig) => {
       </h3>
       <hr class="mx-80 mb-5 mt-1 border-gray-300" />
       <img alt="database"
-           class="rounded-3xl dark:border-8 dark:border-customGold dark:grayscale-75 dark:p-5 mx-auto"
+           class="rounded-3xl dark:border-8 dark:border-customGold dark:grayscale-75 dark:p-5 mx-auto mb-5"
            src="/db.jpg"
       >
 
@@ -854,10 +861,12 @@ watch(selectedConfig, (newConfig) => {
             <h1 class="header">{{ database.name }}</h1>
             <h2>{{ database.subtitle }}</h2>
           </div>
-          <ul>
-            <li v-for="feature in database.features"
+          <ul class="mx-5 mb-5">
+            <li
+                v-for="feature in database.features"
                 :key="feature"
-            >{{ feature }}
+                class="my-2 muteBoldSubheader"
+            >++ {{ feature }}
             </li>
           </ul>
           <button class="btn-base w-1/2 mx-auto">Get Started</button>

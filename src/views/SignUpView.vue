@@ -36,7 +36,7 @@ export default {
 
 <template>
   <div class="mt-5">
-    <form class="dark:bg-gray-400 md:shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10"
+    <form class="dark:bg-gray-900 md:shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10"
           @submit.prevent="login"
     >
       <h2 class="header text-center">Sign Up</h2>
@@ -124,7 +124,7 @@ export default {
       >terms and conditions</router-link></span> </small>
 
       <router-link to="/auth/login">
-        <button class="resultListAddBtn mt-5"
+        <button class="btn-base mt-5"
                 type="submit"
         >Create Account
         </button>

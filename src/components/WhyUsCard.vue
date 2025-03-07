@@ -22,7 +22,7 @@ export default {
   <div class="flex flex-col gap-y-3 shadow-2xl rounded-2xl mx-auto mb-10 p-10 w-3/4 dark:bg-gray-900 transform transition-all duration-500 hover:-translate-y-1.5 ease-in-out">
     <div>
 
-      <svg v-if="header === 'Reliability'"
+      <svg v-if="header === 'High Performance'"
            class="dark:fill-customGold"
            height="2rem"
            viewBox="0 0 576 512"

@@ -35,12 +35,13 @@ export default {
 </script>
 
 <template>
-  <div class="mt-5">
-    <form class="dark:bg-gray-900 md:shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10"
-          @submit.prevent="login"
+  <div class="my-5">
+    <form
+        class="dark:bg-gray-900 md:shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10"
+        @submit.prevent="login"
     >
       <h2 class="header text-center">Sign Up</h2>
-      <h2 class="muteSmallSubheader text-center mb-5">Join 1000+ website & app owners</h2>
+      <h2 class="muteSmallSubheader text-center mb-5">Join 1500+ website & app owners</h2>
 
       <!--      FIELDS-->
       <div class="flex md:flex-row flex-col items-center gap-x-1.5  w-full">

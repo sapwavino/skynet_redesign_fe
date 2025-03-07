@@ -7,6 +7,7 @@ import Testimonials from "@/components/Testimonials.vue";
 import FAQs from "@/components/FAQs.vue";
 import CustomServicePicker from "@/components/CustomServicePicker.vue";
 import {useStore} from 'vuex';
+import {convertPrice} from "@/utils/helper_functions.js";
 
 const store = useStore();
 
@@ -20,6 +21,7 @@ onMounted(() => {
     window.localStorage.setItem('preferredCurrency', JSON.stringify('NGN'))
   }
   store.dispatch('updatePreferredCurrency', preferredCurrency);
+  convertPrice(store.state.preferredCurrency, 10)
 })
 
 defineProps({layout: "DefaultLayout"});

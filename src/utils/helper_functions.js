@@ -22,7 +22,7 @@ export function convertPrice(currency, price) {
     const username = 'client';
     const password = 'er1KM8OcrSJ8byMBWVJrEz2rSzEwlw8R';
 // Encode credentials to Base64
-    const authHeader = 'Basic ' + btoa(username + ':' + password);
+//     const authHeader = 'Basic ' + btoa(username + ':' + password);
     // let url = 'http://localhost:3001/api/guest/client/login'
     // let url = 'https://httpbin.org/get'
     // axios.post(url, {

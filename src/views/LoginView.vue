@@ -1,45 +1,46 @@
 <script>
-import {createToast} from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css'
+import { createToast } from "mosha-vue-toastify";
+import { mapActions } from "vuex";
+import "mosha-vue-toastify/dist/style.css";
 
 export default {
   name: "Login",
   data() {
     return {
-      email: '',
-      password: '',
-      error: ''
-    }
+      email: "",
+      password: "",
+      error: "",
+    };
   },
   methods: {
-    login() {
+    ...mapActions({
+      loginAction: "auth/login",
+      startLoading: "startLoading",
+      stopLoading: "stopLoading",
+    }),
+    async login() {
       // Check if email matches a valid email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.email)) {
-        createToast(
-            `Please enter a valid email address.`,
-            {
-              duration: 2000,
-              type: 'danger',
-            }
-        )
+        createToast(`Please enter a valid email address.`, {
+          duration: 2000,
+          type: "danger",
+        });
         return;
       }
       // Check if password is at least 8 characters long and contains at least one uppercase letter, one lowercase letter, one number, and one special character
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       if (!this.email || !this.password) {
-        createToast(
-            `Please enter valid credentials.`,
-            {
-              duration: 2000,
-              type: 'danger',
-            }
-        )
+        createToast(`Please enter valid credentials.`, {
+          duration: 2000,
+          type: "danger",
+        });
         return;
       }
       // Simulate a login request
-      this.$store.dispatch('login')
-      this.$router.push('/dashboard')
+      // this.$store.dispatch('login')
+      // this.$router.push('/dashboard')
       // setTimeout(() => {
       //   if (this.username === 'admin' && this.password === 'password') {
       //     this.$store.dispatch('login')
@@ -48,48 +49,139 @@ export default {
       //     this.error = 'Invalid credentials'
       //   }
       // }, 1000)
-    }
-  }
-}
+      try {
+        this.loading = true;
+        this.startLoading();
+        console.log("data", this.email, this.password);
+        // Call login action with credentials
+        await this.loginAction({
+          email: this.email,
+          password: this.password,
+        });
+
+        createToast("Login successful!", {
+          duration: 2000,
+          type: "success",
+        });
+
+        // Redirect to dashboard
+        this.$router.push("/dashboard");
+      } catch (error) {
+        this.error =
+          error.response?.data?.message || "Login failed. Please try again.";
+        createToast(this.error, {
+          duration: 2000,
+          type: "danger",
+        });
+      } finally {
+        this.loading = false;
+        this.stopLoading();
+      }
+    },
+  },
+};
 </script>
 
 <template>
-  <div class="min-h-[83vh]">
-    <form class="dark:bg-gray-900 shadow-2xl rounded-3xl flex flex-col items-center justify-center mx-auto md:w-1/3 p-10 my-5"
-          @submit.prevent="login"
+  <div
+    class="min-h-screen py-8 px-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-slate-900"
+  >
+    <form
+      @submit.prevent="login"
+      class="max-w-2xl mx-auto bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl shadow-xl p-8 md:p-12 space-y-8 border border-customGold/20"
     >
-      <h2 class="header text-center mb-5">Log in</h2>
-      <label class="muteSubheader mb-1">Email</label>
-      <input
+      <!-- Header Section -->
+      <div class="text-center space-y-2">
+        <h2 class="text-3xl md:text-4xl font-bold text-customGold">
+          Welcome Back
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300">Log in to your account</p>
+      </div>
+
+      <!-- Email Field -->
+      <div class="space-y-2">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+        >
+          Email
+        </label>
+        <input
           v-model="email"
-          autofocus
-          class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-8 text-center"
-          placeholder="you@yourwebsite.com"
-          required
           type="email"
-      />
-      <label class="muteSubheader mb-1">Password</label>
-      <input v-model="password"
-             class="text-input-base rounded-2xl px-3.5 py-2 w-3/4 mb-3 text-center"
-             placeholder="Password"
-             type="password"
-      />
-      <p class="text-sm text-gray-600"><a class="underline"
-                                          href="#"
-      >Forgot your password? </a></p>
-      <button class="btn-base mt-5"
-              type="submit"
-              @click.prevent="login"
-      >Login
+          autofocus
+          required
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div class="space-y-2">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+        >
+          Password
+        </label>
+        <input
+          v-model="password"
+          type="password"
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+          placeholder="••••••••"
+        />
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="text-right">
+        <a
+          href="#"
+          class="text-sm text-customGold hover:text-customGold/80 font-medium"
+        >
+          Forgot your password?
+        </a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        :disabled="loading"
+        class="w-full bg-customGold text-gray-900 dark:text-gray-900 py-3 px-6 rounded-xl font-medium hover:bg-customGold/90 focus:ring-4 focus:ring-customGold/25 transform transition duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span v-if="loading" class="flex items-center justify-center space-x-2">
+          <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+              fill="none"
+            />
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
+          <span>Logging in...</span>
+        </span>
+        <span v-else>Log in</span>
       </button>
-      <p class="text-sm text-gray-600 mt-5">Don't have an account? <a class="underline font-medium italic"
-                                                                      href="/auth/signup"
-      >Sign up</a></p>
+
+      <!-- Sign Up Link -->
+      <p class="text-center text-gray-600 dark:text-gray-300">
+        Don't have an account?
+        <router-link
+          to="/auth/signup"
+          class="text-customGold hover:text-customGold/80 font-medium"
+        >
+          Sign up
+        </router-link>
+      </p>
     </form>
-    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
 <style scoped>
-
+/* Any additional custom styles can go here */
 </style>

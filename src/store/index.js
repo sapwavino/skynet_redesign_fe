@@ -1,10 +1,15 @@
 import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
+import auth from "./modules/auth";
 const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
 
 // Create a new store instance or import from module.
 const store = createStore({
+
+    modules: {
+        auth
+    },
 
     state: {
         domainToSearch: "",

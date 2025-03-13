@@ -245,6 +245,9 @@ watch(selectedConfig, (newConfig) => {
     <h2 class="muteBoldSubheader text-center">Customize your virtual private server with the exact resources you need.
       <br /> Pay only for what you use.
     </h2>
+
+
+    <!--    POPULAR CONFIGS-->
     <div class="mt-5">
       <h2 class="text-2xl font-bold text-center dark:text-gray-300">Popular Configurations</h2>
       <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
@@ -253,9 +256,9 @@ watch(selectedConfig, (newConfig) => {
             v-for="(config, idx) in popularConfigs"
             :key="idx"
             :class="{
-              'ring-4 ring-customGold': config.name === selectedConfig.name
+              'ring-4 ring-customGold shadow-2xl': config.name === selectedConfig.name
             }"
-            class="m-2 shadow-2xl rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out dark:bg-gray-900"
+            class="m-2 rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out dark:bg-gray-900"
             @click="selectedConfig = config"
         >
           <p v-if="config.isGPU"

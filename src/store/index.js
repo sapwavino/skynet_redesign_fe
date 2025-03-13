@@ -2,9 +2,9 @@ import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
+
 const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
 
-// Create a new store instance or import from module.
 const store = createStore({
 
     modules: {
@@ -95,11 +95,11 @@ const store = createStore({
                         type: "Python",
                         server_ip: '127.0.0.1',
                         server_hostname: 'cpanel.skynet.africa',
-                        username:'luka_77',
-                        password:'password',
-                        bandwidth:'1024MB/month',
-                        disk_quota:'1024MB',
-                        hosting_plan:'email',
+                        username: 'luka_77',
+                        password: 'password',
+                        bandwidth: '1024MB/month',
+                        disk_quota: '1024MB',
+                        hosting_plan: 'email',
                         price: 500,
                         description: "CPanel Hosting",
                         active: true,
@@ -115,11 +115,11 @@ const store = createStore({
                         type: "Wordpress",
                         server_ip: '127.0.0.1',
                         server_hostname: 'cpanel.skynet.africa',
-                        username:'236_lebron',
-                        password:'password',
-                        bandwidth:'1024MB/month',
-                        disk_quota:'1024MB',
-                        hosting_plan:'email',
+                        username: '236_lebron',
+                        password: 'password',
+                        bandwidth: '1024MB/month',
+                        disk_quota: '1024MB',
+                        hosting_plan: 'email',
                         price: 500,
                         description: "CPanel Hosting",
                         active: true,
@@ -139,11 +139,11 @@ const store = createStore({
                         domain: 'anewdomain2.com',
                         server_ip: '127.0.0.1',
                         server_hostname: 'cpanel.skynet.africa',
-                        username:'kyrie',
-                        password:'password',
-                        bandwidth:'1024MB/month',
-                        disk_quota:'1024MB',
-                        hosting_plan:'email',
+                        username: 'kyrie',
+                        password: 'password',
+                        bandwidth: '1024MB/month',
+                        disk_quota: '1024MB',
+                        hosting_plan: 'email',
                         billing_cycle: "monthly",
                         created_at: new Date('2022-01-01'),
                         activated_at: new Date('2022-01-01'),
@@ -156,11 +156,11 @@ const store = createStore({
                         price: 500,
                         server_ip: '127.0.0.1',
                         server_hostname: 'cpanel.skynet.africa',
-                        username:'harden',
-                        password:'password',
-                        bandwidth:'1024MB/month',
-                        disk_quota:'1024MB',
-                        hosting_plan:'email',
+                        username: 'harden',
+                        password: 'password',
+                        bandwidth: '1024MB/month',
+                        disk_quota: '1024MB',
+                        hosting_plan: 'email',
                         description: "Plesk",
                         active: true,
                         domain: 'anotherdomain4.com',
@@ -177,16 +177,16 @@ const store = createStore({
                         type: "cloud",
                         price: 2000,
                         ram: '4gb',
-                        bandwidth:'1tb',
+                        bandwidth: '1tb',
                         cores: '4v',
                         architecture: 'intel',
                         storage: '50gb',
                         location: 'nairobi',
                         status: 'online',
-                        os:'ubuntu',
+                        os: 'ubuntu',
                         os_version: '22.04',
                         ip_address: '212.115.024.111',
-                        ipv6:'212.115.024.111',
+                        ipv6: '212.115.024.111',
                         description: "G3 VPS",
                         active: true,
                         billing_cycle: "monthly",
@@ -200,16 +200,16 @@ const store = createStore({
                         type: "cloud",
                         price: 2000,
                         ram: '8gb',
-                        bandwidth:'2tb',
+                        bandwidth: '2tb',
                         cores: '4v',
                         architecture: 'intel',
                         storage: '100gb',
                         location: 'nairobi',
                         status: 'online',
-                        os:'debian',
+                        os: 'debian',
                         os_version: '22.04',
                         ip_address: '122.145.024.111',
-                        ipv6:'122.145.024.111',
+                        ipv6: '122.145.024.111',
                         description: "G2 VPS",
                         active: false,
                         billing_cycle: "monthly",
@@ -223,17 +223,17 @@ const store = createStore({
                         type: "cloud",
                         price: 2000,
                         ram: '4gb',
-                        bandwidth:'1tb',
+                        bandwidth: '1tb',
                         cores: '4v',
                         architecture: 'intel',
                         storage: '100gb',
                         location: 'nairobi',
                         status: 'online',
                         description: "G3 VPS",
-                        os:'ubuntu',
+                        os: 'ubuntu',
                         os_version: '20.04',
                         ip_address: '212.115.024.111',
-                        ipv6:'212.115.024.111',
+                        ipv6: '212.115.024.111',
                         active: true,
                         billing_cycle: "monthly",
                         created_at: new Date('2022-01-01'),
@@ -398,18 +398,18 @@ const store = createStore({
                 }
             )
         },
-        markNotificationAsRead({commit}, id){
+        markNotificationAsRead({commit}, id) {
             commit("MARK_NOTIFICATION_READ", id)
         },
         setShowMobileNav({commit}, value) {
             commit("SET_SHOW_MOBILE_NAV", value);
         },
-        startLoading({ commit, state }) {
+        startLoading({commit, state}) {
             commit('SET_LOADING', true);
             const randomIndex = Math.floor(Math.random() * state.loadingMessages.length);
             commit('SET_CURRENT_LOADING_MESSAGE', state.loadingMessages[randomIndex]);
         },
-        stopLoading({ commit }) {
+        stopLoading({commit}) {
             commit('SET_LOADING', false);
         }
     },

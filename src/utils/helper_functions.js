@@ -1,5 +1,12 @@
 import axios from "axios";
 
+/*
+ Encode credentials to Base64
+ */
+export const generateAuthHeaders = (username, password) => {
+    return 'Basic ' + btoa(username + ':' + password);
+}
+
 export const exchangeRates = {
     NGN: 1, USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
     GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
@@ -19,10 +26,7 @@ export function convertPrice(currency, price) {
         console.log(response.data);
         // return response.data;
     })
-    const username = 'client';
-    const password = 'er1KM8OcrSJ8byMBWVJrEz2rSzEwlw8R';
-// Encode credentials to Base64
-//     const authHeader = 'Basic ' + btoa(username + ':' + password);
+
     // let url = 'http://localhost:3001/api/guest/client/login'
     // let url = 'https://httpbin.org/get'
     // axios.post(url, {

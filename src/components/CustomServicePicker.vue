@@ -692,9 +692,10 @@ watch(selectedConfig, (newConfig) => {
 
     </div>
 
-
     <!--    HOSTING SECTION-->
-    <section class="mt-10 dark:text-gray-200">
+    <section
+        class="mt-10 dark:text-gray-200 md:border-2 md:border-gray-300/70 md:rounded-2xl md:pb-10 md:shadow-xl"
+    >
       <div id="hosting"
            class="mt-10 min-h-10"
       ></div>
@@ -710,11 +711,11 @@ watch(selectedConfig, (newConfig) => {
           src="/noGPUAnimation.json"
           style="height: 300px; width: 300px; margin: 0 auto;"
       />
-      <p class="muteBoldSubheader text-center">Configure Shared Hosting Plan</p>
+      <p class="muteBoldSubheader text-center mb-5">Configure Shared Hosting Plan</p>
 
-      <div class="flex items-center justify-center mt-5">
-        <h2 class="font-bold text-xl text-center mr-3">Number of Websites</h2>
-        <section class="">
+      <section class="md:flex md:mx-auto md:w-3/4 md:py-5">
+        <div class="flex items-center">
+          <h2 class="font-bold text-xl text-center">Number of Websites</h2>
           <div class="text-center">
             <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
                     @click="numberOfWebsites > 0 ? numberOfWebsites -= 1 : ''"
@@ -731,23 +732,27 @@ watch(selectedConfig, (newConfig) => {
             >+
             </button>
           </div>
-        </section>
-      </div>
-      <div class="text-center">
-        <h1 class="muteSubheader mt-5">Features</h1>
-        <ul>
-          <li v-for="(feature, index) in features"
-              :key="index"
-          >✔️ {{ feature }}
-          </li>
-        </ul>
+        </div>
+        <div class="text-center">
+          <h1 class="muteSubheader mt-5">Features</h1>
+          <ul>
+            <li v-for="(feature, index) in features"
+                :key="index"
+            >✔️ {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="flex flex-col items-center">
         <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}</h2>
         <button class="btn-base">Order Now</button>
-      </div>
+      </section>
     </section>
 
     <!--EMAIL SECTION-->
-    <section class="mt-10 dark:text-gray-200">
+    <section
+        class="mt-10 dark:text-gray-200  md:border-2 md:border-gray-300/70 md:rounded-2xl md:pb-10 md:shadow-xl"
+    >
       <div id="email"
            class="mt-10 min-h-10"
       ></div>
@@ -760,13 +765,13 @@ watch(selectedConfig, (newConfig) => {
           autoplay
           loop
           src="emailSectionAnimation.lottie"
-          style="height: 300px;"
+          style="height: 300px; width: 300px; margin: 0 auto;"
       />
-      <p class="muteBoldSubheader text-center">Configure Email Plan</p>
+      <p class="muteBoldSubheader text-center mb-5">Configure Email Plan</p>
 
-      <div class="flex items-center justify-center mt-5">
-        <h2 class="font-bold text-xl text-center mr-3">Email Accounts</h2>
-        <section class="">
+      <section class="md:flex md:mx-auto md:w-3/4 md:py-5">
+        <div class="flex items-center">
+          <h2 class="font-bold text-xl text-center">Email Accounts</h2>
           <div class="text-center">
             <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold"
                     @click="numberOfEmails > 0 ? numberOfEmails -= 1 : ''"
@@ -783,24 +788,27 @@ watch(selectedConfig, (newConfig) => {
             >+
             </button>
           </div>
-        </section>
-      </div>
-      <div class="text-center">
-        <h1 class="muteSubheader mt-5">Features</h1>
-        <ul>
-          <li v-for="(feature, index) in emailFeatures"
-              :key="index"
-          >✔️ {{ feature }}
-          </li>
-        </ul>
+        </div>
+        <div class="text-center my-auto">
+          <h1 class="text-gray-500 dark:text-gray-400 font-bold underline mt-5">Features</h1>
+          <ul>
+            <li v-for="(feature, index) in emailFeatures"
+                :key="index"
+            >✔️ {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="flex flex-col items-center">
         <h2 class="header mb-2 mt-10">Total: ${{ emailsTotalCost }}</h2>
         <button class="btn-base">Order Now</button>
-      </div>
+      </section>
     </section>
 
-
     <!--    DATABASE SECTION-->
-    <section class="my-10 dark:text-gray-200">
+    <section
+        class="my-10 dark:text-gray-200  md:border-2 md:border-gray-300/70 md:rounded-2xl md:pb-10 md:shadow-xl md:px-5"
+    >
       <div id="database"
            class="mt-10 min-h-10"
       ></div>

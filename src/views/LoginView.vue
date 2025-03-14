@@ -1,10 +1,13 @@
 <script>
-import { createToast } from "mosha-vue-toastify";
-import { mapActions } from "vuex";
+import {createToast} from "mosha-vue-toastify";
+import {mapActions} from "vuex";
 import "mosha-vue-toastify/dist/style.css";
+import AppLoader from "@/components/AppLoader.vue";
+
 
 export default {
   name: "Login",
+  components: {AppLoader},
   data() {
     return {
       email: "",
@@ -28,9 +31,10 @@ export default {
         });
         return;
       }
-      // Check if password is at least 8 characters long and contains at least one uppercase letter, one lowercase letter, one number, and one special character
+      // Check if password is at least 8 characters long and contains at least one uppercase letter, one lowercase
+      // letter, one number, and one special character
       const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       if (!this.email || !this.password) {
         createToast(`Please enter valid credentials.`, {
           duration: 2000,
@@ -38,22 +42,9 @@ export default {
         });
         return;
       }
-      // Simulate a login request
-      // this.$store.dispatch('login')
-      // this.$router.push('/dashboard')
-      // setTimeout(() => {
-      //   if (this.username === 'admin' && this.password === 'password') {
-      //     this.$store.dispatch('login')
-      //     this.$router.push('/dashboard')
-      //   } else {
-      //     this.error = 'Invalid credentials'
-      //   }
-      // }, 1000)
       try {
         this.loading = true;
-        this.startLoading();
-        console.log("data", this.email, this.password);
-        // Call login action with credentials
+        await this.startLoading();
         await this.loginAction({
           email: this.email,
           password: this.password,
@@ -64,18 +55,17 @@ export default {
           type: "success",
         });
 
-        // Redirect to dashboard
         this.$router.push("/dashboard");
       } catch (error) {
         this.error =
-          error.response?.data?.message || "Login failed. Please try again.";
+            error.response?.data?.message || "Login failed. Please try again.";
         createToast(this.error, {
           duration: 2000,
           type: "danger",
         });
       } finally {
         this.loading = false;
-        this.stopLoading();
+        await this.stopLoading();
       }
     },
   },
@@ -84,11 +74,11 @@ export default {
 
 <template>
   <div
-    class="min-h-screen py-8 px-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-slate-900"
+      class="min-h-screen py-8 px-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-slate-900"
   >
     <form
-      @submit.prevent="login"
-      class="max-w-2xl mx-auto bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl shadow-xl p-8 md:p-12 space-y-8 border border-customGold/20"
+        class="max-w-2xl mx-auto bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl shadow-xl p-8 md:p-12 space-y-8 border border-customGold/20"
+        @submit.prevent="login"
     >
       <!-- Header Section -->
       <div class="text-center space-y-2">
@@ -101,40 +91,42 @@ export default {
       <!-- Email Field -->
       <div class="space-y-2">
         <label
-          class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
         >
           Email
         </label>
         <input
-          v-model="email"
-          type="email"
-          autofocus
-          required
-          class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-          placeholder="you@example.com"
+            v-model="email"
+            autofocus
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+            name="email"
+            placeholder="you@example.com"
+            required
+            type="email"
         />
       </div>
 
       <!-- Password Field -->
       <div class="space-y-2">
         <label
-          class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
         >
           Password
         </label>
         <input
-          v-model="password"
-          type="password"
-          class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-          placeholder="••••••••"
+            v-model="password"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+            name="password"
+            placeholder="••••••••••••••••"
+            type="password"
         />
       </div>
 
       <!-- Forgot Password -->
       <div class="text-right">
         <a
-          href="#"
-          class="text-sm text-customGold hover:text-customGold/80 font-medium"
+            class="text-sm text-customGold hover:text-customGold/80 font-medium"
+            href="#"
         >
           Forgot your password?
         </a>
@@ -142,25 +134,29 @@ export default {
 
       <!-- Submit Button -->
       <button
-        type="submit"
-        :disabled="loading"
-        class="w-full bg-customGold text-gray-900 dark:text-gray-900 py-3 px-6 rounded-xl font-medium hover:bg-customGold/90 focus:ring-4 focus:ring-customGold/25 transform transition duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          :disabled="loading"
+          class="w-full bg-customGold text-gray-900 dark:text-gray-900 py-3 px-6 rounded-xl font-medium hover:bg-customGold/90 focus:ring-4 focus:ring-customGold/25 transform transition duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          type="submit"
       >
-        <span v-if="loading" class="flex items-center justify-center space-x-2">
-          <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+        <span v-if="loading"
+              class="flex items-center justify-center space-x-2"
+        >
+          <svg class="animate-spin h-5 w-5"
+               viewBox="0 0 24 24"
+          >
             <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-              fill="none"
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                fill="none"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
             />
             <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                class="opacity-75"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                fill="currentColor"
             />
           </svg>
           <span>Logging in...</span>
@@ -172,8 +168,8 @@ export default {
       <p class="text-center text-gray-600 dark:text-gray-300">
         Don't have an account?
         <router-link
-          to="/auth/signup"
-          class="text-customGold hover:text-customGold/80 font-medium"
+            class="text-customGold hover:text-customGold/80 font-medium"
+            to="/auth/signup"
         >
           Sign up
         </router-link>

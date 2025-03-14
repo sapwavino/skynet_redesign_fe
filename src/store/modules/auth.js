@@ -1,4 +1,4 @@
-import { authService } from '@/services/auth.service'
+import {authService} from '@/services/auth.service'
 
 export default {
     namespaced: true,
@@ -23,14 +23,11 @@ export default {
         }
     },
     actions: {
-        async login({ commit }, credentials) {
+        async login({commit}, credentials) {
             try {
-                console.log('Login attempt with:', { email: credentials.email })
                 const response = await authService.login(credentials)
-                console.log('Login API response:', response)
-                const { data } = response
+                const {data} = response
 
-                console.log('Login API response:', data)
 
                 if (data.error) {
                     console.error('Login failed:', data.error)
@@ -44,11 +41,11 @@ export default {
                 }
 
                 commit('SET_USER', data.result?.user || data.user)
-                commit('SET_TOKEN', data.result?.token || data.token)
+                commit('SET_TOKEN', data.result?.apikey || data.apikey)
                 commit('SET_LOGGED_IN', true)
                 commit('SET_ERROR', null)
 
-                localStorage.setItem('token', data.result?.token || data.token)
+                localStorage.setItem('token', data.result?.apikey || data.apikey)
                 localStorage.setItem('isLoggedIn', JSON.stringify(true))
 
                 console.log('Login successful for user:', data.result?.user?.email || data.user?.email)
@@ -73,14 +70,14 @@ export default {
             }
         },
 
-        async signup({ commit }, userData) {
+        async signup({commit}, userData) {
             try {
                 console.log('Signup attempt for:', {
                     email: userData.email,
                     firstName: userData.first_name
                 })
 
-                const { data } = await authService.register(userData)
+                const {data} = await authService.register(userData)
 
                 console.log('Signup API response:', data)
 

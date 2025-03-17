@@ -9,6 +9,7 @@ import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 export default {
   name: "DomainNameSearch",
   components: {CurrencyDropdown, Recents},
+  emits: ['inputFocused'],
   setup() {
     return {}
   },
@@ -242,11 +243,12 @@ export default {
     <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">
       <input v-model="searchTerm"
-             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700"
+             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50"
              placeholder="Find your domain name"
              style="padding: 1rem"
              type="search"
-             @keydown.enter="fetchSearchResults"
+             @focus="$emit('inputFocused');  console.log('inputFocused emitted')"
+             @keydown.enter="fetchSearchResults; $emit('inputFocused')"
       />
       <button
           :disabled="loading"

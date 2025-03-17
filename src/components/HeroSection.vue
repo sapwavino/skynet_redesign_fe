@@ -65,7 +65,14 @@ export default {
             },
           ]
         },
-      ]
+      ],
+      autoPlayCarousel: true
+    }
+  },
+  methods: {
+    autoPlayCarouselHandler() {
+      this.autoPlayCarousel = false;
+      console.log('autoPlayCarouselHandler called');
     }
   }
 }
@@ -73,7 +80,16 @@ export default {
 
 <template>
   <section class="hero">
-    <Carousel :autoPlay="true">
+    <Carousel :autoPlay="autoPlayCarousel">
+      <section class="h-[75vh] flex flex-col items-center md:flex-row gap-5 md:p-14 md:justify-between bg-gradient-to-tr from-gray-900 via-yellow-700/80 from-30% via-75% to-gray-900 text-gray-50 pt-5">
+        <h2 class="bigHeader">
+          <span class="text-5xl tracking-wider">Do more online,</span>
+          <br /> for much less
+        </h2>
+        <div class="mx-auto md:w-1/3">
+          <DomainNameSearch @inputFocused="autoPlayCarouselHandler" />
+        </div>
+      </section>
       <div v-for="(slide, idx) in slides"
            :key="idx"
            class="h-[75vh] flex flex-col items-center md:flex-row gap-5 md:p-14 md:justify-between bg-gradient-to-tr from-gray-900 via-yellow-700/80 from-30% via-75% to-gray-900 text-gray-50 pt-5"
@@ -210,13 +226,7 @@ export default {
         </section>
       </div>
     </Carousel>
-    <h2 class="bigHeader">
-      <span class="text-5xl tracking-wider">Do more online,</span>
-      <br /> for much less
-    </h2>
-    <div class="mx-auto md:w-1/3">
-      <DomainNameSearch />
-    </div>
+
   </section>
 </template>
 

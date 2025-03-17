@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted, onUnmounted} from 'vue';
+import {ref, computed, onMounted, onUnmounted, watch} from 'vue';
 
 const props = defineProps({
   showControls: {
@@ -107,6 +107,16 @@ onUnmounted(() => {
   clearInterval(autoPlayIntervalId);
 });
 
+watch(() => props.autoPlay, (newValue, oldValue) => {
+  console.log('Carousel autoPlay prop changed:', newValue);
+  if (!newValue) {
+    clearInterval(autoPlayIntervalId);
+    autoPlayIntervalId = null; // Ensure the interval ID is cleared
+  }
+  else if (newValue && slideCount.value > 1 && autoPlayIntervalId === null) {
+    startAutoPlay();
+  }
+});
 </script>
 
 <style scoped>

@@ -6,7 +6,7 @@ export default {
         user: null,
         token: localStorage.getItem('token'),
         isLoggedIn: false,
-        lastError: null // Add error tracking
+        lastAuthError: null //
     },
     mutations: {
         SET_USER(state, user) {
@@ -19,7 +19,7 @@ export default {
             state.isLoggedIn = value
         },
         SET_ERROR(state, error) {
-            state.lastError = error
+            state.lastAuthError = error
         }
     },
     actions: {
@@ -113,7 +113,7 @@ export default {
         }
     },
     getters: {
-        getLastError: state => state.lastError,
+        getLastAuthError: state => state.lastAuthError,
         isAuthenticated: state => state.isLoggedIn && !!state.token
     }
 }

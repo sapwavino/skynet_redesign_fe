@@ -243,12 +243,12 @@ export default {
     <!--    DOMAIN SEARCH INPUT-->
     <section class="container flex h-14">
       <input v-model="searchTerm"
-             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50"
+             class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50 bg-gray-300"
              placeholder="Find your domain name"
              style="padding: 1rem"
              type="search"
              @focus="$emit('inputFocused');  console.log('inputFocused emitted')"
-             @keydown.enter="fetchSearchResults; $emit('inputFocused')"
+             @keydown.enter="fetchSearchResults"
       />
       <button
           :disabled="loading"
@@ -281,13 +281,13 @@ export default {
     <!--        <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>-->
     <!--        <hr class="border-gray-300 border w-1/2" />-->
     <!--        <span class="md:text-base text-sm text-yellow-500 font-bold tracking-wide">-->
-    <!--          <span v-if="selectedCurrency === 'NGN'">₦</span>-->
-    <!--          <span v-if="selectedCurrency === 'KES'">KSh</span>-->
-    <!--          <span v-if="selectedCurrency === 'GHS'">₵</span>-->
-    <!--          <span v-else-if="selectedCurrency === 'USD'">$</span>-->
-    <!--          <span v-else-if="selectedCurrency === 'GBP'">£</span>-->
-    <!--          <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}-->
-    <!--        </span>-->
+    <!--              <span v-if="selectedCurrency === 'NGN'">₦</span>-->
+    <!--              <span v-if="selectedCurrency === 'KES'">KSh</span>-->
+    <!--              <span v-if="selectedCurrency === 'GHS'">₵</span>-->
+    <!--              <span v-else-if="selectedCurrency === 'USD'">$</span>-->
+    <!--              <span v-else-if="selectedCurrency === 'GBP'">£</span>-->
+    <!--              <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}-->
+    <!--            </span>-->
     <!--      </div>-->
     <!--      <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">-->
     <!--        <span class="text-2xl font-semibold dark:text-gray-300">& much more</span>-->

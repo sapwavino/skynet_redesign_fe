@@ -2,6 +2,7 @@ import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
+import {domainService} from "@/services/domain.service.js";
 
 const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
 
@@ -14,8 +15,7 @@ const store = createStore({
     state: {
         domainToSearch: "",
         cart: {
-            items: [
-                // {
+            items: [// {
                 //     name: "anewdomain.com",
                 //     price: 90,
                 //     quantity: 1,
@@ -50,246 +50,218 @@ const store = createStore({
                 country: "United States",
                 address: "123 Main St, Anytown, USA",
                 gender: 'male'
-            },
-            services: {
-                domains: [
-                    {
-                        id: '123',
-                        name: "anewdomain.com.ng",
-                        price: 90,
-                        description: "Domain registration",
-                        active: true,
-                        billing_cycle: "annually",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2023-01-01'),
-                    },
-                    {
-                        id: '456',
-                        name: "anotherdomain.com",
-                        price: 90,
-                        description: "Domain registration",
-                        active: false,
-                        billing_cycle: "annually",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: '789',
-                        name: "dominatetheweb.net",
-                        price: 90,
-                        description: "Domain registration",
-                        active: true,
-                        billing_cycle: "annually",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2023-01-01'),
-                    },
+            }, services: {
+                domains: [{
+                    id: '123',
+                    name: "anewdomain.com.ng",
+                    price: 90,
+                    description: "Domain registration",
+                    active: true,
+                    billing_cycle: "annually",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2023-01-01'),
+                }, {
+                    id: '456',
+                    name: "anotherdomain.com",
+                    price: 90,
+                    description: "Domain registration",
+                    active: false,
+                    billing_cycle: "annually",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: '789',
+                    name: "dominatetheweb.net",
+                    price: 90,
+                    description: "Domain registration",
+                    active: true,
+                    billing_cycle: "annually",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2023-01-01'),
+                },
 
-                ],
-                hosting: [
-                    {
-                        id: '789',
-                        name: "Hosting-001",
-                        type: "Python",
-                        server_ip: '127.0.0.1',
-                        server_hostname: 'cpanel.skynet.africa',
-                        username: 'luka_77',
-                        password: 'password',
-                        bandwidth: '1024MB/month',
-                        disk_quota: '1024MB',
-                        hosting_plan: 'email',
-                        price: 500,
-                        description: "CPanel Hosting",
-                        active: true,
-                        domain: 'anewdomain.com',
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: '234',
-                        name: "Hosting-002",
-                        type: "Wordpress",
-                        server_ip: '127.0.0.1',
-                        server_hostname: 'cpanel.skynet.africa',
-                        username: '236_lebron',
-                        password: 'password',
-                        bandwidth: '1024MB/month',
-                        disk_quota: '1024MB',
-                        hosting_plan: 'email',
-                        price: 500,
-                        description: "CPanel Hosting",
-                        active: true,
-                        domain: 'anotherdomain.com',
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: '345',
-                        name: "Hosting-003",
-                        type: "Node",
-                        price: 500,
-                        description: "CPanel Hosting",
-                        active: false,
-                        domain: 'anewdomain2.com',
-                        server_ip: '127.0.0.1',
-                        server_hostname: 'cpanel.skynet.africa',
-                        username: 'kyrie',
-                        password: 'password',
-                        bandwidth: '1024MB/month',
-                        disk_quota: '1024MB',
-                        hosting_plan: 'email',
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: '678',
-                        name: "Hosting-012",
-                        type: "Undecided",
-                        price: 500,
-                        server_ip: '127.0.0.1',
-                        server_hostname: 'cpanel.skynet.africa',
-                        username: 'harden',
-                        password: 'password',
-                        bandwidth: '1024MB/month',
-                        disk_quota: '1024MB',
-                        hosting_plan: 'email',
-                        description: "Plesk",
-                        active: true,
-                        domain: 'anotherdomain4.com',
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    }
-                ],
-                cloud: [
-                    {
-                        id: 'f163d394-800d-40a3-b07f-9262cc9b4034',
-                        name: "CL_G3_001",
-                        type: "cloud",
-                        price: 2000,
-                        ram: '4gb',
-                        bandwidth: '1tb',
-                        cores: '4v',
-                        architecture: 'intel',
-                        storage: '50gb',
-                        location: 'nairobi',
-                        status: 'online',
-                        os: 'ubuntu',
-                        os_version: '22.04',
-                        ip_address: '212.115.024.111',
-                        ipv6: '212.115.024.111',
-                        description: "G3 VPS",
-                        active: true,
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: "63a97cf6-51f1-4a7c-b50e-f5d5cbbbac53",
-                        name: "CL_G2_002",
-                        type: "cloud",
-                        price: 2000,
-                        ram: '8gb',
-                        bandwidth: '2tb',
-                        cores: '4v',
-                        architecture: 'intel',
-                        storage: '100gb',
-                        location: 'nairobi',
-                        status: 'online',
-                        os: 'debian',
-                        os_version: '22.04',
-                        ip_address: '122.145.024.111',
-                        ipv6: '122.145.024.111',
-                        description: "G2 VPS",
-                        active: false,
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    },
-                    {
-                        id: "e25fa6c0-0393-45ac-8cd1-723f80bb6524",
-                        name: "CL_G3_003",
-                        type: "cloud",
-                        price: 2000,
-                        ram: '4gb',
-                        bandwidth: '1tb',
-                        cores: '4v',
-                        architecture: 'intel',
-                        storage: '100gb',
-                        location: 'nairobi',
-                        status: 'online',
-                        description: "G3 VPS",
-                        os: 'ubuntu',
-                        os_version: '20.04',
-                        ip_address: '212.115.024.111',
-                        ipv6: '212.115.024.111',
-                        active: true,
-                        billing_cycle: "monthly",
-                        created_at: new Date('2022-01-01'),
-                        activated_at: new Date('2022-01-01'),
-                        renewal_date: new Date('2022-02-01'),
-                    }
-                ],
-                email: [],
-                database: [],
-            },
-            orders: [],
-            invoices: [],
-            wallet: [],
-            notifications: [
-                {
-                    id: 1,
-                    title: "New Message",
-                    message: "You have a new message from John Doe.",
-                    type: "message",
-                    read: false,
-                    timestamp: "2025-02-06T10:30:00Z",
-                },
-                {
-                    id: 2,
-                    title: "System Update",
-                    message: "A new system update is available. Click here to update. Lorem20 ipsum dolor sit amet, consectetur adipiscing elit.",
-                    type: "system",
-                    read: false,
-                    timestamp: "2025-02-06T09:15:00Z",
-                },
-                {
-                    id: 3,
-                    title: "Reminder",
-                    message: "Your meeting with the product team starts in 30 minutes.",
-                    type: "reminder",
-                    read: true,
-                    timestamp: "2025-02-05T16:45:00Z",
-                },
-                {
-                    id: 4,
-                    title: "Payment Received",
-                    message: "You received a payment of $250.00 from Jane Doe.",
-                    type: "payment",
-                    read: false,
-                    timestamp: "2025-02-06T12:00:00Z",
-                },
-                {
-                    id: 5,
-                    title: "Security Alert",
-                    message: "Unusual login activity detected on your account.",
-                    type: "security",
-                    read: true,
-                    timestamp: "2025-02-04T22:10:00Z",
-                },
-            ],
-            support: {
+                ], hosting: [{
+                    id: '789',
+                    name: "Hosting-001",
+                    type: "Python",
+                    server_ip: '127.0.0.1',
+                    server_hostname: 'cpanel.skynet.africa',
+                    username: 'luka_77',
+                    password: 'password',
+                    bandwidth: '1024MB/month',
+                    disk_quota: '1024MB',
+                    hosting_plan: 'email',
+                    price: 500,
+                    description: "CPanel Hosting",
+                    active: true,
+                    domain: 'anewdomain.com',
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: '234',
+                    name: "Hosting-002",
+                    type: "Wordpress",
+                    server_ip: '127.0.0.1',
+                    server_hostname: 'cpanel.skynet.africa',
+                    username: '236_lebron',
+                    password: 'password',
+                    bandwidth: '1024MB/month',
+                    disk_quota: '1024MB',
+                    hosting_plan: 'email',
+                    price: 500,
+                    description: "CPanel Hosting",
+                    active: true,
+                    domain: 'anotherdomain.com',
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: '345',
+                    name: "Hosting-003",
+                    type: "Node",
+                    price: 500,
+                    description: "CPanel Hosting",
+                    active: false,
+                    domain: 'anewdomain2.com',
+                    server_ip: '127.0.0.1',
+                    server_hostname: 'cpanel.skynet.africa',
+                    username: 'kyrie',
+                    password: 'password',
+                    bandwidth: '1024MB/month',
+                    disk_quota: '1024MB',
+                    hosting_plan: 'email',
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: '678',
+                    name: "Hosting-012",
+                    type: "Undecided",
+                    price: 500,
+                    server_ip: '127.0.0.1',
+                    server_hostname: 'cpanel.skynet.africa',
+                    username: 'harden',
+                    password: 'password',
+                    bandwidth: '1024MB/month',
+                    disk_quota: '1024MB',
+                    hosting_plan: 'email',
+                    description: "Plesk",
+                    active: true,
+                    domain: 'anotherdomain4.com',
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }], cloud: [{
+                    id: 'f163d394-800d-40a3-b07f-9262cc9b4034',
+                    name: "CL_G3_001",
+                    type: "cloud",
+                    price: 2000,
+                    ram: '4gb',
+                    bandwidth: '1tb',
+                    cores: '4v',
+                    architecture: 'intel',
+                    storage: '50gb',
+                    location: 'nairobi',
+                    status: 'online',
+                    os: 'ubuntu',
+                    os_version: '22.04',
+                    ip_address: '212.115.024.111',
+                    ipv6: '212.115.024.111',
+                    description: "G3 VPS",
+                    active: true,
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: "63a97cf6-51f1-4a7c-b50e-f5d5cbbbac53",
+                    name: "CL_G2_002",
+                    type: "cloud",
+                    price: 2000,
+                    ram: '8gb',
+                    bandwidth: '2tb',
+                    cores: '4v',
+                    architecture: 'intel',
+                    storage: '100gb',
+                    location: 'nairobi',
+                    status: 'online',
+                    os: 'debian',
+                    os_version: '22.04',
+                    ip_address: '122.145.024.111',
+                    ipv6: '122.145.024.111',
+                    description: "G2 VPS",
+                    active: false,
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }, {
+                    id: "e25fa6c0-0393-45ac-8cd1-723f80bb6524",
+                    name: "CL_G3_003",
+                    type: "cloud",
+                    price: 2000,
+                    ram: '4gb',
+                    bandwidth: '1tb',
+                    cores: '4v',
+                    architecture: 'intel',
+                    storage: '100gb',
+                    location: 'nairobi',
+                    status: 'online',
+                    description: "G3 VPS",
+                    os: 'ubuntu',
+                    os_version: '20.04',
+                    ip_address: '212.115.024.111',
+                    ipv6: '212.115.024.111',
+                    active: true,
+                    billing_cycle: "monthly",
+                    created_at: new Date('2022-01-01'),
+                    activated_at: new Date('2022-01-01'),
+                    renewal_date: new Date('2022-02-01'),
+                }], email: [], database: [],
+            }, orders: [], invoices: [], wallet: [], notifications: [{
+                id: 1,
+                title: "New Message",
+                message: "You have a new message from John Doe.",
+                type: "message",
+                read: false,
+                timestamp: "2025-02-06T10:30:00Z",
+            }, {
+                id: 2,
+                title: "System Update",
+                message: "A new system update is available. Click here to update. Lorem20 ipsum dolor sit amet, consectetur adipiscing elit.",
+                type: "system",
+                read: false,
+                timestamp: "2025-02-06T09:15:00Z",
+            }, {
+                id: 3,
+                title: "Reminder",
+                message: "Your meeting with the product team starts in 30 minutes.",
+                type: "reminder",
+                read: true,
+                timestamp: "2025-02-05T16:45:00Z",
+            }, {
+                id: 4,
+                title: "Payment Received",
+                message: "You received a payment of $250.00 from Jane Doe.",
+                type: "payment",
+                read: false,
+                timestamp: "2025-02-06T12:00:00Z",
+            }, {
+                id: 5,
+                title: "Security Alert",
+                message: "Unusual login activity detected on your account.",
+                type: "security",
+                read: true,
+                timestamp: "2025-02-04T22:10:00Z",
+            },], support: {
                 tickets: [],
             }
         },
@@ -306,12 +278,8 @@ const store = createStore({
             "Warming up the servers...",
             "Polishing the pixels...",
             "Servers dey reason your request.",
-            "Loading, like arranging gala in traffic.",
             "Fetching the network jollof.",
             "Servers are doing shakara.",
-            "Loading, like waiting for NEPA.",
-            "Loading, no vex.",
-            "Wetin dey load dey sweet.",
             "Fetching data, no be juju.",
             "Fetching data like jollof rice.",
             "Fetching data, no be beans.",
@@ -321,13 +289,11 @@ const store = createStore({
             "Catching the digital molue.",
             "Checking the village network.",
             "Loading, no be small thing o!",
-            "Building the bridge to your data.",
-            "Loading, abeg",
-            "Loading, no vex."
-        ],
-        currentLoadingMessage: '' // Add this to store the current message
-    },
-    mutations: {
+            "Building the bridge to your data."],
+        currentLoadingMessage: '',
+        availableTLDs: [],
+        error: ''
+    }, mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
             state.domainToSearch = domain;
         },
@@ -364,9 +330,14 @@ const store = createStore({
         },
         SET_CURRENT_LOADING_MESSAGE(state, message) {
             state.currentLoadingMessage = message;
+        },
+        SET_AVAILABLE_TLDS(state, list) {
+            state.availableTLDs = list;
+        },
+        SET_ERROR(state, error) {
+            state.error = error;
         }
-    },
-    actions: {
+    }, actions: {
         updateSearchDomain({commit}, domain) {
             commit("UPDATE_DOMAIN_TO_SEARCH", domain);
         },
@@ -390,13 +361,9 @@ const store = createStore({
         },
         addItemToCart({commit}, item) {
             commit("ADD_ITEM_TO_CART", item);
-            createToast(
-                "Item added to cart: " + item.name,
-                {
-                    type: 'info',
-                    duration: 2000,
-                }
-            )
+            createToast("Item added to cart: " + item.name, {
+                type: 'info', duration: 2000,
+            })
         },
         markNotificationAsRead({commit}, id) {
             commit("MARK_NOTIFICATION_READ", id)
@@ -411,9 +378,28 @@ const store = createStore({
         },
         stopLoading({commit}) {
             commit('SET_LOADING', false);
+        },
+        initialize({commit, state}) {
+            console.log("Initializing app data...")
+            domainService.availableTLDs()
+                .then((response) => {
+                    const {data} = response
+
+                    if (data.error) {
+                        console.error('Failed to fetch TLDs:', data.error)
+                        commit('SET_ERROR', data.error)
+                        throw new Error(data.error.message || 'Failed to fetch TLDs:')
+                    }
+
+                    commit('SET_AVAILABLE_TLDS', data.result);
+                    console.log(`Initialized TLDs.  ${data.result.length} available.`)
+                })
+                .catch((error) => {
+                    console.error('Failed to initialize TLDs:', error)
+                    commit('SET_ERROR', error)
+                })
         }
-    },
-    getters: {
+    }, getters: {
         cartTotal: (state) => {
             return state.cart.items.reduce((total, item) => {
                 return (parseFloat(total + item.price)).toFixed(2);

@@ -69,7 +69,7 @@
 }
 
 .text-input-base {
-    @apply outline-customGold dark:outline-customGold dark:border-customGold ring-customGold border border-customGold dark:ring-customGold focus:outline-2 dark:focus:bg-gray-50 dark:bg-gray-200 disabled:border-gray-300 dark:text-white text-black;
+    @apply outline-customGold dark:outline-customGold dark:border-customGold ring-customGold border border-customGold dark:ring-customGold focus:outline-2 dark:focus:bg-gray-50 dark:bg-gray-200 disabled:border-gray-300 text-black;
 }
 
 .dash-card-btn-base {

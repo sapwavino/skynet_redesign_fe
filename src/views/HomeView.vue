@@ -21,7 +21,6 @@ onMounted(() => {
     window.localStorage.setItem('preferredCurrency', JSON.stringify('NGN'))
   }
   store.dispatch('updatePreferredCurrency', preferredCurrency);
-  convertPrice(store.state.preferredCurrency, 10)
 })
 
 defineProps({layout: "DefaultLayout"});

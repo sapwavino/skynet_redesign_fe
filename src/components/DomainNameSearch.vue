@@ -42,14 +42,6 @@ export default {
       loading: false,
       searchTerm: '',
       searchResults: [],
-      exchangeRates: {
-        NGN: 1,
-        USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
-        GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
-        EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
-        KES: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
-        GHS: 0.012,    // 1 NGN = 0.012 GHS (Approximate - Check for current rate)
-      },
       recents: [],
       showMore: false,
       countries: [
@@ -64,12 +56,6 @@ export default {
     }
   },
   watch: {
-    selectedCurrency: {
-      handler(newCurrency) {
-        this.convertPrices(newCurrency);
-      },
-      immediate: true
-    },
     searchTerm(newval) {
       if (newval === '') {
         this.loading = true
@@ -165,12 +151,6 @@ export default {
       this.searchResults.push(this.$store.state.domainToSearch);
       // this.$store.dispatch('updateSearchDomain', '');
     },
-    convertPrices(currency) {
-      const rate = this.exchangeRates[currency];
-      this.tldPrices.forEach(tld => {
-        tld.price = (tld.originalPrice * rate).toFixed(2);
-      });
-    },
     formatNumber(value) {
       let parts = value.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -244,10 +224,11 @@ export default {
     <section class="container flex h-14">
       <input v-model="searchTerm"
              class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50 bg-gray-300"
-             placeholder="Find your domain name"
+             placeholder="Find your domain"
              style="padding: 1rem"
              type="search"
-             @focus="$emit('inputFocused');  console.log('inputFocused emitted')"
+             @change="$emit('inputFocused')"
+             @focus="$emit('inputFocused')"
              @keydown.enter="fetchSearchResults"
       />
       <button
@@ -260,39 +241,19 @@ export default {
 
     </section>
 
-    <Recents :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)"
-             @clear="clearRecents"
-             @clickedRecent="setRecent"
+    <Recents
+        :recents="recents.filter((val, index, arr) => index > arr.length - 4 - 1)"
+        @clear="clearRecents"
+        @clickedRecent="setRecent"
     />
 
     <!--CURRENCY DROPDOWN-->
     <div class="block w-full mt-5">
-      <CurrencyDropdown :show-text="true" />
+      <CurrencyDropdown
+          :show-text="true"
+          @active="$emit('inputFocused')"
+      />
     </div>
-
-    <!--    TLD PRICES -->
-    <!--    <section v-if="!loading && searchResults.length === 0"-->
-    <!--             class="grid grid-cols-3 md:grid-cols-5 mt-3"-->
-    <!--    >-->
-    <!--      <div v-for="(tld, idx) in tldPrices"-->
-    <!--           :key="idx"-->
-    <!--           class="flex flex-col items-center justify-center gap-y-2 border border-gray-300 h-20"-->
-    <!--      >-->
-    <!--        <span class="text-2xl font-medium dark:text-gray-300">.{{ tld.tld }}</span>-->
-    <!--        <hr class="border-gray-300 border w-1/2" />-->
-    <!--        <span class="md:text-base text-sm text-yellow-500 font-bold tracking-wide">-->
-    <!--              <span v-if="selectedCurrency === 'NGN'">₦</span>-->
-    <!--              <span v-if="selectedCurrency === 'KES'">KSh</span>-->
-    <!--              <span v-if="selectedCurrency === 'GHS'">₵</span>-->
-    <!--              <span v-else-if="selectedCurrency === 'USD'">$</span>-->
-    <!--              <span v-else-if="selectedCurrency === 'GBP'">£</span>-->
-    <!--              <span v-else-if="selectedCurrency === 'EUR'">€</span>{{ formatNumber(tld.price) }}-->
-    <!--            </span>-->
-    <!--      </div>-->
-    <!--      <div class="border border-gray-300 h-20 text-center flex flex-col justify-center">-->
-    <!--        <span class="text-2xl font-semibold dark:text-gray-300">& much more</span>-->
-    <!--      </div>-->
-    <!--    </section>-->
 
     <!--    LOADING ANIMATION-->
     <section v-if="loading"
@@ -307,14 +268,14 @@ export default {
            class="mt-3 mx-auto"
   >
     <div
-        class="border border-gray-50 flex flex-col justify-center rounded-br-3xl rounded-bl-3xl p-5 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
+        class="border border-gray-50 flex flex-col justify-center rounded-3xl md:p-5 p-1 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
     >
-      <span class="text-2xl font-bold text-center dark:text-gray-200">Results</span>
+      <span class="text-2xl font-bold text-center dark:text-gray-200 text-black hidden md:block">Results</span>
       <span v-if="$store.state.domainToSearch.length > 20"
             class="text-xs text-green-600 dark:text-gray-700 text-center"
       >We are showing a shorter name because domain name is longer than 20 characters</span>
       <ul class="w-full">
-        <li v-for="(tld, idx) in toggleTldPrices"
+        <li v-for="(tld, idx) in $store.getters.tldPrices"
             :key="idx"
             class="list-none resultListItem flex items-center justify-between gap-2"
         >
@@ -324,7 +285,7 @@ export default {
                 ($store.state.domainToSearch.length > 15
                     ? $store.state.domainToSearch.substring(0, 15) + '***'
                     : $store.state.domainToSearch)
-                + '.' + tld.tld
+                + tld.tld
               }}
             </h2>
           </div>
@@ -333,14 +294,9 @@ export default {
             <div class="flex flex-col text-right mr-1">
               <h1 class="font-black text-xs md:text-lg">
                   <span class="font-bold">
-                    <span v-if="selectedCurrency === 'NGN'">₦</span>
-                    <span v-else-if="selectedCurrency === 'USD'">$</span>
-                    <span v-else-if="selectedCurrency === 'KES'">KSh</span>
-                    <span v-else-if="selectedCurrency === 'GHS'">₵</span>
-                    <span v-else-if="selectedCurrency === 'GBP'">£</span>
-                    <span v-else-if="selectedCurrency === 'EUR'">€</span>{{
+                    <span>{{ $store.getters.preferredCurrencySymbol }}</span>{{
                       formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
-                                                                         }}
+                                                                             }}
                   </span>
               </h1>
               <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
@@ -351,12 +307,12 @@ export default {
             </button>
           </div>
         </li>
-        <li class="list-none resultListItem flex items-center justify-center">
-          <button class="resultListAddBtn"
-                  @click="showMore = true"
-          >+ Explore more Domains
-          </button>
-        </li>
+        <!--        <li class="list-none resultListItem flex items-center justify-center">-->
+        <!--          <button class="resultListAddBtn"-->
+        <!--                  @click="showMore = true"-->
+        <!--          >+ Explore more Domains-->
+        <!--          </button>-->
+        <!--        </li>-->
       </ul>
     </div>
   </section>

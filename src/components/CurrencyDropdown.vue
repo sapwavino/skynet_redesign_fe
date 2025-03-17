@@ -12,14 +12,7 @@ export default {
   },
   data() {
     return {
-      countries: [
-        {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
-        {name: "KES", flag: "🇰🇪", text: "Kenyan Shillings"},
-        {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
-        {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
-        {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
-        {name: "EUR", flag: "🇪🇺", text: "European Euro"},
-      ],
+      countries: this.$store.state.currencyPairs,
     }
   },
   methods: {
@@ -54,7 +47,9 @@ export default {
 </script>
 
 <template>
-  <div class="block mx-auto">
+  <div class="block mx-auto"
+       @mouseover="$emit('active')"
+  >
     <select id="country"
             v-model="selectedCurrency"
             class="border-2 border-customGold dark:text-customGold rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center "
@@ -65,7 +60,7 @@ export default {
               :key="idx"
               :value="country.name"
       >{{ country.flag }}
-       {{ country.name }}<span v-if="showText"> - {{ country.text }}</span>
+       {{ country.name }} ({{ country.symbol }}) <span v-if="showText"> - {{ country.text }}</span>
       </option>
     </select>
   </div>

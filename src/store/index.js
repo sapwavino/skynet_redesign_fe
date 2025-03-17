@@ -3,6 +3,7 @@ import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
 import {domainService} from "@/services/domain.service.js";
+import axios from "axios";
 
 const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
 
@@ -292,8 +293,21 @@ const store = createStore({
             "Building the bridge to your data."],
         currentLoadingMessage: '',
         availableTLDs: [],
-        error: ''
-    }, mutations: {
+        error: '',
+        currencyPairs: [
+            {name: 'USD', flag: '🇺🇸', text: 'US Dollar', symbol: '$'},
+            {name: 'NGN', flag: '🇳🇬', text: 'Nigerian Naira', symbol: '₦'},
+            {name: 'KES', flag: '🇰🇪', text: 'Kenyan Shilling', symbol: 'KSh'},
+            {name: 'ZAR', flag: '🇿🇦', text: 'South African Rands', symbol: 'R'},
+            {name: 'EUR', flag: '🇪🇺', text: 'European Euro', symbol: '€'},
+            {name: 'GHS', flag: '🇬🇭', text: 'Ghanaian Cedis', symbol: '₵'},
+            {name: 'AED', flag: '🇦🇪', text: 'Arab Emirate Dirham', symbol: 'د.إ'},
+            {name: 'EGP', flag: '🇪🇬', text: 'Egyptian Pound', symbol: 'E£'},
+            {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
+            {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
+        ]
+    },
+    mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
             state.domainToSearch = domain;
         },
@@ -336,8 +350,12 @@ const store = createStore({
         },
         SET_ERROR(state, error) {
             state.error = error;
+        },
+        SET_CURRENCY_PAIRS(state, pairs) {
+            state.currencyPairs = pairs;
         }
-    }, actions: {
+    },
+    actions: {
         updateSearchDomain({commit}, domain) {
             commit("UPDATE_DOMAIN_TO_SEARCH", domain);
         },
@@ -379,7 +397,7 @@ const store = createStore({
         stopLoading({commit}) {
             commit('SET_LOADING', false);
         },
-        initialize({commit, state}) {
+        async initialize({commit, state}) {
             console.log("Initializing app data...")
             domainService.availableTLDs()
                 .then((response) => {
@@ -398,12 +416,43 @@ const store = createStore({
                     console.error('Failed to initialize TLDs:', error)
                     commit('SET_ERROR', error)
                 })
+
+            const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
+            // Create an array of promises
+            const conversionPromises = state.currencyPairs.map(async (currency) => {
+                try {
+                    const response = await axios.post(conversionRateEndpoint, {code: currency.name});
+                    // Assuming the API response has a 'result' object with a 'conversion_rate' property
+                    currency.conversion_rate = response.data.result.conversion_rate;
+                    return currency; // Return the updated currency object
+                } catch (error) {
+                    console.error(`Error fetching conversion rate for ${currency.name}:`, error);
+                    currency.conversion_rate = null; // Or some error indicator
+                    return currency;
+                }
+            });
+
+            // Wait for all promises to resolve
+            const updatedCurrencies = await Promise.all(conversionPromises);
+            commit('SET_CURRENCY_PAIRS', updatedCurrencies)
+            console.log(`Initialized conversion rates for ${updatedCurrencies.length} currencies`)
         }
-    }, getters: {
+    },
+    getters: {
         cartTotal: (state) => {
             return state.cart.items.reduce((total, item) => {
                 return (parseFloat(total + item.price)).toFixed(2);
             }, 0); // Start with a total of 0
+        },
+        preferredCurrencySymbol: (state) => {
+            const currency = state.currencyPairs.find(c => c.name === state.preferredCurrency);
+            return currency.symbol
+        },
+        tldPrices: (state) => {
+            return state.availableTLDs.slice(0, 5).map(tld => ({
+                tld: tld.tld,
+                price: tld.price_registration
+            }));
         }
     }
 });

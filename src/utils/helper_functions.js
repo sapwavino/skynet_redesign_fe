@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import store from "@/store/index.js";
 /*
  Encode credentials to Base64
  */
@@ -8,7 +8,8 @@ export const generateAuthHeaders = (username, password) => {
 }
 
 export const exchangeRates = {
-    NGN: 1, USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
+    NGN: 1,
+    USD: 0.00066, // 1 NGN = 0.00066 USD (Updated)
     GBP: 0.00051, // 1 NGN = 0.00051 GBP (Updated)
     EUR: 0.00061, // 1 NGN = 0.00061 EUR (Updated)
     KES: 0.086,    // 1 NGN = 0.086 KSH (Approximate - Check for current rate)
@@ -17,25 +18,9 @@ export const exchangeRates = {
 
 export function convertPrice(currency, price) {
     price = parseFloat(price);
-    // let url = 'https://skynet.africa/api/guest/currency/format'
-    // axios.post(url, {
-    //     price: price,
-    //     code: currency,
-    //     without_currency: true
-    // }).then(response => {
-    //     console.log(response.data);
-    //     // return response.data;
-    // })
-
-    // let url = 'http://localhost:3001/api/guest/client/login'
-    // let url = 'https://httpbin.org/get'
-    // axios.post(url, {
-    //     "email": "sapwavino@gmail.com",
-    //     "password": "Bl@ckbeat1"
-    // }).then(response => {
-    //     console.log(response.data);
-    // })
-    const rate = exchangeRates[currency];
+    const rate = store.state.currencyPairs.find((one) => {
+        return one.name === currency;
+    }).conversion_rate;
     return (price * rate).toFixed(2);
 }
 

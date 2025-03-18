@@ -6,6 +6,7 @@ import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {authService} from "@/services/auth.service.js";
 import router from "@/router/index.js";
+import {orderService} from "@/services/order.service.js";
 
 const store = createStore({
 
@@ -304,7 +305,8 @@ const store = createStore({
             {name: 'EGP', flag: '🇪🇬', text: 'Egyptian Pound', symbol: 'E£'},
             {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
             {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
-        ]
+        ],
+        orders: []
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -346,6 +348,9 @@ const store = createStore({
         },
         SET_CURRENCY_PAIRS(state, pairs) {
             state.currencyPairs = pairs;
+        },
+        SET_ORDERS(state, orders) {
+            state.orders = orders;
         }
     },
     actions: {
@@ -386,28 +391,45 @@ const store = createStore({
             console.log("Initializing app & user data...")
             const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
             if (isLoggedIn) {
-                authService.me()
                 state.auth.isLoggedIn = true
+                authService.me()
+                orderService.getAll()
+                    .then((response) => {
+                        const {data} = response
+
+                        if (data.error) {
+                            console.error('❌Error while fetching user orders:', data.error)
+                            throw new Error(data.error)
+                        }
+                        commit('SET_ORDERS', data.result.list)
+                        console.log(`✅Initialized ${data.result.list.length} ${data.result.list.length > 1 ? 'orders' : 'order'}.`)
+
+                    })
+                    .catch((error) => {
+                        console.error('Failed to initialize orders:', error)
+                        commit('SET_ERROR', error)
+                    })
             }
             domainService.availableTLDs()
                 .then((response) => {
                     const {data} = response
 
                     if (data.error) {
-                        console.error('Failed to fetch TLDs:', data.error)
+                        console.error('❌Error while fetching available TLDs:', data.error)
                         commit('SET_ERROR', data.error)
-                        throw new Error(data.error.message || 'Failed to fetch TLDs:')
+                        throw new Error(data.error.message || 'Error while fetching available TLDs:')
                     }
 
                     commit('SET_AVAILABLE_TLDS', data.result);
-                    console.log(`Initialized TLDs.  ${data.result.length} available.`)
+                    console.log(`✅Initialized ${data.result.length} TLDs.`)
                 })
                 .catch((error) => {
                     console.error('Failed to initialize TLDs:', error)
                     commit('SET_ERROR', error)
                 })
+
+            // INIT CURRENCY CONVERSION RATES
             const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
-            // Create an array of promises
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
                     const response = await axios.post(conversionRateEndpoint, {code: currency.name});
@@ -415,15 +437,14 @@ const store = createStore({
                     currency.conversion_rate = response.data.result.conversion_rate;
                     return currency; // Return the updated currency object
                 } catch (error) {
-                    console.error(`Error fetching conversion rate for ${currency.name}:`, error);
+                    console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
                     currency.conversion_rate = null; // Or some error indicator
                     return currency;
                 }
             });
-            // Wait for all promises to resolve
             const updatedCurrencies = await Promise.all(conversionPromises);
             commit('SET_CURRENCY_PAIRS', updatedCurrencies)
-            console.log(`Initialized conversion rates for ${updatedCurrencies.length} currencies`)
+            console.log(`✅Initialized conversion rates for ${updatedCurrencies.length} currencies.`)
         }
     },
     getters: {

@@ -2,6 +2,7 @@
 import {getLastLogin} from "../utils/helper_functions.js";
 import {createToast} from "mosha-vue-toastify";
 import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
+import {authService} from "@/services/auth.service.js";
 
 export default {
   name: "Dashboard",
@@ -399,16 +400,21 @@ export default {
       <hr class="mr-5 mb-5 dark:border-gray-500" />
 
       <!--        PROFILE + BALANCE -->
-      <div class="flex items-center">
+      <div v-if="$store.state.auth.user"
+           class="flex items-center"
+      >
         <img
+            :src="`https://api.dicebear.com/9.x/initials/svg?seed=${$store.state.auth.user.first_name}${$store.state.auth.user.last_name}&fontFamily=Tahoma&backgroundType=gradientLinear&backgroundColor=eabc63`"
             alt="userImg"
             class="rounded-full h-14 w-14 object-cover border-4 border-customGold mb-3"
-            src="https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?s=612x612&w=0&k=20&c=yNawJP9JGXU6LOL262ME5M1U2xxNKQsvT7F9DZhZCh4="
         />
-        <div class="flex flex-col px-5">
+        <div
+            class="flex flex-col px-5"
+        >
 
-          <h2 class="header">John Doe</h2>
-          <h2 class="muteSubheader">john@doe.com</h2>
+          <h2 class="text-2xl font-bold dark:text-gray-200">{{ $store.state.auth.user.first_name }}
+                                                            {{ $store.state.auth.user.last_name }}</h2>
+          <h2 class="muteSubheader">{{ $store.state.auth.user.email }}</h2>
           <h2 class="muteSmallSubheader"
               style="font-size: 0.6rem; font-weight: bolder !important;"
           >Last login:
@@ -419,7 +425,8 @@ export default {
         <div class="block w-1/2">
           <CurrencyDropdown :show-text="false" />
         </div>
-        <button class="flat-border-btn-base-small w-full rounded-2xl w-1/2 ">Balance: <span
+        <button class="border-2 border-customGold dark:text-customGold rounded-xl block p-3 py-3.5 focus:outline-none font-bold cursor-pointer text-center text-sm">
+          Balance: <span
             class="text-base"
         >0.00</span></button>
       </div>

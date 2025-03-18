@@ -20,7 +20,11 @@ export default {
         },
         SET_ERROR(state, error) {
             state.lastAuthError = error
-        }
+        },
+        LOGOUT(state) {
+            state.isLoggedIn = false
+        },
+
     },
     actions: {
         async login({commit}, credentials) {
@@ -40,15 +44,18 @@ export default {
                     throw new Error('Invalid response from server')
                 }
 
-                commit('SET_USER', data.result?.user || data.user)
                 commit('SET_TOKEN', data.result?.apikey || data.apikey)
                 commit('SET_LOGGED_IN', true)
                 commit('SET_ERROR', null)
 
                 localStorage.setItem('token', data.result?.apikey || data.apikey)
                 localStorage.setItem('isLoggedIn', JSON.stringify(true))
+                localStorage.setItem('lastLogin', JSON.stringify(new Date()))
+                localStorage.setItem('preferredCurrency', JSON.stringify('NGN'))
 
-                console.log('Login successful for user:', data.result?.user?.email || data.user?.email)
+                authService.me()
+
+                console.log('Login successful for user:', data.result.email)
                 return data
             } catch (error) {
                 console.error('Login error:', {
@@ -110,7 +117,15 @@ export default {
 
                 throw error
             }
-        }
+        },
+
+        async logout({commit}) {
+            commit("LOGOUT");
+            window.localStorage.removeItem('isLoggedIn');
+            window.localStorage.removeItem('token');
+            window.localStorage.removeItem('lastLogin');
+            await authService.logout()
+        },
     },
     getters: {
         getLastAuthError: state => state.lastAuthError,

@@ -25,7 +25,7 @@ export function convertPrice(currency, price) {
 }
 
 export const getLastLogin = () => {
-    const date = new Date();
+    const date = new Date(JSON.parse(localStorage.getItem('lastLogin')));
     const options = {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'};
     const formattedDate = date.toLocaleDateString('en-GB', options);
 

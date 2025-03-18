@@ -81,7 +81,7 @@ export default {
       >Database</a>
 
     </div>
-    <div v-show="!dashboardNav && !$store.state.isLoggedIn"
+    <div v-show="!dashboardNav && !$store.state.auth.isLoggedIn"
          class="flex gap-x-2 items-center"
     >
       <ThemeDropdown />
@@ -107,7 +107,7 @@ export default {
         Create Account
       </router-link>
     </div>
-    <div v-show="dashboardNav || $store.state.isLoggedIn"
+    <div v-show="dashboardNav || $store.state.auth.isLoggedIn"
          class="flex gap-x-4 items-center"
     >
       <ThemeDropdown />
@@ -120,22 +120,22 @@ export default {
         </div>
       </router-link>
       <router-link
-          v-if="$store.state.isLoggedIn"
+          v-if="$store.state.auth.isLoggedIn && $route.path !== '/dashboard'"
           class="btn-base"
           style="padding: 10px 15px"
           to="/dashboard"
       >
         Dashboard
       </router-link>
-      <button v-if="$store.state.isLoggedIn"
+      <button v-if="$store.state.auth.isLoggedIn"
               class="btn-base"
               style="padding: 10px 15px"
-              @click="$store.dispatch('logout'); $router.push('/auth/login')"
+              @click="$store.dispatch('auth/logout'); $router.push('/auth/login')"
       >
         Log Out
       </button>
 
-      <div v-show="!$store.state.isLoggedIn"
+      <div v-show="!$store.state.auth.isLoggedIn"
            class="flex gap-x-2"
       >
         <router-link class="border-btn-base"

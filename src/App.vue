@@ -9,6 +9,7 @@ import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import {computed, onMounted} from "vue";
 import store from "@/store/index.js";
 import router from "@/router/index.js";
+import {authService} from "@/services/auth.service.js";
 
 const route = useRoute();
 // const store = store;
@@ -28,7 +29,7 @@ onMounted(() => {
   store.dispatch('initialize')
   const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
   if (isLoggedIn) {
-    store.dispatch('login')
+    router.push('/dashboard')
   }
 })
 

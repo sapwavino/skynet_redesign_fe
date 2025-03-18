@@ -4,8 +4,8 @@ import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
-
-const preferredCurrencyFromStorage = JSON.parse(localStorage.getItem('preferredCurrency'));
+import {authService} from "@/services/auth.service.js";
+import router from "@/router/index.js";
 
 const store = createStore({
 
@@ -40,7 +40,6 @@ const store = createStore({
             ],
         },
         showCookieModal: true,
-        isLoggedIn: false,
         user: {
             info: {
                 full_name: "John Doe",
@@ -266,7 +265,7 @@ const store = createStore({
                 tickets: [],
             }
         },
-        preferredCurrency: preferredCurrencyFromStorage || "NGN",
+        preferredCurrency: JSON.parse(localStorage.getItem('preferredCurrency')) || "NGN",
         showMobileNav: false,
         loading: false,
         loadingMessages: [
@@ -324,12 +323,6 @@ const store = createStore({
         HIDE_COOKIE_MODAL(state) {
             state.showCookieModal = false;
         },
-        LOGIN(state) {
-            state.isLoggedIn = true
-        },
-        LOGOUT(state) {
-            state.isLoggedIn = false
-        },
         MARK_NOTIFICATION_READ(state, id) {
             const notification = state.user.notifications.find(one => one.id === id);
             if (notification) {
@@ -369,14 +362,6 @@ const store = createStore({
             commit("HIDE_COOKIE_MODAL", false);
             window.localStorage.setItem('showCookieModal', JSON.stringify(false));
         },
-        login({commit}) {
-            commit("LOGIN");
-            window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
-        },
-        logout({commit}) {
-            commit("LOGOUT");
-            window.localStorage.removeItem('isLoggedIn');
-        },
         addItemToCart({commit}, item) {
             commit("ADD_ITEM_TO_CART", item);
             createToast("Item added to cart: " + item.name, {
@@ -398,7 +383,12 @@ const store = createStore({
             commit('SET_LOADING', false);
         },
         async initialize({commit, state}) {
-            console.log("Initializing app data...")
+            console.log("Initializing app & user data...")
+            const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
+            if (isLoggedIn) {
+                authService.me()
+                state.auth.isLoggedIn = true
+            }
             domainService.availableTLDs()
                 .then((response) => {
                     const {data} = response
@@ -416,7 +406,6 @@ const store = createStore({
                     console.error('Failed to initialize TLDs:', error)
                     commit('SET_ERROR', error)
                 })
-
             const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
             // Create an array of promises
             const conversionPromises = state.currencyPairs.map(async (currency) => {
@@ -431,7 +420,6 @@ const store = createStore({
                     return currency;
                 }
             });
-
             // Wait for all promises to resolve
             const updatedCurrencies = await Promise.all(conversionPromises);
             commit('SET_CURRENCY_PAIRS', updatedCurrencies)

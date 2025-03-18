@@ -2,17 +2,17 @@
 import {createToast} from "mosha-vue-toastify";
 import {mapActions} from "vuex";
 import "mosha-vue-toastify/dist/style.css";
-import AppLoader from "@/components/AppLoader.vue";
 
 
 export default {
   name: "Login",
-  components: {AppLoader},
+  components: {},
   data() {
     return {
       email: "",
       password: "",
       error: "",
+      loading: false,
     };
   },
   methods: {
@@ -50,7 +50,8 @@ export default {
           password: this.password,
         });
 
-        createToast("Login successful!", {
+
+        createToast(`Login successful! Hello ${this.$store.state.auth.user.first_name}`, {
           duration: 2000,
           type: "success",
         });
@@ -98,7 +99,7 @@ export default {
         <input
             v-model="email"
             autofocus
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-customGold focus:border-0"
             name="email"
             placeholder="you@example.com"
             required
@@ -115,7 +116,7 @@ export default {
         </label>
         <input
             v-model="password"
-            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-customGold focus:border-customGold transition duration-200 bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-customGold focus:border-0"
             name="password"
             placeholder="••••••••••••••••"
             type="password"

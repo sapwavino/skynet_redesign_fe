@@ -50,14 +50,10 @@ export default {
           password: this.password,
         });
 
-
-        createToast(`Login successful! Hello ${this.$store.state.auth.user.first_name}`, {
-          duration: 2000,
-          type: "success",
-        });
-
         this.$router.push("/dashboard");
       } catch (error) {
+        console.log("error is")
+        console.error(error);
         this.error =
             error.response?.data?.message || "Login failed. Please try again.";
         createToast(this.error, {

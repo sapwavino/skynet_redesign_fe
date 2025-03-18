@@ -389,10 +389,21 @@ const store = createStore({
         },
         async initialize({commit, state}) {
             console.log("Initializing app & user data...")
+
+            // INIT LOGGED IN USER'S DATA
             const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
             if (isLoggedIn) {
                 state.auth.isLoggedIn = true
                 authService.me()
+                    .then((response) => {
+                        const {data} = response
+                        state.auth.user = data.result
+                        console.log(`✅Fetched authenticated user profile`)
+                    })
+                    .catch((error) => {
+                        console.error('❌Failed to fetch authenticated user profile:', error)
+                        throw new Error(error.message)
+                    })
                 orderService.getAll()
                     .then((response) => {
                         const {data} = response
@@ -410,6 +421,8 @@ const store = createStore({
                         commit('SET_ERROR', error)
                     })
             }
+
+            // INIT APP DATA
             domainService.availableTLDs()
                 .then((response) => {
                     const {data} = response
@@ -433,12 +446,11 @@ const store = createStore({
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
                     const response = await axios.post(conversionRateEndpoint, {code: currency.name});
-                    // Assuming the API response has a 'result' object with a 'conversion_rate' property
                     currency.conversion_rate = response.data.result.conversion_rate;
-                    return currency; // Return the updated currency object
+                    return currency;
                 } catch (error) {
                     console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
-                    currency.conversion_rate = null; // Or some error indicator
+                    currency.conversion_rate = null;
                     return currency;
                 }
             });

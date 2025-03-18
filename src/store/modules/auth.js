@@ -1,4 +1,5 @@
 import {authService} from '@/services/auth.service'
+import {createToast} from "mosha-vue-toastify";
 
 export default {
     namespaced: true,
@@ -27,7 +28,7 @@ export default {
 
     },
     actions: {
-        async login({commit}, credentials) {
+        async login({commit, state}, credentials) {
             try {
                 const response = await authService.login(credentials)
                 const {data} = response
@@ -54,6 +55,19 @@ export default {
                 localStorage.setItem('preferredCurrency', JSON.stringify('NGN'))
 
                 authService.me()
+                    .then((response) => {
+                        const {data} = response
+                        state.user = data.result
+                        console.log(`✅Fetched authenticated user profile`)
+                        createToast(`Login successful! Hello ${state.user.first_name}`, {
+                            duration: 2000,
+                            type: "success",
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('❌Failed to fetch authenticated user profile:', error)
+                        throw new Error(error.message)
+                    })
 
                 console.log('Login successful for user:', data.result.email)
                 return data

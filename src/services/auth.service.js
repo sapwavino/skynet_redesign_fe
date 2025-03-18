@@ -9,16 +9,7 @@ export const authService = {
         return api.post('/guest/client/create', userData)
     },
     me() {
-        api.post('/client/profile/get')
-            .then((response) => {
-                const {data} = response
-                store.state.auth.user = data.result
-                return data.result
-            })
-            .catch((error) => {
-                console.error('Failed to fetch user profile:', error)
-                throw new Error(error.message)
-            })
+        return api.post('/client/profile/get')
     },
     logout() {
         return api.post('/auth/logout')

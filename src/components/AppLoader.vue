@@ -13,7 +13,7 @@
             class="h-[9rem] animate-pulse"
             src="../assets/img/Skynet%20Web%20Services%20Logo.png"
         />
-        <!--        <div class="appLoader h-40">{{ $store.state.currentLoadingMessage }}</div>-->
+        <div class="appLoader h-40">{{ $store.state.currentLoadingMessage }}</div>
       </div>
     </div>
   </transition>

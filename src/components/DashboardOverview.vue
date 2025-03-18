@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted() {
-    
+
   }
 }
 </script>
@@ -681,7 +681,7 @@ export default {
             >
               {{ showBalance ? 'Hide Balance' : 'Show Balance' }}
             </button>
-            <button class="dash-card-btn-base w-full">Top Up</button>
+            <!--            <button class="dash-card-btn-base w-full">Top Up</button>-->
             <router-link to="/dashboard/wallet">
               <button class="dash-card-btn-base w-full">Open Wallet</button>
             </router-link>

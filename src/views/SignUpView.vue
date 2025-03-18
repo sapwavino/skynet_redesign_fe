@@ -69,7 +69,7 @@ export default {
 
       try {
         this.loading = true;
-        this.startLoading();
+        await this.startLoading();
 
         const userData = {
           email: this.email,
@@ -103,7 +103,7 @@ export default {
         }
       } finally {
         this.loading = false;
-        this.stopLoading();
+        await this.stopLoading();
       }
     },
   },

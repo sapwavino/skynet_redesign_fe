@@ -274,22 +274,21 @@ const store = createStore({
             "Finding the right frequency.",
             "Servers sipping coffee.",
             "Connecting the dots (literally).",
-            "Polishing pixels.",
             "Decoding the internet whispers...",
             "Warming up the servers...",
             "Polishing the pixels...",
-            "Servers dey reason your request.",
-            "Fetching the network jollof.",
-            "Servers are doing shakara.",
-            "Fetching data, no be juju.",
-            "Fetching data like jollof rice.",
-            "Fetching data, no be beans.",
-            "Data dey come, calm down.",
-            "Server dey do shakara.",
-            "Checking if the server greeted elders.",
-            "Catching the digital molue.",
-            "Checking the village network.",
-            "Loading, no be small thing o!",
+            // "Servers dey reason your request.",
+            // "Fetching the network jollof.",
+            // "Servers are doing shakara.",
+            // "Fetching data, no be juju.",
+            // "Fetching data like jollof rice.",
+            // "Fetching data, no be beans.",
+            // "Data dey come, calm down.",
+            // "Server dey do shakara.",
+            // "Checking if the server greeted elders.",
+            // "Catching the digital molue.",
+            // "Checking the village network.",
+            // "Loading, no be small thing o!",
             "Building the bridge to your data."],
         currentLoadingMessage: '',
         availableTLDs: [],
@@ -474,7 +473,18 @@ const store = createStore({
                 tld: tld.tld,
                 price: tld.price_registration
             }));
-        }
+        },
+        getCloudOrders: (state) => {
+            return state.orders.filter(order => order.service_type === 'custom');
+        },
+        getDatabaseOrders: (state) => {
+        },
+        getHostingOrders: (state) => {
+        },
+        getDomainOrders: (state) => {
+        },
+        getEmailOrders: (state) => {
+        },
     }
 });
 

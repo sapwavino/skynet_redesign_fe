@@ -101,6 +101,7 @@ export default {
             <th class="py-3 px-4 text-left">#ID</th>
             <th class="py-3 px-4 text-left">Created On</th>
             <th class="py-3 px-4 text-left">Due Date</th>
+            <th class="py-3 px-4 text-left">Currency</th>
             <th class="py-3 px-4 text-left">Total</th>
             <th class="py-3 px-4 text-left">Action</th>
           </tr>
@@ -114,6 +115,7 @@ export default {
             <td class="py-3 px-4 font-bold">#{{ invoice.id }}</td>
             <td class="py-3 px-4">{{ invoice.created_at }}</td>
             <td class="py-3 px-4">{{ invoice.due_at }}</td>
+            <td class="py-3 px-4 font-medium">{{ invoice.currency }}</td>
             <td class="py-3 px-4">
               {{
                 $store.getters.preferredCurrencySymbol
@@ -131,6 +133,7 @@ export default {
 
           <tr class="border-b border-blue-gray-200">
             <td class="py-3 px-4 font-bold">Unpaid Total</td>
+            <td class="py-3 px-4"></td>
             <td class="py-3 px-4"></td>
             <td class="py-3 px-4"></td>
             <td class="py-3 px-4 font-bold">

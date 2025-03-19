@@ -3,17 +3,17 @@ import {v4 as uuidv4} from 'uuid';
 export class DomainCartItem {
     constructor(
         name,
-        price) {
-            this.id = uuidv4();
-            this.name = name;
-            this.price = price;
-            this.order_type = "domain";
-            this.description = "Domain registration for " + name;
-            this.active = true;
-            this.billing_cycle = "annually";
-            this.created_at = new Date();
-            this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
-        }
+        price
+    ) {
+        this.name = name;
+        this.price = price;
+        this.order_type = "domain";
+        this.description = "Domain registration for " + name;
+        this.active = true;
+        this.billing_cycle = "annually";
+        this.created_at = new Date();
+        this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
+    }
 }
 
 // hosting-cart-item.js

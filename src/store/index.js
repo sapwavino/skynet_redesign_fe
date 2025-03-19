@@ -8,6 +8,7 @@ import {authService} from "@/services/auth.service.js";
 import router from "@/router/index.js";
 import {orderService} from "@/services/order.service.js";
 import {currencyService} from "@/services/currency.service.js";
+import {invoiceService} from "@/services/invoice.service.js";
 
 const store = createStore({
 
@@ -306,7 +307,8 @@ const store = createStore({
             {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
             {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
         ],
-        orders: []
+        orders: [],
+        invoices: []
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -351,7 +353,10 @@ const store = createStore({
         },
         SET_ORDERS(state, orders) {
             state.orders = orders;
-        }
+        },
+        SET_INVOICES(state, invoices) {
+            state.invoices = invoices;
+        },
     },
     actions: {
         updateSearchDomain({commit}, domain) {
@@ -420,6 +425,21 @@ const store = createStore({
                         console.error('Failed to initialize orders:', error)
                         commit('SET_ERROR', error)
                     })
+                invoiceService.getAllInvoices()
+                    .then((response) => {
+                        const {data} = response
+
+                        if (data.error) {
+                            console.error('❌Error while fetching user invoices:', data.error)
+                            throw new Error(data.error)
+                        }
+                        commit('SET_INVOICES', data.result.list)
+                        console.log(`✅Initialized ${data.result.list.length} ${data.result.list.length > 1 ? 'invoices' : 'invoice'}.`)
+                    })
+                    .catch((error) => {
+                        console.error('Failed to initialize invoices:', error)
+                        commit('SET_ERROR', error)
+                    })
             }
 
             // INIT APP DATA
@@ -442,12 +462,12 @@ const store = createStore({
                 })
 
             // INIT CURRENCY CONVERSION RATES
-            const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
+            let initialized_currency_rates = []
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
                     const response = await currencyService.getConversionRates(currency.name)
                     currency.conversion_rate = response.data.result.conversion_rate;
-                    console.log(`✅Initialized conversion rate for ${currency.name}.`)
+                    initialized_currency_rates.push(currency.name);
                     return currency;
                 } catch (error) {
                     console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
@@ -458,6 +478,7 @@ const store = createStore({
             await Promise.all(conversionPromises)
                 .then((response) => {
                     commit('SET_CURRENCY_PAIRS', response)
+                    console.log(`✅Initialized conversion rates for ${initialized_currency_rates.join(", ")}. \nTotal: ${initialized_currency_rates.length}`)
                 })
                 .catch()
         }

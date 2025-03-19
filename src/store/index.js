@@ -7,6 +7,7 @@ import axios from "axios";
 import {authService} from "@/services/auth.service.js";
 import router from "@/router/index.js";
 import {orderService} from "@/services/order.service.js";
+import {currencyService} from "@/services/currency.service.js";
 
 const store = createStore({
 
@@ -436,7 +437,7 @@ const store = createStore({
                     console.log(`✅Initialized ${data.result.length} TLDs.`)
                 })
                 .catch((error) => {
-                    console.error('Failed to initialize TLDs:', error)
+                    console.error('❌Failed to initialize TLDs:', error)
                     commit('SET_ERROR', error)
                 })
 
@@ -444,8 +445,9 @@ const store = createStore({
             const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
-                    const response = await axios.post(conversionRateEndpoint, {code: currency.name});
+                    const response = await currencyService.getConversionRates(currency.name)
                     currency.conversion_rate = response.data.result.conversion_rate;
+                    console.log(`✅Initialized conversion rate for ${currency.name}.`)
                     return currency;
                 } catch (error) {
                     console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
@@ -453,9 +455,11 @@ const store = createStore({
                     return currency;
                 }
             });
-            const updatedCurrencies = await Promise.all(conversionPromises);
-            commit('SET_CURRENCY_PAIRS', updatedCurrencies)
-            console.log(`✅Initialized conversion rates for ${updatedCurrencies.length} currencies.`)
+            await Promise.all(conversionPromises)
+                .then((response) => {
+                    commit('SET_CURRENCY_PAIRS', response)
+                })
+                .catch()
         }
     },
     getters: {

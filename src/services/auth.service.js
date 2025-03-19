@@ -1,5 +1,4 @@
 import api from "@/config/axios"
-import store from "@/store/index.js";
 
 export const authService = {
     login(credentials) {

@@ -98,6 +98,7 @@ export default {
         </section>
         <div class="mx-auto md:w-2/3">
           <DomainNameSearch
+              :show-more-button="false"
               @inputFocused="autoPlayCarouselHandler"
           />
         </div>

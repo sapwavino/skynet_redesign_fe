@@ -51,7 +51,7 @@ export default {
       >
         🛒
         <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
-          {{ $store.state.cart.items.length }}
+          {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>
       <CurrencyDropdown :show-text="false" />
@@ -77,7 +77,7 @@ export default {
       >
         🛒
         <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
-          {{ $store.state.cart.items.length }}
+          {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>
       <router-link
@@ -130,7 +130,7 @@ export default {
       >
         🛒
         <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
-          {{ $store.state.cart.items.length }}
+          {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>
       <svg

@@ -1,35 +1,45 @@
 import {v4 as uuidv4} from 'uuid';
+import store from "@/store/index.js";
 
 export class DomainCartItem {
     constructor(
         name,
-        price) {
-            this.id = uuidv4();
-            this.name = name;
-            this.price = price;
-            this.order_type = "domain";
-            this.description = "Domain registration for " + name;
-            this.active = true;
-            this.billing_cycle = "annually";
-            this.created_at = new Date();
-            this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
-        }
+        price
+    ) {
+        this.id = uuidv4();
+        this.name = name;
+        this.price = price;
+        this.order_type = "domain";
+        this.description = "Domain registration for " + name;
+        this.active = true;
+        this.billing_cycle = "annually";
+        this.created_at = new Date();
+        this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
+    }
 }
 
-// hosting-cart-item.js
 export class HostingCartItem {
-    constructor(name, type, price, domain, billing_cycle, id = null, active = true, description = "Hosting", created_at = new Date(), activated_at = new Date(), renewal_date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.price = price;
-        this.description = description;
-        this.active = active;
+    constructor(
+        panel,
+        quantity = 1,
+        duration,
+        domain,
+        plan
+    ) {
+        this.type = 'hosting'
+        this.panel = panel;
+        this.quantity = quantity;
         this.domain = domain;
-        this.billing_cycle = billing_cycle;
-        this.created_at = created_at;
-        this.activated_at = activated_at;
-        this.renewal_date = renewal_date;
+        this.duration = duration;
+        this.plan = plan;
+        this.description = this.panel + ' hosting';
+        this.product = this.getProduct()
+    }
+
+    getProduct() {
+        return store.getters["products/getHostingProducts"].find((one) => {
+            return one.slug === this.panel + '-' + this.plan
+        })
     }
 }
 

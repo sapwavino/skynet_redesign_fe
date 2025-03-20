@@ -12,8 +12,5 @@ export const domainService = {
             sld: domain.sld,
             tld: domain.tld
         })
-    },
-    logout() {
-        return api.post('/auth/logout')
     }
 }

@@ -2,45 +2,26 @@ import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
+import products from "./modules/products.js";
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {authService} from "@/services/auth.service.js";
 import router from "@/router/index.js";
 import {orderService} from "@/services/order.service.js";
 import {currencyService} from "@/services/currency.service.js";
+import {productService} from "@/services/product.service.js";
+import {cartService} from "@/services/cart.service.js";
 
 const store = createStore({
 
     modules: {
-        auth
+        auth,
+        products
     },
 
     state: {
         domainToSearch: "",
-        cart: {
-            items: [// {
-                //     name: "anewdomain.com",
-                //     price: 90,
-                //     quantity: 1,
-                //     description: "Domain registration",
-                //     type: "domain"
-                // },
-                // {
-                //     name: "Product 2",
-                //     description: 'G3 VPS',
-                //     price: 100,
-                //     quantity: 2,
-                //     type: "cloud"
-                // },
-                // {
-                //     name: "Product 3",
-                //     description: 'CPanel Hosting',
-                //     price: 700,
-                //     quantity: 1,
-                //     type: "hosting"
-                // }
-            ],
-        },
+        cart: {},
         showCookieModal: true,
         user: {
             info: {
@@ -351,6 +332,9 @@ const store = createStore({
         },
         SET_ORDERS(state, orders) {
             state.orders = orders;
+        },
+        SET_CART(state, cart) {
+            state.cart = cart;
         }
     },
     actions: {
@@ -420,6 +404,21 @@ const store = createStore({
                         console.error('Failed to initialize orders:', error)
                         commit('SET_ERROR', error)
                     })
+                cartService.getAllCartItems()
+                    .then((response) => {
+                        const {data} = response
+                        if (data.error) {
+                            console.error('❌Error while fetching cart items:', data.error)
+                            commit('SET_ERROR', data.error)
+                            throw new Error(data.error.message)
+                        }
+                        commit('SET_CART', data.result);
+                        console.log(`✅Initialized ${data.result.items.length} ${data.result.items.length > 1 ? 'items' : 'item'} in the cart.`)
+                    })
+                    .catch((error) => {
+                        console.error('❌Failed to initialize cart:', error)
+                        commit('SET_ERROR', error)
+                    })
             }
 
             // INIT APP DATA
@@ -442,7 +441,6 @@ const store = createStore({
                 })
 
             // INIT CURRENCY CONVERSION RATES
-            const conversionRateEndpoint = 'https://skynet.africa/api/guest/currency/get';
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
                     const response = await currencyService.getConversionRates(currency.name)
@@ -460,14 +458,52 @@ const store = createStore({
                     commit('SET_CURRENCY_PAIRS', response)
                 })
                 .catch()
+
+            //     INIT PRODUCTS
+            productService.getAllProducts()
+                .then((response) => {
+                    const {data} = response
+                    if (data.error) {
+                        console.error('❌Error while fetching available TLDs:', data.error)
+                        commit('SET_ERROR', data.error)
+                        throw new Error(data.error.message || 'Error while fetching available TLDs:')
+                    }
+                    commit('products/SET_PRODUCTS', data.result.list)
+                    console.log(`✅Initialized ${data.result.list.length} products.`)
+                })
+                .catch((error) => {
+                    console.error('❌Failed to initialize products:', error)
+                    commit('SET_ERROR', error)
+                })
+
+        },
+        async checkDomainAvailability({state}) {
+            const domain = state.domainToSearch;
+            const allTLDs = state.availableTLDs
+            let availableTLDs = []
+            const url = 'https://skynet.com/api/guest/servicedomain/check'
+
+            allTLDs.map((tld) => {
+                try {
+                    const res = axios.post(url, {
+                        sld: domain,
+                        tld: tld.tld
+                    })
+                    const {data} = res
+                    console.log(`data for ${domain} & ${tld.tld} is...`)
+                    console.log(data)
+                    console.log()
+
+                } catch (error) {
+                    console.error(`❌Error checking domain availability for ${domain}.${tld.tld}:`, error);
+                    throw new Error(`❌Error checking availability for ${tld.tld} ${domain}`)
+                }
+            })
+
+            axios.post()
         }
     },
     getters: {
-        cartTotal: (state) => {
-            return state.cart.items.reduce((total, item) => {
-                return (parseFloat(total + item.price)).toFixed(2);
-            }, 0); // Start with a total of 0
-        },
         preferredCurrencySymbol: (state) => {
             const currency = state.currencyPairs.find(c => c.name === state.preferredCurrency);
             return currency.symbol
@@ -478,12 +514,19 @@ const store = createStore({
                 price: tld.price_registration
             }));
         },
+        allTldPrices: (state) => {
+            return state.availableTLDs.map(tld => ({
+                tld: tld.tld,
+                price: tld.price_registration
+            }));
+        },
         getCloudOrders: (state) => {
             return state.orders.filter(order => order.service_type === 'custom');
         },
         getDatabaseOrders: (state) => {
         },
         getHostingOrders: (state) => {
+            return state.orders.filter(order => order.service_type === 'hosting');
         },
         getDomainOrders: (state) => {
         },

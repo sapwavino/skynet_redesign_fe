@@ -9,7 +9,19 @@ import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 export default {
   name: "DomainNameSearch",
   components: {CurrencyDropdown, Recents},
-  emits: ['inputFocused'],
+  emits: ['inputFocused', 'domainSelected'],
+  props:
+      {
+        showMoreButton: {
+          type: Boolean,
+          default: false,
+        },
+        hostingDomain: {
+          type: Boolean,
+          default: false,
+        }
+      }
+  ,
   setup() {
     return {}
   },
@@ -44,14 +56,7 @@ export default {
       searchResults: [],
       recents: [],
       showMore: false,
-      countries: [
-        {name: "GHS", flag: "🇬🇭", text: "Ghanaian Cedis"},
-        {name: "KES", flag: "🇰🇪", text: "Kenyan Shillings"},
-        {name: "NGN", flag: "🇳🇬", text: "Nigerian Naira"},
-        {name: "GBP", flag: "🇬🇧", text: "British Pound Sterling"},
-        {name: "USD", flag: "🇺🇸", text: "United States Dollar"},
-        {name: "EUR", flag: "🇪🇺", text: "European Euro"},
-      ],
+      selectedDomain: ''
 
     }
   },
@@ -132,6 +137,7 @@ export default {
       }
 
       this.$store.dispatch('updateSearchDomain', removeTLD(this.searchTerm));
+      this.$store.dispatch('checkDomainAvailability')
       let recentExists = this.recents.includes(this.$store.state.domainToSearch);
       if (!recentExists) {
         this.recents.push(this.$store.state.domainToSearch);
@@ -165,7 +171,6 @@ export default {
       this.searchTerm = domain;
     },
     buyDomain(domain, price) {
-      // console.log(new DomainCartItem("name", "100",))
       console.log(
           domain,
           convertPrice(this.$store.state.preferredCurrency, price),
@@ -201,9 +206,9 @@ export default {
   computed: {
     toggleTldPrices() {
       if (this.showMore) {
-        return this.tldPrices
+        return this.$store.getters.allTldPrices
       }
-      return this.tldPricesShort
+      return this.$store.getters.tldPrices
     },
     selectedCurrency: {
       get() {
@@ -264,57 +269,124 @@ export default {
   </div>
 
   <!--    SEARCH RESULTS-->
-  <section v-if="!loading && searchResults.length > 0"
-           class="mt-3 mx-auto"
-  >
-    <div
-        class="border border-gray-50 flex flex-col justify-center rounded-3xl md:p-5 p-1 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
+  <section v-if="hostingDomain">
+    <section v-if="!loading && searchResults.length > 0"
+             class="mt-3 mx-auto"
     >
-      <span class="text-2xl font-bold text-center dark:text-gray-200 text-black hidden md:block">Results</span>
-      <span v-if="$store.state.domainToSearch.length > 20"
-            class="text-xs text-green-600 dark:text-gray-700 text-center"
-      >We are showing a shorter name because domain name is longer than 20 characters</span>
-      <ul class="w-full">
-        <li v-for="(tld, idx) in $store.getters.tldPrices"
-            :key="idx"
-            class="list-none resultListItem flex items-center justify-between gap-2"
-        >
-          <div class="flex flex-col gap-y-1">
-            <h2 class="font-bold text-xs md:text-lg">
-              {{
-                ($store.state.domainToSearch.length > 15
-                    ? $store.state.domainToSearch.substring(0, 15) + '***'
-                    : $store.state.domainToSearch)
-                + tld.tld
-              }}
-            </h2>
-          </div>
+      <div
+          class="border border-gray-50 flex flex-col justify-center rounded-3xl md:p-5 p-1 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
+      >
+        <span class="text-2xl font-bold text-center dark:text-gray-200 text-black hidden md:block">Results</span>
+        <span v-if="$store.state.domainToSearch.length > 20"
+              class="text-xs text-green-600 dark:text-gray-700 text-center"
+        >We are showing a shorter name because domain name is longer than 20 characters</span>
+        <ul class="w-full">
+          <li v-for="(tld, idx) in toggleTldPrices"
+              :key="idx"
+              class="list-none resultListItem flex items-center justify-between gap-2"
+          >
+            <div class="flex flex-col gap-y-1">
+              <h2 class="font-bold text-xs md:text-lg">
+                {{
+                  ($store.state.domainToSearch.length > 15
+                      ? $store.state.domainToSearch.substring(0, 15) + '***'
+                      : $store.state.domainToSearch)
+                  + tld.tld
+                }}
+              </h2>
+            </div>
 
-          <div class="flex items-center gap-x-1 ">
-            <div class="flex flex-col text-right mr-1">
-              <h1 class="font-black text-xs md:text-lg">
+            <div class="flex items-center gap-x-1 ">
+              <div class="flex flex-col text-right mr-1">
+                <h1 class="font-black text-xs md:text-lg">
                   <span class="font-bold">
                     <span>{{ $store.getters.preferredCurrencySymbol }}</span>{{
                       formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
                                                                              }}
                   </span>
-              </h1>
-              <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
+                </h1>
+                <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
+              </div>
+              <button :class="{
+                'resultListAddBtn' : selectedDomain!==tld.tld,
+                'resultListAddBtnSelected' : selectedDomain===tld.tld,
+                }"
+                      @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price); selectedDomain=tld.tld; $emit('domainSelected', {
+                        sld: searchTerm,
+                        tld: tld.tld
+                      })"
+              >{{ selectedDomain === tld.tld ? "Selected" : "Select" }}
+              </button>
             </div>
+          </li>
+          <li v-if="showMoreButton && !showMore"
+              class="list-none resultListItem flex items-center justify-center"
+          >
             <button class="resultListAddBtn"
-                    @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
-            >🛒 Buy
+                    @click="showMore = true"
+            >+ Explore more Domains
             </button>
-          </div>
-        </li>
-        <!--        <li class="list-none resultListItem flex items-center justify-center">-->
-        <!--          <button class="resultListAddBtn"-->
-        <!--                  @click="showMore = true"-->
-        <!--          >+ Explore more Domains-->
-        <!--          </button>-->
-        <!--        </li>-->
-      </ul>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </section>
+  <section v-else>
+
+    <section v-if="!loading && searchResults.length > 0"
+             class="mt-3 mx-auto"
+    >
+      <div
+          class="border border-gray-50 flex flex-col justify-center rounded-3xl md:p-5 p-1 bg-gray-100 dark:bg-gray-950 dark:border-0 dark:rounded-3xl"
+      >
+        <span class="text-2xl font-bold text-center dark:text-gray-200 text-black hidden md:block">Results</span>
+        <span v-if="$store.state.domainToSearch.length > 20"
+              class="text-xs text-green-600 dark:text-gray-700 text-center"
+        >We are showing a shorter name because domain name is longer than 20 characters</span>
+        <ul class="w-full">
+          <li v-for="(tld, idx) in toggleTldPrices"
+              :key="idx"
+              class="list-none resultListItem flex items-center justify-between gap-2"
+          >
+            <div class="flex flex-col gap-y-1">
+              <h2 class="font-bold text-xs md:text-lg">
+                {{
+                  ($store.state.domainToSearch.length > 15
+                      ? $store.state.domainToSearch.substring(0, 15) + '***'
+                      : $store.state.domainToSearch)
+                  + tld.tld
+                }}
+              </h2>
+            </div>
+
+            <div class="flex items-center gap-x-1 ">
+              <div class="flex flex-col text-right mr-1">
+                <h1 class="font-black text-xs md:text-lg">
+                  <span class="font-bold">
+                    <span>{{ $store.getters.preferredCurrencySymbol }}</span>{{
+                      formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
+                                                                             }}
+                  </span>
+                </h1>
+                <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
+              </div>
+              <button class="resultListAddBtn"
+                      @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
+              >🛒 Buy
+              </button>
+            </div>
+          </li>
+          <li v-if="showMoreButton"
+              class="list-none resultListItem flex items-center justify-center"
+          >
+            <button class="resultListAddBtn"
+                    @click="showMore = true"
+            >+ Explore more Domains
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
   </section>
 
 </template>

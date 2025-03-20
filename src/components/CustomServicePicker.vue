@@ -437,13 +437,13 @@ watch(selectedConfig, (newConfig) => {
       <section class="my-5">
         <h2 class="font-bold text-xl text-center dark:text-gray-300">Operating System</h2>
         <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-        <div class="grid grid-cols-2 md:grid-cols-3">
+        <div class="grid grid-cols-2 md:grid-cols-4">
           <div
               :class="{
                 'border-2 border-customGold dark:bg-gray-900' : operatingSystem === 'linux',
-                'dark:text-gray-500' : operatingSystem !== 'linux',
+                'dark:text-gray-500' : operatingSystem !== 'linux'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'linux'"
           >
             <svg
@@ -469,7 +469,7 @@ watch(selectedConfig, (newConfig) => {
                 'border-2 border-customGold text-customGold dark:bg-gray-900' : operatingSystem === 'debian',
                 'dark:text-gray-500' : operatingSystem !== 'debian',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'debian'"
           >
             <svg
@@ -592,10 +592,59 @@ watch(selectedConfig, (newConfig) => {
 
           <div
               :class="{
-                'border-2 border-customGold text-customGold dark:text-customGold dark:bg-gray-900' : operatingSystem === 'windows',
-                'dark:text-gray-500' : operatingSystem !== 'windows',
+                'border-2 border-customGold text-customGold dark:bg-gray-900' : operatingSystem === 'centos',
+                'dark:text-gray-500' : operatingSystem !== 'centos',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-1/2 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+              @click="operatingSystem = 'centos'"
+          >
+            <svg
+                :class="{
+                'fill-customGold' : operatingSystem === 'centos'
+              }"
+                class="hover:fill-customGold mx-auto"
+                height="80"
+                width="75"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+              <g transform="matrix(1.954132 0 0 1.954132 -85.24798 -3.17432)">
+                <g fill-rule="evenodd">
+                  <path d="M57.42 16.804l1.185 1.178-1.185 1.178H49.08v3.924l-5.085-5.102 5.085-5.016v3.838z"
+                  />
+                  <path d="M61.196 15.42l-1.178 1.185-1.178-1.185V7.08h-3.924l5.102-5.085 5.016 5.085h-3.838z"
+                  />
+                  <path d="M62.58 19.196l-1.185-1.178 1.185-1.178h8.338v-3.924l5.085 5.102-5.085 5.016v-3.838z"
+                  />
+                  <path d="M58.804 20.58l1.178-1.185 1.178 1.185v8.34h3.924l-5.102 5.085-5.016-5.085h3.838z"
+                  />
+                </g>
+                <g stroke="#fff"
+                   stroke-width=".724"
+                >
+                  <path d="M48.783 6.783h10.132v10.132H48.783z"
+                  />
+                  <path d="M61.086 6.783h10.132v10.132H61.086z"
+                  />
+                  <path d="M61.086 19.086h10.132v10.132H61.086z"
+                  />
+                  <path d="M48.783 19.086h10.132v10.132H48.783z"
+                  />
+                  <path d="M44.136 18l7.164-7.164L58.465 18 51.3 25.164zm8.7-8.7L60 2.136 67.164 9.3 60 16.465zm8.7 8.7l7.164-7.164L75.864 18 68.7 25.164zm-8.7 8.7L60 19.535l7.164 7.164L60 33.864z"
+                        fill="none"
+                  />
+                </g>
+              </g>
+            </svg>
+
+            <span class="font-bold mt-2 tracking-wider text-lg ">CentOS</span>
+          </div>
+
+          <div
+              :class="{
+                'border-2 border-customGold text-customGold dark:text-customGold dark:bg-gray-900' : operatingSystem === 'windows',
+                'dark:text-gray-500' : operatingSystem !== 'windows'
+              }"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -689,7 +738,8 @@ watch(selectedConfig, (newConfig) => {
 
       <!--CONFIG SUMMARY-->
       <div class="text-center mt-5">
-        <h2 class="header mb-2">Total: ${{ totalCost }}</h2>
+        <h2 class="header mb-2">Total: ${{ totalCost }}<span class="font-bold text-gray-600 text-sm">/month</span>
+        </h2>
         <button class="btn-base">Order Now</button>
       </div>
 
@@ -747,7 +797,8 @@ watch(selectedConfig, (newConfig) => {
         </div>
       </section>
       <section class="flex flex-col items-center">
-        <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}</h2>
+        <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}<span class="font-bold text-gray-600 text-sm">/month</span>
+        </h2>
         <button class="btn-base">Order Now</button>
       </section>
     </section>
@@ -803,7 +854,9 @@ watch(selectedConfig, (newConfig) => {
         </div>
       </section>
       <section class="flex flex-col items-center">
-        <h2 class="header mb-2 mt-10">Total: ${{ emailsTotalCost }}</h2>
+        <h2 class="header mb-2 mt-10">Total: ${{
+            emailsTotalCost
+                                      }}<span class="font-bold text-gray-600 text-sm">/month</span></h2>
         <button class="btn-base">Order Now</button>
       </section>
     </section>

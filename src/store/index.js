@@ -2,6 +2,7 @@ import {createStore} from "vuex";
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
+import support from "./modules/support"
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {authService} from "@/services/auth.service.js";
@@ -13,7 +14,8 @@ import {invoiceService} from "@/services/invoice.service.js";
 const store = createStore({
 
     modules: {
-        auth
+        auth,
+        support
     },
 
     state: {
@@ -392,7 +394,7 @@ const store = createStore({
         stopLoading({commit}) {
             commit('SET_LOADING', false);
         },
-        async initialize({commit, state}) {
+        async initialize({commit, state, dispatch}) {
             console.log("Initializing app & user data...")
 
             // INIT LOGGED IN USER'S DATA
@@ -480,7 +482,8 @@ const store = createStore({
                     commit('SET_CURRENCY_PAIRS', response)
                     console.log(`✅Initialized conversion rates for ${initialized_currency_rates.join(", ")}. \nTotal: ${initialized_currency_rates.length}`)
                 })
-                .catch()
+                .catch();
+            await dispatch('support/initialize');
         }
     },
     getters: {

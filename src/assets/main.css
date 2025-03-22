@@ -7,17 +7,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
     /*--color-customGold: #ffc107;*/
-    --color-customGold:#eabe63ff;
-    --color-customGold-transparent:rgba(234, 186, 99, 0.6);
+    --color-customGold: #eabe63ff;
+    --color-customGold-transparent: rgba(234, 186, 99, 0.6);
 
 }
 
 /*STYLE DEFAULTS & RESET*/
-*, html, body {
-    font-family:"Raleway", sans-serif !important;
-    box-sizing:border-box;
-    scroll-behavior:smooth;
-    transition:all 0.5s ease-in-out;
+*,
+html,
+body {
+    font-family: "Raleway", sans-serif !important;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: all 0.5s ease-in-out;
 }
 
 html {
@@ -30,18 +32,18 @@ button {
 
 @media (min-width:1024px) {
     #dash {
-        display:grid;
+        display: grid;
         grid-template-columns: 1fr 2fr;
-        padding:0 2rem;
+        padding: 0 2rem;
     }
 }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-    margin:0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
 }
 
 
@@ -81,7 +83,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 /*ELEMENTS*/
 .hero {
-    @apply p-5 md:flex flex-col items-center ;
+    @apply p-5 md:flex flex-col items-center;
 }
 
 .announcement-banner {
@@ -105,42 +107,43 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .ribbon {
-    width:60px;
-    padding:10px 0;
-    position:absolute;
-    top:-6px;
-    right:20px;
-    text-align:center;
-    border-top-left-radius:3px;
-    @apply bg-gradient-to-br from-customGold  via-yellow-200 to-customGold shadow-xl font-black;
+    width: 60px;
+    padding: 10px 0;
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    text-align: center;
+    border-top-left-radius: 3px;
+    @apply bg-gradient-to-br from-customGold via-yellow-200 to-customGold shadow-xl font-black;
 }
 
 .ribbon:before {
-    height:0;
-    width:0;
-    right:-5.5px;
-    top:0.1px;
-    border-bottom:6px solid #8d5a20;
-    border-right:6px solid transparent;
+    height: 0;
+    width: 0;
+    right: -5.5px;
+    top: 0.1px;
+    border-bottom: 6px solid #8d5a20;
+    border-right: 6px solid transparent;
 }
 
-.ribbon:before, .ribbon:after {
-    content:"";
-    position:absolute;
+.ribbon:before,
+.ribbon:after {
+    content: "";
+    position: absolute;
 }
 
 .ribbon:after {
-    height:0;
-    width:0;
-    bottom:-29.5px;
-    left:0;
-    border-left:30px solid #ffc107;
-    border-right:30px solid #ffc107;
-    border-bottom:30px solid transparent;
+    height: 0;
+    width: 0;
+    bottom: -29.5px;
+    left: 0;
+    border-left: 30px solid #ffc107;
+    border-right: 30px solid #ffc107;
+    border-bottom: 30px solid transparent;
 }
 
 .hostingPlanCard {
-    @apply flex flex-col  justify-center gap-y-2 shadow-2xl rounded-2xl p-20 relative transform transition-all dark:bg-gray-400 border-customGold-transparent border-2 dark:border-0;
+    @apply flex flex-col justify-center gap-y-2 shadow-2xl rounded-2xl p-20 relative transform transition-all dark:bg-gray-400 border-customGold-transparent border-2 dark:border-0;
 }
 
 .appsMarqueeCard {
@@ -148,7 +151,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashLink {
-    @apply px-3 py-2 font-bold flex items-center mx-auto w-full  dark:text-customGold dark:text-customGold
+    @apply px-3 py-2 font-bold flex items-center mx-auto w-full dark:text-customGold dark:text-customGold
 }
 
 .dashLinkSVG {
@@ -184,5 +187,154 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .loadingPageStyle {
-    @apply absolute inset-0 z-50 h-screen bg-gray-300/50  dark:bg-gray-800/90 flex items-center justify-center;
+    @apply absolute inset-0 z-50 h-screen bg-gray-300/50 dark:bg-gray-800/90 flex items-center justify-center;
+}
+
+.active {
+    border-bottom: 2px solid var(--color-customGold);
+}
+
+.line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.form-group {
+    @apply space-y-1;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300;
+}
+
+.form-input {
+    @apply w-full px-4 py-2.5 border rounded-lg dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-customGold focus:border-transparent transition-all duration-200 shadow-sm;
+}
+
+.form-hint {
+    @apply text-xs text-gray-500 dark:text-gray-400 mt-1 px-1;
+}
+
+
+.form-input:focus {
+    @apply transform scale-[1.01] shadow-md;
+}
+
+/* Smooth hover transitions */
+button,
+a {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar for better usability */
+::-webkit-scrollbar {
+    width: 6px;
+    /* Slightly thinner for less visual impact */
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-customGold);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d4af37;
+}
+
+/* Message styling */
+.message-container {
+    @apply rounded-lg p-5 mb-5 relative border-l-4 transition-all shadow-sm hover:shadow;
+}
+
+.admin-message {
+    @apply bg-blue-50 dark:bg-blue-900/30 border-blue-500;
+}
+
+.user-message {
+    @apply bg-gray-50 dark:bg-gray-700/40 border-customGold;
+}
+
+.message-header {
+    @apply flex justify-between items-center mb-3 pb-2 border-b border-gray-100 dark:border-gray-700/50;
+}
+
+.message-avatar {
+    @apply w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-3 shadow-inner;
+}
+
+.message-name {
+    @apply text-sm font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.message-time {
+    @apply text-xs text-gray-500 dark:text-gray-400 mt-0.5;
+}
+
+.message-content {
+    @apply text-gray-700 dark:text-gray-300 text-sm leading-relaxed;
+}
+
+.attachment-link {
+    @apply rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors p-3 mt-2 block;
+}
+
+/* Button styles */
+.btn-base {
+    @apply bg-customGold hover:bg-amber-500 text-gray-900 font-medium rounded-lg px-5 py-2.5 transition shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customGold;
+}
+
+/* Animation for draft saving */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+/* On-hold highlight animation */
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(234, 179, 8, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0);
+    }
+}
+
+.message-container.admin-message.latest-message {
+    animation: pulse-border 2s infinite;
+}
+
+/* Focus styles for inputs */
+textarea:focus,
+input:focus {
+    @apply transition-all duration-300 outline-none ring-2 ring-customGold;
+}
+
+/* Card hover effects */
+.hover-card {
+    @apply transition-all duration-300 hover:shadow-md;
 }

@@ -1,8 +1,15 @@
 import api from "@/config/axios"
+import store from "@/store/index.js";
 
 export const cartService = {
-    getAllCartItems() {
-        return api.post('/guest/cart/get')
+    getAllCartItems(sessionID = null) {
+        if (sessionID) {
+            return api.post("/guest/cart/getx", {
+                sessionID: sessionID,
+            });
+        }
+        // No sessionID implies authenticated user
+        return api.post("/guest/cart/getx");
     },
     addItemToCart(item) {
         return api.post('/guest/cart/add_item', item)

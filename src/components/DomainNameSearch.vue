@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     convertPrice,
-    fetchSearchResults() {
+    async fetchSearchResults() {
       const removeTLD = (str) => str.replace(/\..*$/, '');
       const removeWhitespace = (str) => str.replace(/\s+/g, '');
       const noHyphenStartEndRegex = /^(?!-)[a-zA-Z0-9-]+(?<!-)$/;
@@ -136,26 +136,28 @@ export default {
         return;
       }
 
+
       this.$store.dispatch('updateSearchDomain', removeTLD(this.searchTerm));
-      this.$store.dispatch('checkDomainAvailability')
+
+      try {
+        const availabilityResults = await this.$store.dispatch('checkDomainAvailability'); // Await the dispatch
+        console.log("Availability results:", availabilityResults);
+        this.loading = false; //stop loading in case of error.
+        // Process availabilityResults here if needed.
+      } catch (error) {
+        console.error("Error during domain availability check:", error);
+        // Handle the error if checkDomainAvailability fails.
+        this.loading = false; //stop loading in case of error.
+        return;
+      }
+
       let recentExists = this.recents.includes(this.$store.state.domainToSearch);
       if (!recentExists) {
         this.recents.push(this.$store.state.domainToSearch);
 
       }
       window.localStorage.setItem('recents', JSON.stringify(this.recents));
-
-      this.axios.get(`https://api.domainsdb1.info/v1/domains/search/${this.$store.state.domainToSearch}`)
-          .then(response => {
-            this.searchResults = response.data.domains;
-            this.loading = false;
-          })
-          .catch(error => {
-            console.error(error);
-            this.loading = false;
-          });
       this.searchResults.push(this.$store.state.domainToSearch);
-      // this.$store.dispatch('updateSearchDomain', '');
     },
     formatNumber(value) {
       let parts = value.toString().split(".");
@@ -332,7 +334,6 @@ export default {
     </section>
   </section>
   <section v-else>
-
     <section v-if="!loading && searchResults.length > 0"
              class="mt-3 mx-auto"
     >
@@ -349,7 +350,12 @@ export default {
               class="list-none resultListItem flex items-center justify-between gap-2"
           >
             <div class="flex flex-col gap-y-1">
-              <h2 class="font-bold text-xs md:text-lg">
+              <h2
+                  :class="{
+                    'font-medium text-xs md:text-lg line-through text-gray-500': !$store.state.domainToSearchAvailableTLDs.includes(tld.tld),
+                    'font-bold text-xs md:text-lg' : $store.state.domainToSearchAvailableTLDs.includes(tld.tld),
+                  }"
+              >
                 {{
                   ($store.state.domainToSearch.length > 15
                       ? $store.state.domainToSearch.substring(0, 15) + '***'
@@ -362,21 +368,35 @@ export default {
             <div class="flex items-center gap-x-1 ">
               <div class="flex flex-col text-right mr-1">
                 <h1 class="font-black text-xs md:text-lg">
-                  <span class="font-bold">
-                    <span>{{ $store.getters.preferredCurrencySymbol }}</span>{{
+                  <span
+                      v-if="$store.state.domainToSearchAvailableTLDs.includes(tld.tld)"
+                      class="font-bold"
+                  >
+                    <span>
+                      {{
+                        $store.getters.preferredCurrencySymbol
+                      }}
+                    </span>
+                    {{
                       formatNumber(convertPrice($store.state.preferredCurrency, tld.price))
-                                                                             }}
+                    }}
                   </span>
+                  <span v-else>Unavailable</span>
                 </h1>
-                <h1 class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium">Per Year</h1>
+                <h1
+                    v-if="$store.state.domainToSearchAvailableTLDs.includes(tld.tld)"
+                    class="text-xs text-gray-400 dark:text-gray-600 tracking-tight font-medium"
+                >Per Year</h1>
               </div>
-              <button class="resultListAddBtn"
-                      @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
+              <button
+                  v-if="$store.state.domainToSearchAvailableTLDs.includes(tld.tld)"
+                  class="resultListAddBtn"
+                  @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
               >🛒 Buy
               </button>
             </div>
           </li>
-          <li v-if="showMoreButton"
+          <li v-if="showMoreButton && !showMore"
               class="list-none resultListItem flex items-center justify-center"
           >
             <button class="resultListAddBtn"

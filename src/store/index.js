@@ -6,7 +6,6 @@ import products from "./modules/products.js";
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {authService} from "@/services/auth.service.js";
-import router from "@/router/index.js";
 import {orderService} from "@/services/order.service.js";
 import {currencyService} from "@/services/currency.service.js";
 import {productService} from "@/services/product.service.js";
@@ -274,6 +273,7 @@ const store = createStore({
             "Building the bridge to your data."],
         currentLoadingMessage: '',
         availableTLDs: [],
+        domainToSearchAvailableTLDs: [],
         error: '',
         currencyPairs: [
             {name: 'USD', flag: '🇺🇸', text: 'US Dollar', symbol: '$'},
@@ -287,7 +287,7 @@ const store = createStore({
             {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
             {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
         ],
-        orders: []
+        orders: [],
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -375,51 +375,72 @@ const store = createStore({
             console.log("Initializing app & user data...")
 
             // INIT LOGGED IN USER'S DATA
-            const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn'));
+            const isLoggedIn = JSON.parse(window.localStorage.getItem("isLoggedIn"));
             if (isLoggedIn) {
-                state.auth.isLoggedIn = true
-                authService.me()
-                    .then((response) => {
-                        const {data} = response
-                        state.auth.user = data.result
-                        console.log(`✅Fetched authenticated user profile`)
-                    })
-                    .catch((error) => {
-                        console.error('❌Failed to fetch authenticated user profile:', error)
-                        throw new Error(error.message)
-                    })
-                orderService.getAll()
-                    .then((response) => {
-                        const {data} = response
+                state.auth.isLoggedIn = true;
+                try {
+                    const response = await authService.me();
+                    const {data} = response;
+                    state.auth.user = data.result;
+                    console.log(`✅Fetched authenticated user profile`);
 
-                        if (data.error) {
-                            console.error('❌Error while fetching user orders:', data.error)
-                            throw new Error(data.error)
-                        }
-                        commit('SET_ORDERS', data.result.list)
-                        console.log(`✅Initialized ${data.result.list.length} ${data.result.list.length > 1 ? 'orders' : 'order'}.`)
+                    const ordersResponse = await orderService.getAll();
+                    const {data: ordersData} = ordersResponse;
+                    if (ordersData.error) {
+                        console.error("❌Error while fetching user orders:", ordersData.error);
+                        throw new Error(ordersData.error);
+                    }
+                    commit("SET_ORDERS", ordersData.result.list);
+                    console.log(
+                        `✅Initialized ${ordersData.result.list.length} ${
+                            ordersData.result.list.length > 1 ? "orders" : "order"
+                        }.`
+                    );
 
-                    })
-                    .catch((error) => {
-                        console.error('Failed to initialize orders:', error)
-                        commit('SET_ERROR', error)
-                    })
-                cartService.getAllCartItems()
-                    .then((response) => {
-                        const {data} = response
-                        if (data.error) {
-                            console.error('❌Error while fetching cart items:', data.error)
-                            commit('SET_ERROR', data.error)
-                            throw new Error(data.error.message)
-                        }
-                        commit('SET_CART', data.result);
-                        console.log(`✅Initialized ${data.result.items.length} ${data.result.items.length > 1 ? 'items' : 'item'} in the cart.`)
-                    })
-                    .catch((error) => {
-                        console.error('❌Failed to initialize cart:', error)
-                        commit('SET_ERROR', error)
-                    })
+                    const cartResponse = await cartService.getAllCartItems(); // No sessionID for logged-in user
+                    const {data: cartData} = cartResponse;
+                    if (cartData.error) {
+                        console.error(
+                            "❌Error while fetching authenticated user's cart items:",
+                            cartData.error
+                        );
+                        commit("SET_ERROR", cartData.error);
+                        throw new Error(cartData.error.message);
+                    }
+                    commit("SET_CART", cartData.result);
+                    console.log(
+                        `✅Initialized ${cartData.result.items.length} ${
+                            cartData.result.items.length > 1 ? "items" : "item"
+                        } in the authenticated user's cart.`
+                    );
+                } catch (error) {
+                    console.error("❌Initialization error:", error);
+                    commit("SET_ERROR", error);
+                }
             }
+            else {
+                // Guest user
+                try {
+                    const sessionID = JSON.parse(localStorage.getItem("sessionID"));
+                    const cartResponse = await cartService.getAllCartItems(sessionID);
+                    const {data: cartData} = cartResponse;
+                    if (cartData.error) {
+                        console.error("❌Error while fetching guest user's cart items:", cartData.error);
+                        commit("SET_ERROR", cartData.error);
+                        throw new Error(cartData.error.message);
+                    }
+                    commit("SET_CART", cartData.result);
+                    console.log(
+                        `✅Initialized ${cartData.result.items.length} ${
+                            cartData.result.items.length > 1 ? "items" : "item"
+                        } in the guest user's cart.`
+                    );
+                } catch (error) {
+                    console.error("❌Failed to initialize guest user's cart:", error);
+                    commit("SET_ERROR", error);
+                }
+            }
+
 
             // INIT APP DATA
             domainService.availableTLDs()
@@ -479,28 +500,37 @@ const store = createStore({
         },
         async checkDomainAvailability({state}) {
             const domain = state.domainToSearch;
-            const allTLDs = state.availableTLDs
-            let availableTLDs = []
-            const url = 'https://skynet.com/api/guest/servicedomain/check'
+            const allTLDs = state.availableTLDs;
+            const url = 'https://skynet.africa/api/guest/servicedomain/check';
+            state.domainToSearchAvailableTLDs = []
 
-            allTLDs.map((tld) => {
-                try {
-                    const res = axios.post(url, {
-                        sld: domain,
-                        tld: tld.tld
+            try {
+                return await Promise.all(
+                    allTLDs.map(async (tld) => {
+                        try {
+                            const res = await axios.post(url, {
+                                sld: domain,
+                                tld: tld.tld,
+                            }, {
+                                timeout: '5000'
+                            });
+                            const {data} = res;
+
+                            if (!data.error) {
+                                state.domainToSearchAvailableTLDs.push(tld.tld)
+                            }
+                            return {tld: tld.tld, data}; // Return the result
+                        } catch (error) {
+                            console.error(`❌Error checking domain availability for ${domain}.${tld.tld}:`, error);
+                            return {tld: tld.tld, error: error.message}; // Return the error
+                        }
                     })
-                    const {data} = res
-                    console.log(`data for ${domain} & ${tld.tld} is...`)
-                    console.log(data)
-                    console.log()
+                ); // Return all results
 
-                } catch (error) {
-                    console.error(`❌Error checking domain availability for ${domain}.${tld.tld}:`, error);
-                    throw new Error(`❌Error checking availability for ${tld.tld} ${domain}`)
-                }
-            })
-
-            axios.post()
+            } catch (overallError) {
+                console.error('❌Overall error checking domain availabilities:', overallError);
+                throw overallError; // Throw the error so the caller can handle it.
+            }
         }
     },
     getters: {

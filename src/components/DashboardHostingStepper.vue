@@ -3,6 +3,7 @@ import {createToast} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import {HostingCartItem} from "@/utils/helper_classes.js";
 import DomainNameSearch from "@/components/DomainNameSearch.vue";
+import {cartService} from "@/services/cart.service.js";
 
 export default {
   name: "DashboardHostingStepper",
@@ -87,13 +88,35 @@ export default {
           this.hostingPlan
       )
       console.log(newHostingItem)
+      let cartItem = {
+        "id": newHostingItem.product.id,
+        "quantity": newHostingItem.quantity,
+        "period": newHostingItem.duration,
+        "domain": {
+          "action": newHostingItem.domain.action,
+          "owndomain_sld": newHostingItem.domain.owndomain_sld,
+          "owndomain_tld": newHostingItem.domain.owndomain_tld,
+          "register_sld": newHostingItem.domain.register_sld,
+          "register_tld": newHostingItem.domain.register_tld,
+          "register_years": newHostingItem.domain.register_years
+        },
+        "multiple": 1
+      }
 
-      createToast(
-          `${this.count} ${newHostingItem.product.title} ${this.count > 1 ? 'products' : 'product'} ${this.count > 1 ? 'have' : 'has'} been added to cart`,
-          {
-            type: 'success',
-          }
-      )
+      console.log(cartItem)
+
+      cartService.addItemToCart(cartItem)
+          .then((response) => {
+            const {data} = response
+            console.log(data)
+            createToast(
+                `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
+                {
+                  type: 'success',
+                }
+            )
+          })
+
     },
     handleSelectedDomain(selectedDomain) {
       if (selectedDomain) {

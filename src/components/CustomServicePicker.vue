@@ -4,6 +4,14 @@ import {ref, watch, onMounted} from 'vue'
 import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import {DotLottieVue} from "@lottiefiles/dotlottie-vue";
+import {HostingCartItem} from "@/utils/helper_classes.js";
+import {cartService} from "@/services/cart.service.js";
+import ubuntu from "@/assets/img/ubuntu.svg";
+import centos from "@/assets/img/centos.svg";
+import debian from "@/assets/img/debian.svg";
+import windows from "@/assets/img/windows.svg";
+import {domainService} from "@/services/domain.service.js";
+import axios from "axios";
 
 const popularConfigs = ref([
   {
@@ -135,6 +143,13 @@ const databaseServices = ref([
     ]
   }
 ])
+const duration = ref('1Y')
+const hostingPlan = ref('standard')
+const preferredPanel = ref('cpanel')
+const domain = ref('')
+const selectedOS = ref('')
+const selectedOsVersion = ref('')
+const canOrderHosting = ref(false)
 
 const generateSSHPassword = () => {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@-_#*&%$!";
@@ -171,6 +186,126 @@ const calculateTotalCost = () => {
   totalCost.value = baseCost;
 };
 
+function addHostingToCart() {
+  let hostingDomain = {};
+  let parts = domain.value.toString().split('.')
+  let sld = parts[0]
+  let tld = '.' + parts.slice(1).join('.');
+  let domainObject = {sld, tld}
+  console.log(sld, tld)
+
+  // EXISTING DOMAIN
+  hostingDomain = {
+    "action": "owndomain",
+    "owndomain_sld": sld,
+    "owndomain_tld": tld,
+    "register_sld": tld,
+    "register_tld": "",
+    "register_years": ""
+  }
+
+  let newHostingItem = new HostingCartItem(
+      preferredPanel.value,
+      numberOfWebsites.value,
+      duration.value,
+      hostingDomain,
+      hostingPlan.value
+  )
+
+  console.log(newHostingItem)
+
+  let cartItem = {
+    "id": newHostingItem.product.id,
+    "quantity": newHostingItem.quantity,
+    "period": newHostingItem.duration,
+    "domain": {
+      "action": newHostingItem.domain.action,
+      "owndomain_sld": newHostingItem.domain.owndomain_sld,
+      "owndomain_tld": newHostingItem.domain.owndomain_tld,
+      "register_sld": newHostingItem.domain.register_sld,
+      "register_tld": newHostingItem.domain.register_tld,
+      "register_years": newHostingItem.domain.register_years
+    },
+    "multiple": 1
+  }
+
+  console.log(cartItem)
+
+  cartService.addItemToCart(cartItem)
+      .then((response) => {
+        const {data} = response
+        console.log(data)
+        createToast(
+            `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
+            {
+              type: 'success',
+            }
+        )
+      })
+
+
+}
+
+function checkDomain(domainValue) {
+  let parts = domainValue.toString().split('.')
+  let sld = parts[0]
+  let tld = '.' + parts.slice(1).join('.');
+  let domainObject = {sld, tld}
+  let url = 'https://skynet.africa/api/guest/servicedomain/check'
+  return new Promise((resolve, reject) => {
+    axios.post(url, {
+      sld: domainObject.sld, tld: domainObject.tld
+    })
+        .then((res) => {
+          const {data} = res;
+          console.log(data);
+          if (data.error) {
+            createToast(`❌${data.error.message}`, {
+              type: "danger",
+            });
+            canOrderHosting.value = false;
+            resolve(false); // Resolve with false
+          }
+          else {
+            createToast("✅Domain is available.", {
+              type: "success",
+            });
+            canOrderHosting.value = true;
+            resolve(true); // Resolve with true
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          createToast("❌Couldn't check domain availability", {
+            type: "error",
+          });
+          reject(error); // Reject the promise with the error
+        });
+  });
+}
+
+const operatingSystems = ref([
+  {
+    name: 'ubuntu',
+    image: ubuntu,
+    versions: ['Ubuntu 18.04', 'Ubuntu 20.04', 'Ubuntu 22.04']
+  },
+  {
+    name: 'centos',
+    image: centos,
+    versions: ['CentOS 7', 'CentOS 8']
+  },
+  {
+    name: 'debian',
+    image: debian,
+    versions: ['Debian 10', 'Debian 11', 'Debian 12']
+  },
+  {
+    name: 'windows',
+    image: windows,
+    versions: ['Windows Server 2016', 'Windows Server 2019', 'Windows Server 2022']
+  },
+])
 onMounted(() => {
   calculateTotalCost()
 })
@@ -212,6 +347,11 @@ watch(numberOfEmails, (newValue, oldValue) => {
   deep: true,
   immediate: true
 })
+watch(domain, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    canOrderHosting.value = false
+  }
+})
 
 // Watch for plan change and reset total cost
 watch(selectedConfig, (newConfig) => {
@@ -241,7 +381,7 @@ watch(selectedConfig, (newConfig) => {
     <div id="cloud"
          class="mt-10 min-h-10"
     ></div>
-    <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Cloud VPS Solutions</h2>
+    <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200">Cloud VPS Solutions</h2>
     <h2 class="muteBoldSubheader text-center">Customize your virtual private server with the exact resources you need.
       <br /> Pay only for what you use.
     </h2>
@@ -660,6 +800,23 @@ watch(selectedConfig, (newConfig) => {
             <span
                 class="font-bold mt-2 tracking-wider text-lg "
             >Windows (+$10)</span></div>
+          <div class="mt-5 mx-auto col-span-4">
+            <h2 class="muteBoldSubheader text-center">Select OS Version</h2>
+            <select id="country"
+                    v-model="selectedOsVersion"
+                    class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
+                    @change="$emit('selectOSVersion', selectedOsVersion)"
+            >
+              <option value="">Select version</option>
+              <option
+                  v-for="(version, idx) in operatingSystems.find(one => one.name === selectedOS)?.versions"
+                  v-if="selectedOS"
+                  :key="idx"
+                  :value="version"
+              >{{ version }}
+              </option>
+            </select>
+          </div>
         </div>
       </section>
 
@@ -752,7 +909,7 @@ watch(selectedConfig, (newConfig) => {
       <div id="hosting"
            class="mt-10 min-h-10"
       ></div>
-      <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200 text-center">Shared Hosting</h2>
+      <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200">Shared Hosting</h2>
       <h3 class="muteSubheader text-center">
         Affordable and reliable hosting for all your websites. One-click
         installations and unlimited storage.
@@ -796,10 +953,196 @@ watch(selectedConfig, (newConfig) => {
           </ul>
         </div>
       </section>
+
+      <div class="grid md:grid-cols-2 md:w-1/2 mx-auto gap-x-3">
+        <section
+            :class="{'border-2 border-customGold' : preferredPanel === 'cpanel'}"
+            class="hostingConfigureAppCard"
+            @click="preferredPanel = 'cpanel'"
+        >
+          <svg
+              :class="{'fill-customGold': preferredPanel === 'cpanel'}"
+              class="dark:fill-customGold"
+              height="5rem"
+              viewBox="0 0 640 512"
+              xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+                d="M210.3 220.2c-5.6-24.8-26.9-41.2-51-41.2h-37c-7.1 0-12.5 4.5-14.3 10.9L73.1 320l24.7-.1c6.8 0 12.3-4.5 14.2-10.7l25.8-95.7h19.8c8.4 0 16.2 5.6 18.3 14.8 2.5 10.9-5.9 22.6-18.3 22.6h-10.3c-7 0-12.5 4.6-14.3 10.8l-6.4 23.8h32c37.2 0 58.3-36.2 51.7-65.3zm-156.5 28h18.6c6.9 0 12.4-4.4 14.3-10.9l6.2-23.6h-40C30 213.7 9 227.8 1.7 254.8-7 288.6 18.5 320 52 320h12.4l7.1-26.1c1.2-4.4-2.2-8.3-6.4-8.3H53.8c-24.7 0-24.9-37.4 0-37.4zm247.5-34.8h-77.9l-3.5 13.4c-2.4 9.6 4.5 18.5 14.2 18.5h57.5c4 0 2.4 4.3 2.1 5.3l-8.6 31.8c-.4 1.4-.9 5.3-5.5 5.3h-34.9c-5.3 0-5.3-7.9 0-7.9h21.6c6.8 0 12.3-4.6 14.2-10.8l3.5-13.2h-48.4c-39.2 0-43.6 63.8-.7 63.8l57.5.2c11.2 0 20.6-7.2 23.4-17.8l14-51.8c4.8-19.2-9.7-36.8-28.5-36.8zM633.1 179h-18.9c-4.9 0-9.2 3.2-10.4 7.9L568.2 320c20.7 0 39.8-13.8 44.9-34.5l26.5-98.2c1.2-4.3-2-8.3-6.5-8.3zm-236.3 34.7v.1h-48.3l-26.2 98c-1.2 4.4 2.2 8.3 6.4 8.3h18.9c4.8 0 9.2-3 10.4-7.8l17.2-64H395c12.5 0 21.4 11.8 18.1 23.4l-10.6 40c-1.2 4.3 1.9 8.3 6.4 8.3H428c4.6 0 9.1-2.9 10.3-7.8l8.8-33.1c9-33.1-15.9-65.4-50.3-65.4zm98.3 74.6c-3.6 0-6-3.4-5.1-6.7l8-30c.9-3.9 3.7-6 7.8-6h32.9c2.6 0 4.6 2.4 3.9 5.1l-.7 2.6c-.6 2-1.9 3-3.9 3h-21.6c-7 0-12.6 4.6-14.2 10.8l-3.5 13h53.4c10.5 0 20.3-6.6 23.2-17.6l3.2-12c4.9-19.1-9.3-36.8-28.3-36.8h-47.3c-17.9 0-33.8 12-38.6 29.6l-10.8 40c-5 17.7 8.3 36.7 28.3 36.7h66.7c6.8 0 12.3-4.5 14.2-10.7l5.7-21z"
+            />
+          </svg>
+        </section>
+        <section
+            :class="{'border-2 border-customGold' : preferredPanel === 'plesk'}"
+            class="hostingConfigureAppCard"
+            @click="preferredPanel = 'plesk'"
+        >
+          <svg
+              id="Layer_1"
+              :class="{'fill-customGold': preferredPanel === 'plesk'}"
+              class="dark:fill-customGold"
+              height="5rem"
+              viewBox="0 0 500 500"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+          >
+
+<!--            <rect class="st0" width="500" height="500"/>-->
+            <g>
+              <path d="M53.3,336.9H40.6v-133c10.1-3.2,20.7-4.9,31.4-5c6.9-0.1,13.8,1.1,20.3,3.5c5.8,2.1,11.2,5.4,15.7,9.7
+                c4.4,4.2,7.8,9.2,10,14.9c2.4,5.9,3.5,12.3,3.5,18.7c0,8.2-1.4,15.2-4.2,21.1c-2.6,5.6-6.4,10.5-11.1,14.5
+                c-4.6,3.8-9.9,6.6-15.7,8.3c-5.8,1.8-11.9,2.7-18,2.7c-3.3,0-6.5-0.2-9.7-0.7s-6.4-1.2-9.5-2L53.3,336.9z M107,245.4
+                c0-10.6-3-19.2-8.9-25.8c-5.9-6.5-14.3-9.8-25-9.8c-3.4,0-6.7,0.2-10.1,0.6c-3.3,0.4-6.6,1.2-9.7,2.3v64.9c3,1,6,1.8,9.1,2.5
+                c3,0.7,6,1,9.1,1c10.9,0,19.5-3.1,25.9-9.3C103.8,265.7,107,256.9,107,245.4z"
+              />
+              <path d="M147.1,291.4V163.1h12.8v128.2h-12.8V291.4z" />
+              <path d="M264.8,278c-4.1,4.5-9.2,8.1-14.8,10.5s-12.4,3.6-20.3,3.6c-6.6,0.1-13.2-1.1-19.3-3.8c-5.3-2.3-10-5.8-13.7-10.2
+                c-3.7-4.3-6.5-9.3-8.2-14.7c-1.9-5.6-2.8-11.5-2.8-17.4c-0.2-7.1,1-14.3,3.3-21c1.9-5.5,5-10.5,9-14.8c3.7-3.8,8.2-6.8,13.2-8.7
+                c5.1-1.9,10.5-2.8,15.9-2.8c13.4,0,23.6,4.1,30.4,12.4c6.8,8.2,10.1,20.2,9.9,36h-68.7c0.4,10.4,3.4,18.6,9,24.7s13.3,9.2,22.9,9.2
+                c5,0.1,10-0.8,14.7-2.7c4.6-1.9,8.6-4.8,11.9-8.5L264.8,278z M254.5,236.4c0-3.6-0.6-7.2-1.7-10.6c-1.1-3.1-2.7-6-4.9-8.4
+                c-2.3-2.5-5.2-4.4-8.3-5.6c-7.7-2.8-16.2-2.8-23.9,0c-3,1.2-5.8,3-8,5.4c-2.2,2.5-4,5.3-5.4,8.3c-1.7,3.4-2.7,7.1-3.2,10.9
+                L254.5,236.4L254.5,236.4z"
+              />
+              <path d="M351.3,221.4c-2.8-3.7-6.3-6.7-10.4-8.9c-4.1-2-8.7-3-13.2-2.8c-6.5,0-11.1,1.2-13.7,3.5c-2.6,2.2-4,5.4-3.9,8.8
+                c-0.1,2.2,0.6,4.4,1.8,6.2c1.3,1.8,2.9,3.3,4.8,4.4c2.2,1.3,4.5,2.4,6.9,3.2c2.6,0.9,5.3,1.8,8.2,2.7c3.5,1.1,6.9,2.3,10.4,3.6
+                c3.4,1.2,6.6,2.9,9.5,5c2.8,2,5.2,4.6,7,7.6c1.9,3.4,2.8,7.3,2.7,11.3c0.1,3.9-0.9,7.7-2.7,11.2c-1.8,3.3-4.3,6.1-7.3,8.3
+                c-3.3,2.4-7,4.1-10.9,5.1c-10.8,2.8-22.3,2.2-32.7-1.8c-6.1-2.7-11.6-6.8-15.9-11.8l10-8.8c6.7,8.6,15.3,12.8,25.9,12.8
+                c6.9,0,12-1.3,15.4-3.9c3.3-2.6,5-5.7,5-9.3c0.1-2.5-0.5-4.9-1.8-7.1c-1.3-2-3-3.6-5-4.9c-2.3-1.4-4.7-2.6-7.3-3.4
+                c-2.8-0.9-5.7-1.8-8.7-2.7c-3.5-1-6.9-2.1-10.3-3.3c-3.2-1.1-6.3-2.7-9.1-4.7c-2.7-1.9-5-4.4-6.6-7.2c-1.8-3.4-2.7-7.3-2.6-11.2
+                c0-8.1,2.9-14.3,8.8-18.7s13.5-6.6,22.9-6.6c6.1-0.1,12.1,1.1,17.7,3.4c5.2,2.2,10.1,6.1,14.9,11.6l-9.4,8.6L351.3,221.4z"
+              />
+              <path d="M385.3,291.4V163.3h12.8v128.1L385.3,291.4L385.3,291.4z M398.2,244.1l44-44.4h17.2l-45.1,44l44.9,47.6h-17.8L398.2,244.1z
+                "
+              />
+              <path class="st1"
+                    d="M191.7,336.9h-77.2v-12.1h77.2V336.9z"
+              />
+            </g>
+            </svg>
+        </section>
+        <hr class="border-black col-span-2 mt-10" />
+        <!--        PLANS-->
+        <section
+            class="grid md:grid-cols-3 md:gap-x-2 mx-auto w-full col-span-2"
+        >
+          <h1 class="md:col-span-3 header text-center my-5">Plan</h1>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : hostingPlan === 'basic'
+          }"
+              class="font-bold"
+              @click="hostingPlan = 'basic'"
+          >
+            Basic
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : hostingPlan === 'standard'
+          }"
+              class="font-bold"
+              @click="hostingPlan = 'standard'"
+          >Standard
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : hostingPlan === 'pro'
+          }"
+              class="font-bold"
+              @click="hostingPlan = 'pro'"
+          >Pro
+          </button>
+        </section>
+        <hr class="border-black col-span-2 mt-10" />
+        <!--        DURATION-->
+        <section
+            class="grid md:grid-cols-3 md:gap-3 mx-auto w-full col-span-2"
+        >
+          <h1 class="md:col-span-3 header text-center my-5">Duration</h1>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '1M'
+          }"
+              class="font-bold"
+              @click="duration = '1M'"
+          >
+            1 Month
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '3M'
+          }"
+              class="font-bold"
+              @click="duration = '3M'"
+          >3 Months
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '6M'
+          }"
+              class="font-bold"
+              @click="duration = '6M'"
+          >6 Months
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '1Y'
+          }"
+              class="font-bold"
+              @click="duration = '1Y'"
+          >1 Year
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '2Y'
+          }"
+              class="font-bold"
+              @click="duration = '2Y'"
+          >2 Years
+          </button>
+          <button
+              :class="{
+            'bg-customGold rounded-2xl p-2' : duration === '3Y'
+          }"
+              class="font-bold"
+              @click="duration = '3Y'"
+          >3 Years
+          </button>
+        </section>
+        <hr class="border-black col-span-2 my-10" />
+        <section class="container flex h-14 col-span-2">
+          <input
+              v-model="domain"
+              class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50 bg-gray-300"
+              placeholder="Add your domain"
+              style="padding: 1rem"
+              type="search"
+              @keydown.enter="checkDomain(domain)"
+          />
+          <button
+              class="flat-btn-base-sm rounded-tr-xl rounded-br-xl tracking-wider disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed hover:no-underline"
+              @click="checkDomain(domain)"
+          >
+            Check
+          </button>
+
+        </section>
+      </div>
+
       <section class="flex flex-col items-center">
         <h2 class="header mb-2 mt-10">Total: ${{ websitesTotalCost }}<span class="font-bold text-gray-600 text-sm">/month</span>
         </h2>
-        <button class="btn-base">Order Now</button>
+        <button
+            :class="{
+              'btn-base': canOrderHosting,
+              'btn-base-disabled': !canOrderHosting
+            }"
+            :disabled="!canOrderHosting"
+            @click="addHostingToCart"
+        >Order Now
+        </button>
       </section>
     </section>
 

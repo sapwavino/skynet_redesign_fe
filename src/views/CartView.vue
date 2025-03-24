@@ -8,6 +8,9 @@ export default {
     totalPrice() {
       return this.$store.getters.totalPrice;
     }
+  },
+  mounted() {
+    
   }
 }
 </script>

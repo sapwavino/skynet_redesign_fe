@@ -512,7 +512,7 @@ const store = createStore({
                                 sld: domain,
                                 tld: tld.tld,
                             }, {
-                                timeout: '5000'
+                                timeout: '10000'
                             });
                             const {data} = res;
 

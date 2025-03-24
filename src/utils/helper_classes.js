@@ -1,20 +1,38 @@
 import {v4 as uuidv4} from 'uuid';
 import store from "@/store/index.js";
 
+// export class DomainCartItem {
+//     constructor(
+//         name,
+//         price
+//     ) {
+//         this.id = uuidv4();
+//         this.name = name;
+//         this.price = price;
+//         this.order_type = "domain";
+//         this.description = "Domain registration for " + name;
+//         this.active = true;
+//         this.billing_cycle = "annually";
+//         this.created_at = new Date();
+//         this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
+//     }
+// }
+
 export class DomainCartItem {
     constructor(
-        name,
-        price
+        domain,
     ) {
-        this.id = uuidv4();
-        this.name = name;
-        this.price = price;
-        this.order_type = "domain";
-        this.description = "Domain registration for " + name;
-        this.active = true;
-        this.billing_cycle = "annually";
-        this.created_at = new Date();
-        this.renewal_date = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
+        this.type = 'domain'
+        this.sld = domain.split('.')[0];
+        this.tld = '.' + domain.split('.').slice(1).join('.');
+        this.duration = '1'
+        this.product = this.getProduct()
+    }
+
+    getProduct() {
+        return store.state.products.allProducts.find((one) => {
+            return one.type === this.type
+        })
     }
 }
 

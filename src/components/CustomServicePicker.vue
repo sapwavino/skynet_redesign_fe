@@ -147,7 +147,6 @@ const duration = ref('1Y')
 const hostingPlan = ref('standard')
 const preferredPanel = ref('cpanel')
 const domain = ref('')
-const selectedOS = ref('')
 const selectedOsVersion = ref('')
 const canOrderHosting = ref(false)
 
@@ -286,7 +285,7 @@ function checkDomain(domainValue) {
 
 const operatingSystems = ref([
   {
-    name: 'ubuntu',
+    name: 'linux',
     image: ubuntu,
     versions: ['Ubuntu 18.04', 'Ubuntu 20.04', 'Ubuntu 22.04']
   },
@@ -800,17 +799,17 @@ watch(selectedConfig, (newConfig) => {
             <span
                 class="font-bold mt-2 tracking-wider text-lg "
             >Windows (+$10)</span></div>
+
           <div class="mt-5 mx-auto col-span-4">
             <h2 class="muteBoldSubheader text-center">Select OS Version</h2>
-            <select id="country"
-                    v-model="selectedOsVersion"
-                    class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
-                    @change="$emit('selectOSVersion', selectedOsVersion)"
+            <select
+                id="os"
+                v-model="selectedOsVersion"
+                class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
             >
               <option value="">Select version</option>
               <option
-                  v-for="(version, idx) in operatingSystems.find(one => one.name === selectedOS)?.versions"
-                  v-if="selectedOS"
+                  v-for="(version, idx) in operatingSystems.find(one => one.name === operatingSystem)?.versions"
                   :key="idx"
                   :value="version"
               >{{ version }}

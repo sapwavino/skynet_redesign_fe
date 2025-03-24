@@ -5,6 +5,7 @@ import 'mosha-vue-toastify/dist/style.css'
 import Recents from "@/components/Recents.vue";
 import {convertPrice} from "../utils/helper_functions.js";
 import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
+import {DomainCartItem} from "@/utils/helper_classes.js";
 
 export default {
   name: "DomainNameSearch",
@@ -67,11 +68,13 @@ export default {
         this.searchResults = []
         this.loading = false
       }
+      this.$emit('inputFocused')
     },
     ["$store.state.preferredCurrency"]: {
       immediate: true, // Run on component mount
       handler(newCurrency) {
-        this.selectedCurrency = newCurrency || null; // Fallback to 'new' if no tab is set
+        this.selectedCurrency = newCurrency || null;
+        this.$emit('inputFocused')
       },
     },
   },
@@ -172,11 +175,11 @@ export default {
     setRecent(domain) {
       this.searchTerm = domain;
     },
-    buyDomain(domain, price) {
+    buyDomain(domain) {
+      console.log(domain)
+      let newDomain = new DomainCartItem(domain)
       console.log(
-          domain,
-          convertPrice(this.$store.state.preferredCurrency, price),
-          this.$store.state.preferredCurrency
+          newDomain
       )
     },
     changePreferredCurrency() {
@@ -266,7 +269,7 @@ export default {
     <section v-if="loading"
              class="mt-3 w-full "
     >
-      <div class="domainSearchLoader h-40"></div>
+      <div class="domainSearchLoader2"></div>
     </section>
   </div>
 
@@ -313,10 +316,7 @@ export default {
                 'resultListAddBtn' : selectedDomain!==tld.tld,
                 'resultListAddBtnSelected' : selectedDomain===tld.tld,
                 }"
-                      @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price); selectedDomain=tld.tld; $emit('domainSelected', {
-                        sld: searchTerm,
-                        tld: tld.tld
-                      })"
+                      @click.prevent="buyDomain(searchTerm + tld.tld)"
               >{{ selectedDomain === tld.tld ? "Selected" : "Select" }}
               </button>
             </div>
@@ -391,7 +391,7 @@ export default {
               <button
                   v-if="$store.state.domainToSearchAvailableTLDs.includes(tld.tld)"
                   class="resultListAddBtn"
-                  @click.prevent="buyDomain($store.state.domainToSearch + tld.tld, tld.price)"
+                  @click.prevent="buyDomain(searchTerm + tld.tld)"
               >🛒 Buy
               </button>
             </div>

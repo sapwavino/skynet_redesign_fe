@@ -3,9 +3,10 @@
 import {createToast} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import Recents from "@/components/Recents.vue";
-import {convertPrice} from "../utils/helper_functions.js";
+import {convertPrice, extractAndSaveSessionId} from "../utils/helper_functions.js";
 import CurrencyDropdown from "@/components/CurrencyDropdown.vue";
 import {DomainCartItem} from "@/utils/helper_classes.js";
+import {cartService} from "@/services/cart.service.js";
 
 export default {
   name: "DomainNameSearch",
@@ -74,7 +75,7 @@ export default {
       immediate: true, // Run on component mount
       handler(newCurrency) {
         this.selectedCurrency = newCurrency || null;
-        this.$emit('inputFocused')
+        // this.$emit('inputFocused')
       },
     },
   },
@@ -178,6 +179,24 @@ export default {
     buyDomain(domain) {
       console.log(domain)
       let newDomain = new DomainCartItem(domain)
+      let cartItem = {
+        "id": newDomain.getProduct().id,
+        "action": "register",
+        "multiple": 1,
+        "register_sld": newDomain.sld,
+        "register_tld": newDomain.tld,
+        "register_years": newDomain.duration
+      }
+      cartService.addItemToCart(cartItem)
+          .then((response) => {
+            createToast(
+                `${newDomain.sld}${newDomain.tld} been added to cart`,
+                {
+                  type: 'success',
+                }
+            )
+          })
+
       console.log(
           newDomain
       )

@@ -21,7 +21,7 @@
         <hr class="mt-5 border border-gray-300" />
 
         <!--        LOGGED IN NAV-->
-        <ul v-if="$store.state.isLoggedIn"
+        <ul v-if="$store.state.auth.isLoggedIn"
             class="grid grid-cols-2 gap-y-1 mt-5 text-center"
         >
           <li class="col-span-2">

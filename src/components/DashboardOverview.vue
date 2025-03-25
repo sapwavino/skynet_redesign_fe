@@ -6,13 +6,16 @@ export default {
   components: {Tooltip},
   computed: {
     hosting: function () {
-      return this.$store.state.user.services.hosting
+      // return this.$store.state.user.services.hosting
+      return []
     },
     cloud: function () {
-      return this.$store.state.user.services.cloud
+      // return this.$store.state.user.services.cloud
+      return []
     },
     domains: function () {
-      return this.$store.state.user.services.domains
+      // return this.$store.state.user.services.domains
+      return []
     },
     activeDomains: function () {
       return this.$store.state.user.services.domains.filter((one) => one.active === true)
@@ -47,7 +50,12 @@ export default {
       <!-- DOMAINS -->
       <section class="dashGroupCard w-full md:w-1/3">
         <h1 class="muteBoldSubheader uppercase text-center">Domains</h1>
-        <div class="flex flex-wrap justify-center gap-4 mt-5">
+
+        <!--        DOMAINS OVERVIEW-->
+        <div
+            v-if="domains.length > 0"
+            class="flex flex-wrap justify-center gap-4 mt-5"
+        >
           <Tooltip :message="activeDomains"
                    color="bg-green-700"
                    position="top"
@@ -75,8 +83,84 @@ export default {
             </div>
           </Tooltip>
         </div>
-        <button class="dash-card-btn-base w-full mt-5"
-                @click="$router.push('/dashboard/domains?tab=manage')"
+
+        <!--        NO DOMAINS-->
+        <div
+            v-else
+            class="bg-gray-300 p-5 flex flex-col items-center rounded-3xl"
+        >
+          <svg
+              id="Layer_1"
+              class="h-18 mx-auto"
+              viewBox="0 0 512 512"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <path d="M472.178,477.38H39.822C17.864,477.38,0,459.515,0,437.557V136.772
+              c0-9.425,7.641-17.067,17.067-17.067h477.867c9.425,0,17.067,7.641,17.067,17.067v300.785
+              C512,459.515,494.136,477.38,472.178,477.38z"
+                  style="fill:#ffe49c;"
+            />
+            <path d="M494.933,119.706H256.001V477.38h216.177c21.958,0,39.822-17.864,39.822-39.822V136.772
+              C512,127.347,504.359,119.706,494.933,119.706z"
+                  style="fill:#ffd155;"
+            />
+            <g>
+              <path d="M81.581,351.512l-19.855-61.278c-6.952-21.454,25.511-31.997,32.471-10.521l8.681,26.79l5.392-8.476
+                c6.695-10.521,22.095-10.537,28.801,0l5.393,8.478l8.681-26.791c6.953-21.454,39.431-10.955,32.471,10.522l-19.857,61.278
+                c-4.446,13.72-22.903,16.051-30.636,3.9l-10.454-16.432l-10.454,16.432C104.453,367.613,86.021,365.213,81.581,351.512z"
+                    style="fill:#8dc3e9;"
+              />
+              <path d="M266.454,355.412L256,338.98l-10.454,16.432c-7.743,12.169-26.196,9.801-30.636-3.9l-19.855-61.278
+                c-6.952-21.454,25.515-31.998,32.471-10.521l8.681,26.79l5.392-8.476c6.696-10.521,22.095-10.537,28.801,0l5.392,8.476l8.681-26.79
+                c6.952-21.454,39.431-10.956,32.471,10.521l-19.855,61.278C292.649,365.212,274.217,367.614,266.454,355.412z"
+                    style="fill:#8dc3e9;"
+              />
+              <path d="M512,153.839H0V74.443C0,52.449,17.829,34.62,39.822,34.62h432.356
+                C494.171,34.62,512,52.449,512,74.443V153.839z"
+                    style="fill:#8dc3e9;"
+              />
+            </g>
+            <g>
+              <circle cx="71.805"
+                      cy="94.231"
+                      r="12.836"
+                      style="fill:#ffe49c;"
+              />
+              <circle cx="112.959"
+                      cy="94.231"
+                      r="12.836"
+                      style="fill:#ffe49c;"
+              />
+              <circle cx="154.112"
+                      cy="94.231"
+                      r="12.836"
+                      style="fill:#ffe49c;"
+              />
+            </g>
+            <g>
+              <path d="M512,74.443c0-21.993-17.829-39.822-39.822-39.822H256.001v119.219H512V74.443z"
+                    style="fill:#48aee2;"
+              />
+              <path d="M284.473,279.711l-8.681,26.79l-5.392-8.476c-3.352-5.267-8.876-7.897-14.4-7.896v48.854
+                l10.453,16.431c7.763,12.202,26.196,9.8,30.636-3.9l19.855-61.278C323.904,268.757,291.425,258.257,284.473,279.711z"
+                    style="fill:#48aee2;"
+              />
+              <path d="M399.783,355.412l-10.454-16.432l-10.454,16.432c-7.741,12.167-26.195,9.802-30.636-3.9
+                l-19.856-61.278c-6.952-21.454,25.511-31.998,32.471-10.522l8.681,26.791l5.393-8.478c6.696-10.521,22.095-10.537,28.801,0
+                l5.392,8.476l8.681-26.79c6.952-21.454,39.431-10.956,32.471,10.521l-19.855,61.278
+                C425.979,365.212,407.546,367.614,399.783,355.412z"
+                    style="fill:#48aee2;"
+              />
+            </g>
+          </svg>
+          <p class="muteBoldSubheader mt-5 capitalize">No domains to show!</p>
+        </div>
+        <button
+            v-if="domains.length > 0"
+            class="dash-card-btn-base w-full mt-5"
+            @click="$router.push('/dashboard/domains?tab=manage')"
         >
           Manage Domains
         </button>
@@ -90,7 +174,10 @@ export default {
       <!-- HOSTING -->
       <section class="dashGroupCard w-full md:w-1/3">
         <h1 class="muteBoldSubheader uppercase text-center">Hosting</h1>
-        <ul class="h-44 overflow-y-auto">
+        <ul
+            v-if="hosting.length > 0"
+            class="h-44 overflow-y-auto"
+        >
           <router-link v-for="service in hosting"
                        :key="service.id"
                        :to="`/dashboard/hosting?tab=manage&id=${service.id}`"
@@ -108,6 +195,166 @@ export default {
             </li>
           </router-link>
         </ul>
+        <div
+            v-else
+            class="bg-gray-300 p-5 flex flex-col items-center rounded-3xl"
+        >
+          <svg
+              id="Layer_1"
+              class="h-20"
+              enable-background="new 0 0 50 50"
+              version="1.1"
+              viewBox="0 0 50 50"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <g>
+            <path d="M45.99999,1h-42c-1.65685,0-3,1.34315-3,3v3.7599c0,1.65685,1.34315,3,3,3h42c1.65686,0,3-1.34315,3-3V4   C48.99999,2.34315,47.65685,1,45.99999,1z"
+                  fill="#E7E3E6"
+            />
+
+              <path d="M45.99995,13.7467h-42c-1.65685,0-3,1.34315-3,3v3.7599c0,1.65685,1.34315,3,3,3h42   c1.65686,0,3-1.34315,3-3v-3.7599C48.99995,15.08984,47.6568,13.7467,45.99995,13.7467z"
+                    fill="#E7E3E6"
+              />
+
+              <g>
+
+            <path d="M45.99995,26.4934h-42c-1.65685,0-3,1.34315-3,3v3.7599c0,1.65686,1.34315,3,3,3h42    c1.65686,0,3-1.34314,3-3v-3.7599C48.99995,27.83654,47.6568,26.4934,45.99995,26.4934z"
+                  fill="#E7E3E6"
+            />
+
+            </g>
+
+              <path d="M45.99999,39.2401h-42c-1.65685,0-3,1.34315-3,3V46c0,1.65685,1.34315,3,3,3h42c1.65686,0,3-1.34315,3-3   v-3.7599C48.99999,40.58324,47.65685,39.2401,45.99999,39.2401z"
+                    fill="#E7E3E6"
+              />
+
+              <rect fill="#D2D2D2"
+                    height="2.9868"
+                    width="40.91372"
+                    x="4.54314"
+                    y="10.7599"
+              />
+
+              <rect fill="#D2D2D2"
+                    height="2.9868"
+                    width="40.91372"
+                    x="4.54314"
+                    y="23.5066"
+              />
+
+              <rect fill="#D2D2D2"
+                    height="2.9868"
+                    width="40.91372"
+                    x="4.54314"
+                    y="36.2533"
+              />
+
+              <g>
+
+            <circle cx="6.39607"
+                    cy="18.62665"
+                    fill="#EC6E62"
+                    r="2.08549"
+            />
+
+                <circle cx="11.94508"
+                        cy="18.62665"
+                        fill="#85BD57"
+                        r="2.08549"
+                />
+
+                <circle cx="17.49408"
+                        cy="18.62665"
+                        fill="#53B1E2"
+                        r="2.08549"
+                />
+
+            </g>
+
+              <g>
+
+            <circle cx="6.39607"
+                    cy="5.87995"
+                    fill="#EC6E62"
+                    r="2.08549"
+            />
+
+                <circle cx="11.94508"
+                        cy="5.87995"
+                        fill="#85BD57"
+                        r="2.08549"
+                />
+
+                <circle cx="17.49408"
+                        cy="5.87995"
+                        fill="#53B1E2"
+                        r="2.08549"
+                />
+
+            </g>
+
+              <g>
+
+            <circle cx="6.39607"
+                    cy="31.37335"
+                    fill="#EC6E62"
+                    r="2.08549"
+            />
+
+                <circle cx="11.94508"
+                        cy="31.37335"
+                        fill="#85BD57"
+                        r="2.08549"
+                />
+
+                <circle cx="17.49408"
+                        cy="31.37335"
+                        fill="#53B1E2"
+                        r="2.08549"
+                />
+
+            </g>
+
+              <g>
+
+            <circle cx="6.39607"
+                    cy="44.12005"
+                    fill="#EC6E62"
+                    r="2.08549"
+            />
+
+                <circle cx="11.94508"
+                        cy="44.12005"
+                        fill="#85BD57"
+                        r="2.08549"
+                />
+
+                <circle cx="17.49408"
+                        cy="44.12005"
+                        fill="#53B1E2"
+                        r="2.08549"
+                />
+
+            </g>
+
+              <g>
+
+            <circle cx="33.02306"
+                    cy="25"
+                    fill="#FFC966"
+                    r="9.69804"
+            />
+
+                <path d="M38.82196,23.92759c0.39497-0.38499,0.17702-1.05577-0.36881-1.13508l-2.99354-0.435    c-0.21675-0.0315-0.40413-0.16763-0.50107-0.36405l-1.33874-2.71257c-0.2441-0.49459-0.94938-0.49459-1.19347,0l-1.33872,2.71252    c-0.09695,0.19644-0.28436,0.3326-0.50114,0.3641l-2.9935,0.435c-0.54583,0.07932-0.76377,0.75009-0.36881,1.13508    l2.16613,2.11145c0.15683,0.15287,0.2284,0.37313,0.19138,0.58899l-0.51134,2.98153    c-0.09323,0.54361,0.47735,0.95816,0.96555,0.7015l2.67749-1.40763c0.19388-0.10193,0.42551-0.10193,0.61939,0l2.67744,1.4076    c0.48822,0.25667,1.05882-0.1579,0.96558-0.70154l-0.51136-2.98134c-0.03703-0.21591,0.03455-0.43621,0.19141-0.58912    L38.82196,23.92759z"
+                      fill="#FFFFFF"
+                />
+            </g>
+            </g>
+          </svg>
+          <p class="muteBoldSubheader mt-5 capitalize">No apps hosted!</p>
+        </div>
         <div class="mt-3">
           <router-link to="/dashboard/hosting?tab=manage">
             <button class="dash-card-btn-base w-full">Manage Hosting</button>
@@ -118,7 +365,10 @@ export default {
       <!-- CLOUD -->
       <section class="dashGroupCard w-full md:w-1/3">
         <h1 class="muteBoldSubheader uppercase text-center">Cloud</h1>
-        <ul class="h-44 overflow-y-auto">
+        <ul
+            v-if="cloud.length > 0"
+            class="h-44 overflow-y-auto"
+        >
           <router-link v-for="service in cloud"
                        :key="service.id"
                        :to="`/dashboard/cloud?tab=manage&id=${service.id}`"
@@ -138,10 +388,66 @@ export default {
             </li>
           </router-link>
         </ul>
-        <button class="dash-card-btn-base w-full mt-3"
-                @click="$router.push('/dashboard/cloud?tab=manage')"
-        >Manage
-         Cloud
+        <div
+            v-else
+            class="bg-gray-300 p-5 flex flex-col items-center rounded-3xl"
+        >
+          <svg
+              class="h-20"
+              data-name="Слой 1"
+              viewBox="0 0 128 128"
+              xmlns="http://www.w3.org/2000/svg"
+          >
+
+            <title />
+            <path d="M100.75,86h7.92a17.24,17.24,0,0,0,1.42-34.42A19.43,19.43,0,0,0,82.78,29a33,33,0,0,0-61.22,16.8c0,.43,0,.85,0,1.27h0a19.47,19.47,0,1,0,0,38.94h5.69"
+                  fill="#eabe63ff"
+            />
+            <path
+                d="M108.68,88h-7.92a2,2,0,0,1,0-4h7.92a15.24,15.24,0,0,0,1.26-30.43A2,2,0,0,1,108.17,51,17.43,17.43,0,0,0,83.66,30.78,2,2,0,0,1,81.07,30,31,31,0,0,0,23.56,45.79c0,.4,0,.8,0,1.2a2,2,0,0,1-2,2.08h-.08A17.47,17.47,0,1,0,21.56,84h5.69a2,2,0,1,1,0,4H21.56a21.47,21.47,0,0,1-2-42.85,35,35,0,0,1,64-18.68,21.46,21.46,0,0,1,29.28,19.91,20.82,20.82,0,0,1-.3,3.53A19.23,19.23,0,0,1,108.68,88Z"
+                fill="#404040"
+            />
+            <rect
+                class="cls-3"
+                fill="#9f9f9f"
+                height="60"
+                transform="translate(128 152) rotate(-180)"
+                width="58.29"
+                x="34.86"
+                y="46"
+            />
+            <path class="cls-2"
+                  d="M93.14,108H34.86a2,2,0,0,1-2-2V46a2,2,0,0,1,2-2H93.14a2,2,0,0,1,2,2v60A2,2,0,0,1,93.14,108Zm-56.29-4H91.14V48H36.86Z"
+            />
+            <path class="cls-2"
+                  d="M44,115a2,2,0,0,1-2-2v-7a2,2,0,0,1,4,0v7A2,2,0,0,1,44,115Z"
+            />
+            <path class="cls-2"
+                  d="M84,115a2,2,0,0,1-2-2v-7a2,2,0,0,1,4,0v7A2,2,0,0,1,84,115Z"
+            />
+            <path class="cls-2"
+                  d="M93,68H35a2,2,0,0,1,0-4H93a2,2,0,0,1,0,4Z"
+            />
+            <path class="cls-2"
+                  d="M93,88H35a2,2,0,0,1,0-4H93a2,2,0,0,1,0,4Z"
+            />
+            <path class="cls-2"
+                  d="M44,74a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z"
+            />
+            <path class="cls-2"
+                  d="M44,54a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z"
+            />
+            <path class="cls-2"
+                  d="M44,94a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z"
+            />
+          </svg>
+          <p class="muteBoldSubheader mt-5 capitalize">No cloud services!</p>
+        </div>
+        <button
+            class="dash-card-btn-base w-full mt-3"
+            @click="$router.push('/dashboard/cloud?tab=manage')"
+        >
+          Manage Cloud
         </button>
       </section>
     </div>

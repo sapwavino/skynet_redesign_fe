@@ -12,6 +12,7 @@ import debian from "@/assets/img/debian.svg";
 import windows from "@/assets/img/windows.svg";
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
+import {extractAndSaveSessionId} from "@/utils/helper_functions.js";
 
 const popularConfigs = ref([
   {
@@ -80,7 +81,7 @@ const gpuArchitectures = ref([
 const gpuConfig = ref(false)
 const showPassword = ref(false)
 const ssh = ref(true)
-const operatingSystem = ref("linux")
+const operatingSystem = ref("")
 const rootPass = ref("")
 const additionalIPs = ref(0)
 const numberOfWebsites = ref(1)
@@ -233,7 +234,8 @@ function addHostingToCart() {
   cartService.addItemToCart(cartItem)
       .then((response) => {
         const {data} = response
-        console.log(data)
+        const sessionID = extractAndSaveSessionId(response, 'PHPSESSID')
+        console.log(document.cookie)
         createToast(
             `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
             {
@@ -315,7 +317,10 @@ watch(cores, calculateTotalCost);
 watch(storage, calculateTotalCost);
 watch(gpuRAM, calculateTotalCost);
 watch(gpuCores, calculateTotalCost);
-watch(operatingSystem, calculateTotalCost);
+watch(operatingSystem, () => {
+  calculateTotalCost();
+  selectedOsVersion.value = ''
+});
 watch(gpuConfig, (newVal, oldVal) => {
   if (newVal === true) {
     selectedConfig.value = popularConfigs.value.find((one) => {

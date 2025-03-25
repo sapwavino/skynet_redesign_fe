@@ -92,3 +92,50 @@ export function formatDateWithoutTime(dateString) {
 
     return `${dayOfWeek}, ${month} ${day.toString().padStart(2, '0')} ${year} ${timezoneOffset} (${timezoneName})`;
 }
+
+export function extractAndSaveSessionId(response, cookieName, storageKey = 'sessionId') {
+    try {
+        const setCookieHeader = response.headers['set-cookie'];
+        console.log(response.headers)
+
+        if (setCookieHeader) {
+            const sessionId = parseSetCookie(setCookieHeader, cookieName);
+
+            if (sessionId) {
+                localStorage.setItem(storageKey, sessionId);
+                console.log(`Session ID saved to localStorage (${storageKey}): ${sessionId}`);
+                return sessionId;
+            }
+            else {
+                console.warn(`Cookie "${cookieName}" not found in Set-Cookie header.`);
+                return null;
+            }
+        }
+        else {
+            console.warn('Set-Cookie header not found in response.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error extracting session ID:', error);
+        return null;
+    }
+}
+
+function parseSetCookie(setCookieHeader, cookieName) {
+    if (!Array.isArray(setCookieHeader)) {
+        setCookieHeader = [setCookieHeader];
+    }
+
+    for (const cookieString of setCookieHeader) {
+        const cookies = cookieString.split(';');
+
+        for (const cookie of cookies) {
+            const parts = cookie.trim().split('=');
+            if (parts[0] === cookieName) {
+                return parts[1];
+            }
+        }
+    }
+
+    return null;
+}

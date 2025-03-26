@@ -559,6 +559,7 @@ const store = createStore({
             return state.orders.filter(order => order.service_type === 'hosting');
         },
         getDomainOrders: (state) => {
+            return state.orders.filter(order => order.service_type === 'domain');
         },
         getEmailOrders: (state) => {
         },

@@ -24,6 +24,59 @@ export function convertPrice(currency, price) {
     return (price * rate).toFixed(2);
 }
 
+/**
+ * Converts an amount from one currency to another.
+ * @param {number} amount The amount to convert.
+ * @param {string} fromCurrencyCode The currency code to convert from (e.g., 'USD', 'EUR').
+ * @param {string} toCurrencyCode The currency code to convert to (e.g., 'NGN', 'USD').
+ * @returns {number|null} The converted amount, or null if currency codes are invalid.
+ */
+export function convertCurrency(amount, fromCurrencyCode, toCurrencyCode) {
+    const fromCurrency = store.state.currencyPairs.find(
+        (currency) => currency.name === fromCurrencyCode
+    );
+    const toCurrency = store.state.currencyPairs.find(
+        (currency) => currency.name === toCurrencyCode
+    );
+
+    if (!fromCurrency || !toCurrency || fromCurrency.conversion_rate === undefined || toCurrency.conversion_rate === undefined) {
+        console.error("Invalid currency codes or missing conversion rates.");
+        return null;
+    }
+
+    // Convert the amount to USD first
+    const amountInUSD = amount / fromCurrency.conversion_rate;
+
+    // Convert from USD to the target currency
+    return amountInUSD * toCurrency.conversion_rate;
+}
+
+/**
+ * Converts an amount from a given currency to USD.
+ * @param {number} amount The amount to convert.
+ * @param {string} fromCurrencyCode The currency code to convert from (e.g., 'NGN', 'EUR').
+ * @returns {number|null} The converted amount in USD, or null if the currency code is invalid.
+ */
+export function convertToUSD(amount, fromCurrencyCode) {
+
+    const fromCurrency = store.state.currencyPairs.find(
+        (currency) => currency.name === fromCurrencyCode
+    );
+
+    if (!fromCurrency) {
+        console.error("Invalid currency code or missing conversion rate for USD conversion.");
+        return null;
+    }
+
+    return amount / fromCurrency.conversion_rate;
+}
+
+export function formatNumber(value) {
+    let parts = value.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
 export const getLastLogin = () => {
     const date = new Date(JSON.parse(localStorage.getItem('lastLogin')));
     const options = {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'};

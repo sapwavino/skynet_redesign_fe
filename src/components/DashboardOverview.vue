@@ -155,7 +155,7 @@ export default {
               />
             </g>
           </svg>
-          <p class="muteBoldSubheader mt-5 capitalize">No domains to show!</p>
+          <p class="muteBoldSubheader mt-5 capitalize">No domains!</p>
         </div>
         <button
             v-if="domains.length > 0"
@@ -353,7 +353,7 @@ export default {
             </g>
             </g>
           </svg>
-          <p class="muteBoldSubheader mt-5 capitalize">No apps hosted!</p>
+          <p class="muteBoldSubheader mt-5 capitalize">No hosted apps!</p>
         </div>
         <div class="mt-3">
           <router-link to="/dashboard/hosting?tab=manage">

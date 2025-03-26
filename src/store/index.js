@@ -387,7 +387,7 @@ const store = createStore({
                     const ordersResponse = await orderService.getAll();
                     const {data: ordersData} = ordersResponse;
                     if (ordersData.error) {
-                        console.error("❌Error while fetching user orders:", ordersData.error);
+                        console.error("❌Error while fetching user orders:", ordersData.error.message);
                         throw new Error(ordersData.error);
                     }
                     commit("SET_ORDERS", ordersData.result.list);
@@ -409,8 +409,8 @@ const store = createStore({
                     }
                     commit("SET_CART", cartData.result);
                     console.log(
-                        `✅Initialized ${cartData.result.items.length} ${
-                            cartData.result.items.length > 1 ? "items" : "item"
+                        `✅Initialized ${
+                            cartData.result.items.length > 1 ? `${cartData.result.items.length} items` : "no item"
                         } in the authenticated user's cart.`
                     );
                 } catch (error) {

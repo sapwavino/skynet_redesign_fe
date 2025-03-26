@@ -788,7 +788,7 @@ watch(selectedConfig, (newConfig) => {
                 'border-2 border-customGold text-customGold dark:text-customGold dark:bg-gray-900' : operatingSystem === 'windows',
                 'dark:text-gray-500' : operatingSystem !== 'windows'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border-2 p-3 hover:border-customGold col-span-2 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
+              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border-2 p-3 hover:border-customGold col-span-3 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
               @click="operatingSystem = 'windows'"
           >
             <svg
@@ -1120,7 +1120,7 @@ watch(selectedConfig, (newConfig) => {
           <input
               v-model="domain"
               class="w-5/6  rounded-tl-xl rounded-bl-xl text-input-base font-medium border-r-0 placeholder:text-gray-700 focus:bg-gray-50 bg-gray-300"
-              placeholder="Add your domain"
+              placeholder="yourdomain.com"
               style="padding: 1rem"
               type="search"
               @keydown.enter="checkDomain(domain)"

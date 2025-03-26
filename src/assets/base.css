@@ -61,7 +61,7 @@
 }
 
 .text-btn-base {
-    @apply px-3 py-2 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
+    @apply px-3 py-2 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 ;
 }
 
 .text-btn-base-sm {

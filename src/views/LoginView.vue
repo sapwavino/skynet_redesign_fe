@@ -28,6 +28,7 @@ export default {
         createToast(`Please enter a valid email address.`, {
           duration: 2000,
           type: "danger",
+          showIcon: true
         });
         return;
       }

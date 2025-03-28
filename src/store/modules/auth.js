@@ -59,9 +59,11 @@ export default {
                         const {data} = response
                         state.user = data.result
                         console.log(`✅Fetched authenticated user profile`)
-                        createToast(`Login successful! Hello ${state.user.first_name}`, {
+                        createToast(`Hello ${state.user.first_name}`, {
                             duration: 2000,
                             type: "success",
+                            toastBackgroundColor: 'teal',
+                            showIcon: true
                         });
                     })
                     .catch((error) => {

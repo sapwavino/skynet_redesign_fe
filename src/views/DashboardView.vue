@@ -181,7 +181,7 @@ export default {
         <router-link
             class="dashLink"
             exact-active-class="dashLinkActive"
-            to="/dashboard/cloud?tab=new"
+            to="/dashboard/cloud?tab=new&config=preset"
         >
 
           <svg :class="{'dashLinkSVG dark:fill-gray-800': $route.path === '/dashboard/cloud', 'fill-gray-400 dark:fill-customGold mr-5': $route.path !== '/dashboard/cloud'}"

@@ -81,7 +81,7 @@ const gpuArchitectures = ref([
 const gpuConfig = ref(false)
 const showPassword = ref(false)
 const ssh = ref(true)
-const operatingSystem = ref("")
+const operatingSystem = ref("linux")
 const rootPass = ref("")
 const additionalIPs = ref(0)
 const numberOfWebsites = ref(1)
@@ -386,7 +386,7 @@ watch(selectedConfig, (newConfig) => {
          class="mt-10 min-h-10"
     ></div>
     <h2 class="text-4xl font-bold capitalize text-center dark:text-gray-200">Cloud VPS Solutions</h2>
-    <h2 class="muteBoldSubheader text-center">Customize your virtual private server with the exact resources you need.
+    <h2 class="muteSubheader text-center">Customize your virtual private server with the exact resources you need.
       <br /> Pay only for what you use.
     </h2>
 
@@ -395,8 +395,8 @@ watch(selectedConfig, (newConfig) => {
     <div>
       <!--    POPULAR CONFIGS-->
       <div class="mt-5">
-        <h2 class="text-2xl font-bold text-center dark:text-gray-300">Popular Configurations</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+        <h2 class="text-2xl  text-center dark:text-gray-300">Popular Configurations</h2>
+        <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
         <section class="grid md:grid-cols-4">
           <div
               v-for="(config, idx) in popularConfigs"
@@ -429,8 +429,8 @@ watch(selectedConfig, (newConfig) => {
       </div>
 
       <div class="mt-5">
-        <h2 class="text-2xl font-bold text-center dark:text-gray-300">Configure your VPS</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+        <h2 class="text-2xl text-center dark:text-gray-300">Configure your VPS</h2>
+        <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
 
 
         <!--      GPU CONFIG TOGGLE-->
@@ -581,8 +581,8 @@ watch(selectedConfig, (newConfig) => {
 
         <!--      OS-->
         <section class="my-5">
-          <h2 class="font-bold text-xl text-center dark:text-gray-300">Operating System</h2>
-          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <h2 class="text-xl text-center dark:text-gray-300">Operating System</h2>
+          <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
           <div class="grid grid-cols-2 md:grid-cols-4">
             <div
                 :class="{
@@ -808,7 +808,7 @@ watch(selectedConfig, (newConfig) => {
               >Windows (+$10)</span></div>
 
             <div class="mt-5 mx-auto col-span-4">
-              <h2 class="muteBoldSubheader text-center">Select OS Version</h2>
+              <h2 class="muteSubheader text-center">Select OS Version</h2>
               <select
                   id="os"
                   v-model="selectedOsVersion"
@@ -828,8 +828,8 @@ watch(selectedConfig, (newConfig) => {
 
         <!--      ACCESS CONFIG-->
         <section class="mt-10">
-          <h2 class="font-bold text-xl text-center dark:text-gray-300">Access Configuration</h2>
-          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <h2 class="text-xl text-center dark:text-gray-300">Access Configuration</h2>
+          <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
           <div class="flex items-center justify-center">
             <input id="ssh"
                    v-model="ssh"
@@ -878,8 +878,8 @@ watch(selectedConfig, (newConfig) => {
 
         <!--      ADDITIONAL IP-->
         <section class="mt-10">
-          <h2 class="font-bold text-xl text-center dark:text-gray-300">Additional IP Addresses($2 each)</h2>
-          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <h2 class="text-xl text-center dark:text-gray-300">Additional IP Addresses($2 each)</h2>
+          <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
           <div class="text-center">
             <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
                     @click="additionalIPs > 0 ? additionalIPs -= 1 : ''"

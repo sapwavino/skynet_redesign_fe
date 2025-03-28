@@ -57,6 +57,7 @@ export function convertCurrency(amount, fromCurrencyCode, toCurrencyCode) {
  * @returns {number|null} The converted amount in USD, or null if the currency code is invalid.
  */
 export function convertToUSD(amount, fromCurrencyCode) {
+    
     const fromCurrency = store.state.currencyPairs.find(
         (currency) => currency.name === fromCurrencyCode
     );

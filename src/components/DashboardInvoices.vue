@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       tab: this.$route.query.tab || "unpaid",
+      invoiceID: this.$route.query.invoice_id || null
     };
   },
   watch: {
@@ -14,6 +15,12 @@ export default {
       immediate: true, // Run on component mount
       handler(newTab) {
         this.tab = newTab || "unpaid"; // Fallback to 'paid' if no tab is set
+      },
+    },
+    ["$route.query.invoice_id"]: {
+      immediate: true, // Run on component mount
+      handler(newID) {
+        this.invoiceID = newID || null; // Fallback to 'paid' if no tab is set
       },
     },
   },
@@ -103,7 +110,7 @@ export default {
             <th class="py-3 px-4 text-left">Due Date</th>
             <th class="py-3 px-4 text-left">Currency</th>
             <th class="py-3 px-4 text-left">Total</th>
-            <th class="py-3 px-4 text-left">Action</th>
+            <th class="py-3 px-4 text-left"></th>
           </tr>
           </thead>
           <tbody class="text-blue-gray-900">
@@ -124,9 +131,10 @@ export default {
               }}
             </td>
             <td class="py-3 px-4">
-              <a class="text-btn-base"
-                 href="#"
-              >View</a>
+              <router-link :to="`/dashboard/invoices/${invoice.id}`"
+                           class="text-btn-base"
+              >View
+              </router-link>
             </td>
           </tr>
 
@@ -182,9 +190,10 @@ export default {
               }}
             </td>
             <td class="py-3 px-4">
-              <a class="text-btn-base"
-                 href="#"
-              >View</a>
+              <router-link :to="`/dashboard/invoices/${invoice.id}`"
+                           class="text-btn-base"
+              >View
+              </router-link>
             </td>
           </tr>
 

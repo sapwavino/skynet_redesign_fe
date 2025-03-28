@@ -85,6 +85,14 @@ const router = createRouter({
                     },
                 },
                 {
+                    path: 'invoices/:id',
+                    component: () => import('../components/DashboardInvoice.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Invoice"
+                    },
+                },
+                {
                     path: 'wallet',
                     component: () => import('../components/DashboardWallet.vue'),
                     meta: {

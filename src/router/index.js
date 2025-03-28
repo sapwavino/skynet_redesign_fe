@@ -109,6 +109,15 @@ const router = createRouter({
                     },
                 },
                 {
+                    path: 'support/ticket/:id',
+                    component: () => import('../components/DashboardTicketDetail.vue'),
+                    meta: {
+                        layout: "DashboardLayout",
+                        title: "Ticket Details"
+                    },
+                    props: true
+                },
+                {
                     path: 'profile-settings',
                     component: () => import('../components/DashboardProfileSettings.vue'),
                     meta: {

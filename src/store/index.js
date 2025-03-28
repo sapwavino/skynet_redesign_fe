@@ -3,6 +3,7 @@ import {createToast} from "mosha-vue-toastify";
 import 'mosha-vue-toastify/dist/style.css'
 import auth from "./modules/auth";
 import products from "./modules/products.js";
+import support from "./modules/support"
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {authService} from "@/services/auth.service.js";
@@ -10,12 +11,15 @@ import {orderService} from "@/services/order.service.js";
 import {currencyService} from "@/services/currency.service.js";
 import {productService} from "@/services/product.service.js";
 import {cartService} from "@/services/cart.service.js";
+import {invoiceService} from "@/services/invoice.service.js";
 
 const store = createStore({
 
     modules: {
         auth,
         products
+        auth,
+        support
     },
 
     state: {
@@ -288,6 +292,7 @@ const store = createStore({
             {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
         ],
         orders: [],
+        invoices: []
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -336,6 +341,10 @@ const store = createStore({
         SET_CART(state, cart) {
             state.cart = cart;
         }
+        },
+        SET_INVOICES(state, invoices) {
+            state.invoices = invoices;
+        },
     },
     actions: {
         updateSearchDomain({commit}, domain) {
@@ -371,7 +380,7 @@ const store = createStore({
         stopLoading({commit}) {
             commit('SET_LOADING', false);
         },
-        async initialize({commit, state}) {
+        async initialize({commit, state, dispatch}) {
             console.log("Initializing app & user data...")
 
             // INIT LOGGED IN USER'S DATA
@@ -417,6 +426,26 @@ const store = createStore({
                     console.error("❌Initialization error:", error);
                     commit("SET_ERROR", error);
                 }
+                    })
+                    .catch((error) => {
+                        console.error('Failed to initialize orders:', error)
+                        commit('SET_ERROR', error)
+                    })
+                invoiceService.getAllInvoices()
+                    .then((response) => {
+                        const {data} = response
+
+                        if (data.error) {
+                            console.error('❌Error while fetching user invoices:', data.error)
+                            throw new Error(data.error)
+                        }
+                        commit('SET_INVOICES', data.result.list)
+                        console.log(`✅Initialized ${data.result.list.length} ${data.result.list.length > 1 ? 'invoices' : 'invoice'}.`)
+                    })
+                    .catch((error) => {
+                        console.error('Failed to initialize invoices:', error)
+                        commit('SET_ERROR', error)
+                    })
             }
             else {
                 // Guest user
@@ -478,6 +507,8 @@ const store = createStore({
                 .then((response) => {
                     commit('SET_CURRENCY_PAIRS', response)
                 })
+                .catch();
+            await dispatch('support/initialize');
                 .catch()
 
             //     INIT PRODUCTS

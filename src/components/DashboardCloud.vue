@@ -501,6 +501,8 @@ export default {
           </a>
         </li>
       </ul>
+
+      <!--      PRESET SECTION -->
       <section
           v-if="subTab === 'preset'"
           class="col-span-2"
@@ -599,7 +601,7 @@ export default {
 
       </section>
 
-      <!--   CLOUD SECTION-->
+      <!--   CUSTOM SECTION-->
       <section
           v-if="subTab === 'custom'"
           class="col-span-2"

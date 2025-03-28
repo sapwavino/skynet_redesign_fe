@@ -21,8 +21,7 @@ export default {
 
 <template>
   <div class="text-gray-700 mb-10">
-    <h3 class="text muteBoldSubheader">Choose your VPS Type</h3>
-    <h3 class="text muteSubheader mb-5">{{ type }}</h3>
+    <h3 class="text muteBoldSubheader mb-5">Choose your {{ type }} VPS</h3>
     <form class="grid gap-6 lg:grid-cols-4">
       <div v-for="service in services"
            :key="service.name"

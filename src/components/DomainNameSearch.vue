@@ -187,19 +187,37 @@ export default {
         "register_tld": newDomain.tld,
         "register_years": newDomain.duration
       }
-      cartService.addItemToCart(cartItem)
-          .then((response) => {
-            createToast(
-                `${newDomain.sld}${newDomain.tld} been added to cart`,
-                {
-                  type: 'success',
-                }
-            )
-          })
 
-      console.log(
-          newDomain
-      )
+      const sessionId = JSON.parse(localStorage.getItem('sessionid',))
+      if (sessionId) {
+        cartService.addItemToCart(cartItem, sessionId)
+            .then((response) => {
+              createToast(
+                  `${newDomain.sld}${newDomain.tld} been added to cart`,
+                  {
+                    type: 'success',
+                  }
+              )
+            })
+
+        console.log(newDomain)
+      }
+      else {
+        cartService.addItemToCart(cartItem)
+            .then((response) => {
+              localStorage.setItem('sessionid', JSON.stringify(response.data.sessionid))
+              createToast(
+                  `${newDomain.sld}${newDomain.tld} been added to cart`,
+                  {
+                    type: 'success',
+                  }
+              )
+            })
+
+        console.log(newDomain)
+        // localStorage.setItem('sessionid', JSON.parse(sessionId))
+
+      }
     },
     changePreferredCurrency() {
       this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);

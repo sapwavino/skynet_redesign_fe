@@ -26,7 +26,7 @@ export default {
     </router-link>
 
     <div v-show="!dashboardNav"
-         class="flex items-center gap-x-5 font-bold"
+         class="flex items-center gap-x-5 font-medium"
     >
       <a class="text-btn-base"
          href="/#cloud"

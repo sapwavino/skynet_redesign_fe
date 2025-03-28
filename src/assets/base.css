@@ -8,73 +8,73 @@
 }
 
 .btn-base {
-    @apply bg-customGold px-3 py-2 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-customGold px-3 py-2 rounded-xl text-black font-medium text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-disabled {
-    @apply bg-gray-500 px-3 py-2 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-not-allowed;
+    @apply bg-gray-500 px-3 py-2 rounded-xl text-black font-medium text-lg tracking-wider hover:cursor-not-allowed;
 }
 
 
 .btn-base-success {
-    @apply bg-green-700 px-3 py-2 rounded-xl text-white font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-green-700 px-3 py-2 rounded-xl text-white font-medium text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-error {
-    @apply bg-red-700 px-3 py-2 rounded-xl text-white font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-red-700 px-3 py-2 rounded-xl text-white font-medium text-lg tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 
 .btn-base-sm {
-    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-xs tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-customGold px-3 py-1 rounded-xl text-black font-medium text-xs tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-md {
-    @apply bg-customGold px-3 py-1 rounded-xl text-black font-bold text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-customGold px-3 py-1 rounded-xl text-black font-medium text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-darker {
-    @apply bg-black text-customGold px-3 py-2 rounded-xl font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+    @apply bg-black text-customGold px-3 py-2 rounded-xl font-medium text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .btn-base-darker-sm {
-    @apply bg-black text-customGold px-3 py-1 rounded-xl font-bold text-xs tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+    @apply bg-black text-customGold px-3 py-1 rounded-xl font-medium text-xs tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .flat-btn-base-darker {
-    @apply bg-black text-customGold px-3 py-2 font-bold text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
+    @apply bg-black text-customGold px-3 py-2 font-medium text-lg tracking-wider hover:cursor-pointer hover:bg-customGold hover:text-black transform transition-all duration-300 ease-in-out;
 }
 
 .flat-btn-base {
-    @apply bg-customGold text-black px-3 py-2  font-bold text-lg tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
+    @apply bg-customGold text-black px-3 py-2  font-medium text-lg tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
 }
 
 .flat-btn-base-sm {
-    @apply bg-customGold text-black px-3 py-2  font-bold tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
+    @apply bg-customGold text-black px-3 py-2  font-medium tracking-wider hover:cursor-pointer hover:text-customGold hover:bg-black transform transition-all duration-300 ease-in-out ;
 }
 
 .flat-border-btn-base {
-    @apply border border-customGold px-3 py-2 text-black font-bold text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out dark:text-customGold;
+    @apply border border-customGold px-3 py-2 text-black font-medium text-lg tracking-wider hover:cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out dark:text-customGold;
 }
 
 .flat-border-btn-base-small {
-    @apply border-2 border-customGold dark:text-gray-300 rounded-2xl block p-2.5 mx-1 focus:outline-none font-bold cursor-pointer text-center;
+    @apply border-2 border-customGold dark:text-gray-300 rounded-2xl block p-2.5 mx-1 focus:outline-none font-medium cursor-pointer text-center;
 }
 
 .border-btn-base {
-    @apply border border-customGold px-3 py-2 rounded-xl text-black font-bold text-lg tracking-wider hover:cursor-pointer dark:text-customGold;
+    @apply border border-customGold px-3 py-2 rounded-xl text-black font-medium text-lg tracking-wider hover:cursor-pointer dark:text-customGold;
 }
 
 .border-btn-base-sm {
-    @apply border border-customGold px-2 py-2 rounded-xl text-black text-xs font-bold text-lg tracking-wider hover:cursor-pointer;
+    @apply border border-customGold px-2 py-2 rounded-xl text-black text-xs font-medium text-lg tracking-wider hover:cursor-pointer;
 }
 
 .text-btn-base {
-    @apply px-3 py-2 text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
+    @apply px-3 py-2 text-black font-medium transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-lg tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
 }
 
 .text-btn-base-sm {
-    @apply text-black font-bold transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-xs tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
+    @apply text-black font-medium transform transition-all duration-300 ease-in-out hover:scale-110 underline hover:text-customGold text-xs tracking-wider hover:cursor-pointer underline-offset-3 dark:text-gray-200;
 }
 
 .text-input-base {
@@ -82,7 +82,7 @@
 }
 
 .dash-card-btn-base {
-    @apply bg-customGold px-3 py-2 rounded-xl text-black font-bold text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
+    @apply bg-customGold px-3 py-2 rounded-xl text-black font-medium text-sm tracking-wider hover:cursor-pointer hover:bg-black hover:text-customGold transform transition-all duration-300 ease-in-out;
 }
 
 /*LAYOUTS*/

@@ -391,53 +391,55 @@ watch(selectedConfig, (newConfig) => {
     </h2>
 
 
-    <!--    POPULAR CONFIGS-->
-    <div class="mt-5">
-      <h2 class="text-2xl font-bold text-center dark:text-gray-300">Popular Configurations</h2>
-      <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-      <section class="grid md:grid-cols-4">
-        <div
-            v-for="(config, idx) in popularConfigs"
-            :key="idx"
-            :class="{
+    <!--   CLOUD SECTION-->
+    <div>
+      <!--    POPULAR CONFIGS-->
+      <div class="mt-5">
+        <h2 class="text-2xl font-bold text-center dark:text-gray-300">Popular Configurations</h2>
+        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+        <section class="grid md:grid-cols-4">
+          <div
+              v-for="(config, idx) in popularConfigs"
+              :key="idx"
+              :class="{
               'ring-4 ring-customGold shadow-2xl': config.name === selectedConfig.name
             }"
-            class="m-2 rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out dark:bg-gray-900"
-            @click="selectedConfig = config"
-        >
-          <p v-if="config.isGPU"
-             class="bg-customGold font-bold p-1 rounded-full absolute -top-3 -right-3 text-sm animate-pulse tracking-wider"
-          >GPU</p>
+              class="m-2 rounded-2xl p-5 relative flex flex-col gap-3 cursor-pointer border-2 border-customGold/50 hover:-translate-y-1 transform transition-all duration-500 ease-in-out dark:bg-gray-900"
+              @click="selectedConfig = config"
+          >
+            <p v-if="config.isGPU"
+               class="bg-customGold font-bold p-1 rounded-full absolute -top-3 -right-3 text-sm animate-pulse tracking-wider"
+            >GPU</p>
 
-          <p v-if="config.isPopular"
-             class="bg-customGold font-bold p-1 px-2 rounded-full absolute -top-3 -right-3 text-sm tracking-wider"
-          >Popular</p>
+            <p v-if="config.isPopular"
+               class="bg-customGold font-bold p-1 px-2 rounded-full absolute -top-3 -right-3 text-sm tracking-wider"
+            >Popular</p>
 
-          <h2 class="text-2xl font-bold text-center dark:text-gray-300">{{ config.name }}</h2>
+            <h2 class="text-2xl font-bold text-center dark:text-gray-300">{{ config.name }}</h2>
 
-          <div class="flex flex-col items-center">
-            <p
-                v-for="(feature, fIdx) in config.features"
-                :key="fIdx"
-                class="muteBoldSubheader"
-            >{{ feature }}</p>
+            <div class="flex flex-col items-center">
+              <p
+                  v-for="(feature, fIdx) in config.features"
+                  :key="fIdx"
+                  class="muteBoldSubheader"
+              >{{ feature }}</p>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
 
-    <div class="mt-5">
-      <h2 class="text-2xl font-bold text-center dark:text-gray-300">Configure your VPS</h2>
-      <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+      <div class="mt-5">
+        <h2 class="text-2xl font-bold text-center dark:text-gray-300">Configure your VPS</h2>
+        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
 
 
-      <!--      GPU CONFIG TOGGLE-->
-      <div class="flex justify-center mb-5">
-        <label class="inline-flex items-center space-x-4 cursor-pointer text-gray-800"
-               for="Toggle2"
-        >
-          <span class="font-bold dark:text-gray-300">CPU</span>
-          <span class="relative">
+        <!--      GPU CONFIG TOGGLE-->
+        <div class="flex justify-center mb-5">
+          <label class="inline-flex items-center space-x-4 cursor-pointer text-gray-800"
+                 for="Toggle2"
+          >
+            <span class="font-bold dark:text-gray-300">CPU</span>
+            <span class="relative">
           <input id="Toggle2"
                  v-model="gpuConfig"
                  class="hidden peer"
@@ -446,197 +448,197 @@ watch(selectedConfig, (newConfig) => {
           <div class="w-10 h-4 rounded-full shadow bg-gray-400 peer-checked:bg-customGold"></div>
           <div class="absolute left-0 w-6 h-6 rounded-full shadow -inset-y-1 peer-checked:right-0 peer-checked:left-auto bg-customGold"></div>
         </span>
-          <span class="font-bold dark:text-gray-300">GPU-Accelerated</span>
-        </label>
-      </div>
-
-
-      <!--      CPU CONFIGURATION-->
-      <div class="pl-10">
-        <div class="flex items-center gap-3 mx-auto">
-          <label
-              class="text-neutral-700 font-bold dark:text-neutral-200"
-              for="ramRange"
-          >
-            RAM
-          </label
-          >
-          <input
-              id="ramRange"
-              v-model="ram"
-              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-              max="64"
-              min="1"
-              type="range"
-          />
-          <p class="font-bold text-customGold">{{ ram }} GB</p>
+            <span class="font-bold dark:text-gray-300">GPU-Accelerated</span>
+          </label>
         </div>
 
-        <div class="flex items-center gap-3 mx-auto my-5">
-          <label
-              class="text-neutral-700 font-bold dark:text-neutral-200"
-              for="coresRange"
-          >
-            CPU Cores
-          </label
-          >
-          <input
-              id="coresRange"
-              v-model="cores"
-              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-              max="32"
-              min="1"
-              type="range"
-          />
-          <p class="font-bold text-customGold">{{ cores }} Cores</p>
+
+        <!--      CPU CONFIGURATION-->
+        <div class="pl-10">
+          <div class="flex items-center gap-3 mx-auto">
+            <label
+                class="text-neutral-700 font-bold dark:text-neutral-200"
+                for="ramRange"
+            >
+              RAM
+            </label
+            >
+            <input
+                id="ramRange"
+                v-model="ram"
+                class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+                max="64"
+                min="1"
+                type="range"
+            />
+            <p class="font-bold text-customGold">{{ ram }} GB</p>
+          </div>
+
+          <div class="flex items-center gap-3 mx-auto my-5">
+            <label
+                class="text-neutral-700 font-bold dark:text-neutral-200"
+                for="coresRange"
+            >
+              CPU Cores
+            </label
+            >
+            <input
+                id="coresRange"
+                v-model="cores"
+                class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+                max="32"
+                min="1"
+                type="range"
+            />
+            <p class="font-bold text-customGold">{{ cores }} Cores</p>
+          </div>
+
+          <div class="flex items-center gap-3 mx-auto">
+            <label
+                class="text-neutral-700 font-bold dark:text-neutral-200"
+                for="ramRange"
+            >
+              Storage
+            </label
+            >
+            <input
+                id="ramRange"
+                v-model="storage"
+                class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+                max="2000"
+                min="20"
+                step="10"
+                type="range"
+            />
+            <p class="font-bold text-customGold">{{ storage }} GB</p>
+          </div>
         </div>
 
-        <div class="flex items-center gap-3 mx-auto">
-          <label
-              class="text-neutral-700 font-bold dark:text-neutral-200"
-              for="ramRange"
-          >
-            Storage
-          </label
-          >
-          <input
-              id="ramRange"
-              v-model="storage"
-              class="w-5/6 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-              max="2000"
-              min="20"
-              step="10"
-              type="range"
-          />
-          <p class="font-bold text-customGold">{{ storage }} GB</p>
-        </div>
-      </div>
 
+        <!--GPU CONFIG-->
+        <transition name="fade">
+          <section v-if="gpuConfig">
+            <h2 class="font-bold text-xl text-center mt-5 dark:text-gray-300">GPU Configuration</h2>
+            <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+            <div class="border-l-4 border-customGold rounded-l-2xl py-5 px-3">
 
-      <!--GPU CONFIG-->
-      <transition name="fade">
-        <section v-if="gpuConfig">
-          <h2 class="font-bold text-xl text-center mt-5 dark:text-gray-300">GPU Configuration</h2>
-          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-          <div class="border-l-4 border-customGold rounded-l-2xl py-5 px-3">
+              <div class="flex items-center gap-3 mx-auto">
+                <label
+                    class="text-neutral-700 font-bold dark:text-neutral-200"
+                    for="ramRange"
+                >
+                  GPU RAM
+                </label
+                >
+                <input
+                    id="ramRange"
+                    v-model="gpuRAM"
+                    class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+                    max="32"
+                    min="4"
+                    type="range"
+                />
+                <p class="font-bold text-customGold">{{ gpuRAM }} GB</p>
+              </div>
 
-            <div class="flex items-center gap-3 mx-auto">
-              <label
-                  class="text-neutral-700 font-bold dark:text-neutral-200"
-                  for="ramRange"
-              >
-                GPU RAM
-              </label
-              >
-              <input
-                  id="ramRange"
-                  v-model="gpuRAM"
-                  class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-                  max="32"
-                  min="4"
-                  type="range"
-              />
-              <p class="font-bold text-customGold">{{ gpuRAM }} GB</p>
-            </div>
+              <div class="flex items-center gap-3 mx-aut my-5">
+                <label
+                    class="text-neutral-700 font-bold dark:text-neutral-200"
+                    for="ramRange"
+                >
+                  GPU Cores
+                </label
+                >
+                <input
+                    id="ramRange"
+                    v-model="gpuCores"
+                    class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
+                    max="5120"
+                    min="512"
+                    step="512"
+                    type="range"
+                />
+                <p class="font-bold text-customGold">{{ gpuCores }} Cores</p>
+              </div>
 
-            <div class="flex items-center gap-3 mx-aut my-5">
-              <label
-                  class="text-neutral-700 font-bold dark:text-neutral-200"
-                  for="ramRange"
-              >
-                GPU Cores
-              </label
-              >
-              <input
-                  id="ramRange"
-                  v-model="gpuCores"
-                  class="w-3/4 cursor-pointer bg-neutral-100 dark:bg-neutral-600 accent-customGold border-0 border-transparent"
-                  max="5120"
-                  min="512"
-                  step="512"
-                  type="range"
-              />
-              <p class="font-bold text-customGold">{{ gpuCores }} Cores</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-3 py-5">
-              <section
-                  v-for="(architecture, idx) in gpuArchitectures"
-                  :key="idx"
-                  :class="{
+              <div class="grid md:grid-cols-3 gap-3 py-5">
+                <section
+                    v-for="(architecture, idx) in gpuArchitectures"
+                    :key="idx"
+                    :class="{
                     'border-2 border-customGold  p-3 rounded-2xl cursor-pointer' : architecture.name === gpuArchitecture,
                     'border dark:border-gray-700 p-3 rounded-2xl cursor-pointer' : architecture.name !== gpuArchitecture,
                   }"
-                  @click="gpuArchitecture = architecture.name"
-              >
-                <h1 class="muteBoldSubheader">{{ architecture.name }}</h1>
-                <h1 class="muteSmallSubheader">{{ architecture.content }}</h1>
-              </section>
+                    @click="gpuArchitecture = architecture.name"
+                >
+                  <h1 class="muteBoldSubheader">{{ architecture.name }}</h1>
+                  <h1 class="muteSmallSubheader">{{ architecture.content }}</h1>
+                </section>
+              </div>
             </div>
-          </div>
-        </section>
-      </transition>
+          </section>
+        </transition>
 
-      <!--      OS-->
-      <section class="my-5">
-        <h2 class="font-bold text-xl text-center dark:text-gray-300">Operating System</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-        <div class="grid grid-cols-2 md:grid-cols-4">
-          <div
-              :class="{
+        <!--      OS-->
+        <section class="my-5">
+          <h2 class="font-bold text-xl text-center dark:text-gray-300">Operating System</h2>
+          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <div class="grid grid-cols-2 md:grid-cols-4">
+            <div
+                :class="{
                 'border-2 border-customGold dark:bg-gray-900' : operatingSystem === 'linux',
                 'dark:text-gray-500' : operatingSystem !== 'linux'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
-              @click="operatingSystem = 'linux'"
-          >
-            <svg
-                :class="{
+                class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+                @click="operatingSystem = 'linux'"
+            >
+              <svg
+                  :class="{
                 'fill-customGold' : operatingSystem === 'linux'
               }"
-                class="h-20 hover:fill-customGold"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.6.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.4zM420 403.8c-3.6-4-5.3-11.6-7.2-19.7-1.8-8.1-3.9-16.8-10.5-22.4-1.3-1.1-2.6-2.1-4-2.9-1.3-.8-2.7-1.5-4.1-2 9.2-27.3 5.6-54.5-3.7-79.1-11.4-30.1-31.3-56.4-46.5-74.4-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0 132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7-18.9 22.5-45.5 58.8-58.1 96.7-6 17.9-8.8 36.1-6.2 53.3-6.5 5.8-11.4 14.7-16.6 20.2-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4 0 3.9.6 7.9 1.2 11.8 1.2 8.1 2.5 15.7.8 20.8-5.2 14.4-5.9 24.4-2.2 31.7 3.8 7.3 11.4 10.5 20.1 12.3 17.3 3.6 40.8 2.7 59.3 12.5 19.8 10.4 39.9 14.1 55.9 10.4 11.6-2.6 21.1-9.6 25.9-20.2 12.5-.1 26.3-5.4 48.3-6.6 14.9-1.2 33.6 5.3 55.1 4.1.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23 16.6-1.3 34.1-11 48.3-27.9 13.6-16.4 36-23.2 50.9-32.2 7.4-4.5 13.4-10.1 13.9-18.3.4-8.2-4.4-17.3-15.5-29.7zM223.7 87.3c9.8-22.2 34.2-21.8 44-.4 6.5 14.2 3.6 30.9-4.3 40.4-1.6-.8-5.9-2.6-12.6-4.9 1.1-1.2 3.1-2.7 3.9-4.6 4.8-11.8-.2-27-9.1-27.3-7.3-.5-13.9 10.8-11.8 23-4.1-2-9.4-3.5-13-4.4-1-6.9-.3-14.6 2.9-21.8zM183 75.8c10.1 0 20.8 14.2 19.1 33.5-3.5 1-7.1 2.5-10.2 4.6 1.2-8.9-3.3-20.1-9.6-19.6-8.4.7-9.8 21.2-1.8 28.1 1 .8 1.9-.2-5.9 5.5-15.6-14.6-10.5-52.1 8.4-52.1zm-13.6 60.7c6.2-4.6 13.6-10 14.1-10.5 4.7-4.4 13.5-14.2 27.9-14.2 7.1 0 15.6 2.3 25.9 8.9 6.3 4.1 11.3 4.4 22.6 9.3 8.4 3.5 13.7 9.7 10.5 18.2-2.6 7.1-11 14.4-22.7 18.1-11.1 3.6-19.8 16-38.2 14.9-3.9-.2-7-1-9.6-2.1-8-3.5-12.2-10.4-20-15-8.6-4.8-13.2-10.4-14.7-15.3-1.4-4.9 0-9 4.2-12.3zm3.3 334c-2.7 35.1-43.9 34.4-75.3 18-29.9-15.8-68.6-6.5-76.5-21.9-2.4-4.7-2.4-12.7 2.6-26.4v-.2c2.4-7.6.6-16-.6-23.9-1.2-7.8-1.8-15 .9-20 3.5-6.7 8.5-9.1 14.8-11.3 10.3-3.7 11.8-3.4 19.6-9.9 5.5-5.7 9.5-12.9 14.3-18 5.1-5.5 10-8.1 17.7-6.9 8.1 1.2 15.1 6.8 21.9 16l19.6 35.6c9.5 19.9 43.1 48.4 41 68.9zm-1.4-25.9c-4.1-6.6-9.6-13.6-14.4-19.6 7.1 0 14.2-2.2 16.7-8.9 2.3-6.2 0-14.9-7.4-24.9-13.5-18.2-38.3-32.5-38.3-32.5-13.5-8.4-21.1-18.7-24.6-29.9s-3-23.3-.3-35.2c5.2-22.9 18.6-45.2 27.2-59.2 2.3-1.7.8 3.2-8.7 20.8-8.5 16.1-24.4 53.3-2.6 82.4.6-20.7 5.5-41.8 13.8-61.5 12-27.4 37.3-74.9 39.3-112.7 1.1.8 4.6 3.2 6.2 4.1 4.6 2.7 8.1 6.7 12.6 10.3 12.4 10 28.5 9.2 42.4 1.2 6.2-3.5 11.2-7.5 15.9-9 9.9-3.1 17.8-8.6 22.3-15 7.7 30.4 25.7 74.3 37.2 95.7 6.1 11.4 18.3 35.5 23.6 64.6 3.3-.1 7 .4 10.9 1.4 13.8-35.7-11.7-74.2-23.3-84.9-4.7-4.6-4.9-6.6-2.6-6.5 12.6 11.2 29.2 33.7 35.2 59 2.8 11.6 3.3 23.7.4 35.7 16.4 6.8 35.9 17.9 30.7 34.8-2.2-.1-3.2 0-4.2 0 3.2-10.1-3.9-17.6-22.8-26.1-19.6-8.6-36-8.6-38.3 12.5-12.1 4.2-18.3 14.7-21.4 27.3-2.8 11.2-3.6 24.7-4.4 39.9-.5 7.7-3.6 18-6.8 29-32.1 22.9-76.7 32.9-114.3 7.2zm257.4-11.5c-.9 16.8-41.2 19.9-63.2 46.5-13.2 15.7-29.4 24.4-43.6 25.5s-26.5-4.8-33.7-19.3c-4.7-11.1-2.4-23.1 1.1-36.3 3.7-14.2 9.2-28.8 9.9-40.6.8-15.2 1.7-28.5 4.2-38.7 2.6-10.3 6.6-17.2 13.7-21.1.3-.2.7-.3 1-.5.8 13.2 7.3 26.6 18.8 29.5 12.6 3.3 30.7-7.5 38.4-16.3 9-.3 15.7-.9 22.6 5.1 9.9 8.5 7.1 30.3 17.1 41.6 10.6 11.6 14 19.5 13.7 24.6zM173.3 148.7c2 1.9 4.7 4.5 8 7.1 6.6 5.2 15.8 10.6 27.3 10.6 11.6 0 22.5-5.9 31.8-10.8 4.9-2.6 10.9-7 14.8-10.4s5.9-6.3 3.1-6.6-2.6 2.6-6 5.1c-4.4 3.2-9.7 7.4-13.9 9.8-7.4 4.2-19.5 10.2-29.9 10.2s-18.7-4.8-24.9-9.7c-3.1-2.5-5.7-5-7.7-6.9-1.5-1.4-1.9-4.6-4.3-4.9-1.4-.1-1.8 3.7 1.7 6.5z"
-              />
-            </svg>
-            <span :class="{
+                  class="h-20 hover:fill-customGold"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.6.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.4zM420 403.8c-3.6-4-5.3-11.6-7.2-19.7-1.8-8.1-3.9-16.8-10.5-22.4-1.3-1.1-2.6-2.1-4-2.9-1.3-.8-2.7-1.5-4.1-2 9.2-27.3 5.6-54.5-3.7-79.1-11.4-30.1-31.3-56.4-46.5-74.4-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0 132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7-18.9 22.5-45.5 58.8-58.1 96.7-6 17.9-8.8 36.1-6.2 53.3-6.5 5.8-11.4 14.7-16.6 20.2-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4 0 3.9.6 7.9 1.2 11.8 1.2 8.1 2.5 15.7.8 20.8-5.2 14.4-5.9 24.4-2.2 31.7 3.8 7.3 11.4 10.5 20.1 12.3 17.3 3.6 40.8 2.7 59.3 12.5 19.8 10.4 39.9 14.1 55.9 10.4 11.6-2.6 21.1-9.6 25.9-20.2 12.5-.1 26.3-5.4 48.3-6.6 14.9-1.2 33.6 5.3 55.1 4.1.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23 16.6-1.3 34.1-11 48.3-27.9 13.6-16.4 36-23.2 50.9-32.2 7.4-4.5 13.4-10.1 13.9-18.3.4-8.2-4.4-17.3-15.5-29.7zM223.7 87.3c9.8-22.2 34.2-21.8 44-.4 6.5 14.2 3.6 30.9-4.3 40.4-1.6-.8-5.9-2.6-12.6-4.9 1.1-1.2 3.1-2.7 3.9-4.6 4.8-11.8-.2-27-9.1-27.3-7.3-.5-13.9 10.8-11.8 23-4.1-2-9.4-3.5-13-4.4-1-6.9-.3-14.6 2.9-21.8zM183 75.8c10.1 0 20.8 14.2 19.1 33.5-3.5 1-7.1 2.5-10.2 4.6 1.2-8.9-3.3-20.1-9.6-19.6-8.4.7-9.8 21.2-1.8 28.1 1 .8 1.9-.2-5.9 5.5-15.6-14.6-10.5-52.1 8.4-52.1zm-13.6 60.7c6.2-4.6 13.6-10 14.1-10.5 4.7-4.4 13.5-14.2 27.9-14.2 7.1 0 15.6 2.3 25.9 8.9 6.3 4.1 11.3 4.4 22.6 9.3 8.4 3.5 13.7 9.7 10.5 18.2-2.6 7.1-11 14.4-22.7 18.1-11.1 3.6-19.8 16-38.2 14.9-3.9-.2-7-1-9.6-2.1-8-3.5-12.2-10.4-20-15-8.6-4.8-13.2-10.4-14.7-15.3-1.4-4.9 0-9 4.2-12.3zm3.3 334c-2.7 35.1-43.9 34.4-75.3 18-29.9-15.8-68.6-6.5-76.5-21.9-2.4-4.7-2.4-12.7 2.6-26.4v-.2c2.4-7.6.6-16-.6-23.9-1.2-7.8-1.8-15 .9-20 3.5-6.7 8.5-9.1 14.8-11.3 10.3-3.7 11.8-3.4 19.6-9.9 5.5-5.7 9.5-12.9 14.3-18 5.1-5.5 10-8.1 17.7-6.9 8.1 1.2 15.1 6.8 21.9 16l19.6 35.6c9.5 19.9 43.1 48.4 41 68.9zm-1.4-25.9c-4.1-6.6-9.6-13.6-14.4-19.6 7.1 0 14.2-2.2 16.7-8.9 2.3-6.2 0-14.9-7.4-24.9-13.5-18.2-38.3-32.5-38.3-32.5-13.5-8.4-21.1-18.7-24.6-29.9s-3-23.3-.3-35.2c5.2-22.9 18.6-45.2 27.2-59.2 2.3-1.7.8 3.2-8.7 20.8-8.5 16.1-24.4 53.3-2.6 82.4.6-20.7 5.5-41.8 13.8-61.5 12-27.4 37.3-74.9 39.3-112.7 1.1.8 4.6 3.2 6.2 4.1 4.6 2.7 8.1 6.7 12.6 10.3 12.4 10 28.5 9.2 42.4 1.2 6.2-3.5 11.2-7.5 15.9-9 9.9-3.1 17.8-8.6 22.3-15 7.7 30.4 25.7 74.3 37.2 95.7 6.1 11.4 18.3 35.5 23.6 64.6 3.3-.1 7 .4 10.9 1.4 13.8-35.7-11.7-74.2-23.3-84.9-4.7-4.6-4.9-6.6-2.6-6.5 12.6 11.2 29.2 33.7 35.2 59 2.8 11.6 3.3 23.7.4 35.7 16.4 6.8 35.9 17.9 30.7 34.8-2.2-.1-3.2 0-4.2 0 3.2-10.1-3.9-17.6-22.8-26.1-19.6-8.6-36-8.6-38.3 12.5-12.1 4.2-18.3 14.7-21.4 27.3-2.8 11.2-3.6 24.7-4.4 39.9-.5 7.7-3.6 18-6.8 29-32.1 22.9-76.7 32.9-114.3 7.2zm257.4-11.5c-.9 16.8-41.2 19.9-63.2 46.5-13.2 15.7-29.4 24.4-43.6 25.5s-26.5-4.8-33.7-19.3c-4.7-11.1-2.4-23.1 1.1-36.3 3.7-14.2 9.2-28.8 9.9-40.6.8-15.2 1.7-28.5 4.2-38.7 2.6-10.3 6.6-17.2 13.7-21.1.3-.2.7-.3 1-.5.8 13.2 7.3 26.6 18.8 29.5 12.6 3.3 30.7-7.5 38.4-16.3 9-.3 15.7-.9 22.6 5.1 9.9 8.5 7.1 30.3 17.1 41.6 10.6 11.6 14 19.5 13.7 24.6zM173.3 148.7c2 1.9 4.7 4.5 8 7.1 6.6 5.2 15.8 10.6 27.3 10.6 11.6 0 22.5-5.9 31.8-10.8 4.9-2.6 10.9-7 14.8-10.4s5.9-6.3 3.1-6.6-2.6 2.6-6 5.1c-4.4 3.2-9.7 7.4-13.9 9.8-7.4 4.2-19.5 10.2-29.9 10.2s-18.7-4.8-24.9-9.7c-3.1-2.5-5.7-5-7.7-6.9-1.5-1.4-1.9-4.6-4.3-4.9-1.4-.1-1.8 3.7 1.7 6.5z"
+                />
+              </svg>
+              <span :class="{
                 'text-customGold' : operatingSystem === 'linux'
               }"
-                  class="font-bold mt-2 tracking-wider text-lg"
-            >Linux</span>
-          </div>
+                    class="font-bold mt-2 tracking-wider text-lg"
+              >Linux</span>
+            </div>
 
-          <div
-              :class="{
+            <div
+                :class="{
                 'border-2 border-customGold text-customGold dark:bg-gray-900' : operatingSystem === 'debian',
                 'dark:text-gray-500' : operatingSystem !== 'debian',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
-              @click="operatingSystem = 'debian'"
-          >
-            <svg
-                :class="{
+                class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+                @click="operatingSystem = 'debian'"
+            >
+              <svg
+                  :class="{
                 'fill-customGold' : operatingSystem === 'debian'
               }"
-                class="h-20 hover:fill-customGold"
-                enable-background="new 0 0 87.041 108.445"
-                height="80"
-                i:pageBounds="0 792 612 0"
-                i:rulerOrigin="0 0"
-                i:viewOrigin="262 450"
-                overflow="visible"
-                viewBox="0 0 87.041 108.445"
-                width="87.041"
-                xml:space="preserve"
-                xmlns="&ns_svg;"
-                xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                xmlns:graph="&ns_graphs;"
-                xmlns:i="&ns_ai;"
-                xmlns:x="&ns_extend;"
-                xmlns:xlink="&ns_xlink;"
-            >
+                  class="h-20 hover:fill-customGold"
+                  enable-background="new 0 0 87.041 108.445"
+                  height="80"
+                  i:pageBounds="0 792 612 0"
+                  i:rulerOrigin="0 0"
+                  i:viewOrigin="262 450"
+                  overflow="visible"
+                  viewBox="0 0 87.041 108.445"
+                  width="87.041"
+                  xml:space="preserve"
+                  xmlns="&ns_svg;"
+                  xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                  xmlns:graph="&ns_graphs;"
+                  xmlns:i="&ns_ai;"
+                  xmlns:x="&ns_extend;"
+                  xmlns:xlink="&ns_xlink;"
+              >
               <g id="Layer_1"
                  i:dimmedPercent="50"
                  i:layer="yes"
@@ -731,179 +733,180 @@ watch(selectedConfig, (newConfig) => {
                 </g>
               </g>
             </svg>
-            <span class="font-bold mt-2 tracking-wider text-lg ">Debian</span>
-          </div>
+              <span class="font-bold mt-2 tracking-wider text-lg ">Debian</span>
+            </div>
 
-          <div
-              :class="{
+            <div
+                :class="{
                 'border-2 border-customGold text-customGold dark:bg-gray-900' : operatingSystem === 'centos',
                 'dark:text-gray-500' : operatingSystem !== 'centos',
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
-              @click="operatingSystem = 'centos'"
-          >
-            <svg
-                :class="{
+                class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border p-3 hover:border-customGold dark:fill-gray-500 hover:fill-customGold"
+                @click="operatingSystem = 'centos'"
+            >
+              <svg
+                  :class="{
                 'fill-customGold' : operatingSystem === 'centos'
               }"
-                class="hover:fill-customGold mx-auto"
-                height="80"
-                width="75"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="matrix(1.954132 0 0 1.954132 -85.24798 -3.17432)">
-                <g fill-rule="evenodd">
-                  <path d="M57.42 16.804l1.185 1.178-1.185 1.178H49.08v3.924l-5.085-5.102 5.085-5.016v3.838z"
-                  />
-                  <path d="M61.196 15.42l-1.178 1.185-1.178-1.185V7.08h-3.924l5.102-5.085 5.016 5.085h-3.838z"
-                  />
-                  <path d="M62.58 19.196l-1.185-1.178 1.185-1.178h8.338v-3.924l5.085 5.102-5.085 5.016v-3.838z"
-                  />
-                  <path d="M58.804 20.58l1.178-1.185 1.178 1.185v8.34h3.924l-5.102 5.085-5.016-5.085h3.838z"
-                  />
+                  class="hover:fill-customGold mx-auto"
+                  height="80"
+                  width="75"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="matrix(1.954132 0 0 1.954132 -85.24798 -3.17432)">
+                  <g fill-rule="evenodd">
+                    <path d="M57.42 16.804l1.185 1.178-1.185 1.178H49.08v3.924l-5.085-5.102 5.085-5.016v3.838z"
+                    />
+                    <path d="M61.196 15.42l-1.178 1.185-1.178-1.185V7.08h-3.924l5.102-5.085 5.016 5.085h-3.838z"
+                    />
+                    <path d="M62.58 19.196l-1.185-1.178 1.185-1.178h8.338v-3.924l5.085 5.102-5.085 5.016v-3.838z"
+                    />
+                    <path d="M58.804 20.58l1.178-1.185 1.178 1.185v8.34h3.924l-5.102 5.085-5.016-5.085h3.838z"
+                    />
+                  </g>
+                  <g stroke="#fff"
+                     stroke-width=".724"
+                  >
+                    <path d="M48.783 6.783h10.132v10.132H48.783z"
+                    />
+                    <path d="M61.086 6.783h10.132v10.132H61.086z"
+                    />
+                    <path d="M61.086 19.086h10.132v10.132H61.086z"
+                    />
+                    <path d="M48.783 19.086h10.132v10.132H48.783z"
+                    />
+                    <path d="M44.136 18l7.164-7.164L58.465 18 51.3 25.164zm8.7-8.7L60 2.136 67.164 9.3 60 16.465zm8.7 8.7l7.164-7.164L75.864 18 68.7 25.164zm-8.7 8.7L60 19.535l7.164 7.164L60 33.864z"
+                          fill="none"
+                    />
+                  </g>
                 </g>
-                <g stroke="#fff"
-                   stroke-width=".724"
-                >
-                  <path d="M48.783 6.783h10.132v10.132H48.783z"
-                  />
-                  <path d="M61.086 6.783h10.132v10.132H61.086z"
-                  />
-                  <path d="M61.086 19.086h10.132v10.132H61.086z"
-                  />
-                  <path d="M48.783 19.086h10.132v10.132H48.783z"
-                  />
-                  <path d="M44.136 18l7.164-7.164L58.465 18 51.3 25.164zm8.7-8.7L60 2.136 67.164 9.3 60 16.465zm8.7 8.7l7.164-7.164L75.864 18 68.7 25.164zm-8.7 8.7L60 19.535l7.164 7.164L60 33.864z"
-                        fill="none"
-                  />
-                </g>
-              </g>
-            </svg>
+              </svg>
 
-            <span class="font-bold mt-2 tracking-wider text-lg ">CentOS</span>
-          </div>
+              <span class="font-bold mt-2 tracking-wider text-lg ">CentOS</span>
+            </div>
 
-          <div
-              :class="{
+            <div
+                :class="{
                 'border-2 border-customGold text-customGold dark:text-customGold dark:bg-gray-900' : operatingSystem === 'windows',
                 'dark:text-gray-500' : operatingSystem !== 'windows'
               }"
-              class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border-2 p-3 hover:border-customGold col-span-3 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
-              @click="operatingSystem = 'windows'"
-          >
-            <svg
-                :class="{
+                class="flex flex-col items-center justify-center hover:text-customGold hover:shadow-2xl rounded-2xl cursor-pointer md:w-2/3 mx-auto hover:border-2 p-3 hover:border-customGold col-span-3 md:col-span-1 dark:fill-gray-500 hover:fill-customGold"
+                @click="operatingSystem = 'windows'"
+            >
+              <svg
+                  :class="{
                 'fill-customGold' : operatingSystem === 'windows'
               }"
-                class="h-20 hover:fill-customGold"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
-            </svg>
-            <span
-                class="font-bold mt-2 tracking-wider text-lg "
-            >Windows (+$10)</span></div>
-
-          <div class="mt-5 mx-auto col-span-4">
-            <h2 class="muteBoldSubheader text-center">Select OS Version</h2>
-            <select
-                id="os"
-                v-model="selectedOsVersion"
-                class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
-            >
-              <option value="">Select version</option>
-              <option
-                  v-for="(version, idx) in operatingSystems.find(one => one.name === operatingSystem)?.versions"
-                  :key="idx"
-                  :value="version"
-              >{{ version }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <!--      ACCESS CONFIG-->
-      <section class="mt-10">
-        <h2 class="font-bold text-xl text-center dark:text-gray-300">Access Configuration</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-        <div class="flex items-center justify-center">
-          <input id="ssh"
-                 v-model="ssh"
-                 class="mr-3"
-                 type="checkbox"
-          />
-          <label class="font-bold dark:text-gray-300"
-                 for="ssh"
-          >Enable SSH Access</label>
-        </div>
-
-        <section class="flex flex-col md:flex-row items-center justify-center my-5">
-          <div class="relative md:w-1/3 w-full ">
-            <!-- Password Input -->
-            <input
-                id="rootPass"
-                v-model="rootPass"
-                :type="showPassword ? 'text' : 'password'"
-                class="text-input-base w-full py-2 rounded-md px-3 pr-16 placeholder:text-xs md:placeholder:text-base"
-                placeholder="Enter or Generate Password"
-            />
-
-            <!-- Show/Hide & Copy Buttons -->
-            <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
-              <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
-                      @click="showPassword = !showPassword"
+                  class="h-20 hover:fill-customGold"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
               >
-                {{ showPassword ? "HIDE" : "SHOW" }}
-              </button>
-              <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
-                      @click="copyToClipboard"
+                <path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
+              </svg>
+              <span
+                  class="font-bold mt-2 tracking-wider text-lg "
+              >Windows (+$10)</span></div>
+
+            <div class="mt-5 mx-auto col-span-4">
+              <h2 class="muteBoldSubheader text-center">Select OS Version</h2>
+              <select
+                  id="os"
+                  v-model="selectedOsVersion"
+                  class="h-12 border-2 border-customGold dark:text-gray-300 rounded-2xl block py-2.5 px-4 focus:outline-none font-bold cursor-pointer text-center"
               >
-                COPY
-              </button>
+                <option value="">Select version</option>
+                <option
+                    v-for="(version, idx) in operatingSystems.find(one => one.name === operatingSystem)?.versions"
+                    :key="idx"
+                    :value="version"
+                >{{ version }}
+                </option>
+              </select>
             </div>
           </div>
-
-          <!-- Generate Password Button -->
-          <button class="btn-base px-3 ml-3 mt-3 md:mt-0"
-                  @click="rootPass = generateSSHPassword()"
-          >
-            Generate 🔄
-          </button>
         </section>
-      </section>
 
-      <!--      ADDITIONAL IP-->
-      <section class="mt-10">
-        <h2 class="font-bold text-xl text-center dark:text-gray-300">Additional IP Addresses($2 each)</h2>
-        <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
-        <div class="text-center">
-          <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
-                  @click="additionalIPs > 0 ? additionalIPs -= 1 : ''"
-          >-
-          </button>
-          <input v-model="additionalIPs"
-                 class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/8 dark:border-gray-500 dark:text-gray-300"
-                 max="10"
-                 min="0"
-                 type="number"
-          />
-          <button
-              class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
-              @click="additionalIPs < 10 ?additionalIPs += 1 : ''"
-          >+
-          </button>
+        <!--      ACCESS CONFIG-->
+        <section class="mt-10">
+          <h2 class="font-bold text-xl text-center dark:text-gray-300">Access Configuration</h2>
+          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <div class="flex items-center justify-center">
+            <input id="ssh"
+                   v-model="ssh"
+                   class="mr-3"
+                   type="checkbox"
+            />
+            <label class="font-bold dark:text-gray-300"
+                   for="ssh"
+            >Enable SSH Access</label>
+          </div>
+
+          <section class="flex flex-col md:flex-row items-center justify-center my-5">
+            <div class="relative md:w-1/3 w-full ">
+              <!-- Password Input -->
+              <input
+                  id="rootPass"
+                  v-model="rootPass"
+                  :type="showPassword ? 'text' : 'password'"
+                  class="text-input-base w-full py-2 rounded-md px-3 pr-16 placeholder:text-xs md:placeholder:text-base"
+                  placeholder="Enter or Generate Password"
+              />
+
+              <!-- Show/Hide & Copy Buttons -->
+              <div class="absolute inset-y-0 right-2 flex items-center space-x-2">
+                <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
+                        @click="showPassword = !showPassword"
+                >
+                  {{ showPassword ? "HIDE" : "SHOW" }}
+                </button>
+                <button class="text-gray-500 hover:text-gray-700 text-xs font-bold border px-1 rounded-2xl"
+                        @click="copyToClipboard"
+                >
+                  COPY
+                </button>
+              </div>
+            </div>
+
+            <!-- Generate Password Button -->
+            <button class="btn-base px-3 ml-3 mt-3 md:mt-0"
+                    @click="rootPass = generateSSHPassword()"
+            >
+              Generate 🔄
+            </button>
+          </section>
+        </section>
+
+        <!--      ADDITIONAL IP-->
+        <section class="mt-10">
+          <h2 class="font-bold text-xl text-center dark:text-gray-300">Additional IP Addresses($2 each)</h2>
+          <hr class="mx-80 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+          <div class="text-center">
+            <button class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
+                    @click="additionalIPs > 0 ? additionalIPs -= 1 : ''"
+            >-
+            </button>
+            <input v-model="additionalIPs"
+                   class="border-2 rounded-2xl py-3 font-bold mx-2 text-center w-1/8 dark:border-gray-500 dark:text-gray-300"
+                   max="10"
+                   min="0"
+                   type="number"
+            />
+            <button
+                class="border-2 rounded-xl mx-auto p-2 text-lg font-bold dark:border-gray-500 dark:text-gray-300"
+                @click="additionalIPs < 10 ?additionalIPs += 1 : ''"
+            >+
+            </button>
+          </div>
+        </section>
+
+        <!--CONFIG SUMMARY-->
+        <div class="text-center mt-5">
+          <h2 class="header mb-2">Total: ${{ totalCost }}<span class="font-bold text-gray-600 text-sm">/month</span>
+          </h2>
+          <button class="btn-base">Order Now</button>
         </div>
-      </section>
 
-      <!--CONFIG SUMMARY-->
-      <div class="text-center mt-5">
-        <h2 class="header mb-2">Total: ${{ totalCost }}<span class="font-bold text-gray-600 text-sm">/month</span>
-        </h2>
-        <button class="btn-base">Order Now</button>
       </div>
-
     </div>
 
     <!--    HOSTING SECTION-->

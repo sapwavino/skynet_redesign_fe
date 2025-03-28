@@ -17,15 +17,43 @@ const store = createStore({
 
     modules: {
         auth,
-        products
-        auth,
+        products,
         support
     },
-
     state: {
         domainToSearch: "",
         cart: {},
         showCookieModal: true,
+        preferredCurrency: JSON.parse(localStorage.getItem('preferredCurrency')) || "NGN",
+        showMobileNav: false,
+        loading: false,
+        loadingMessages: [
+            "Whispering to the network.",
+            "Finding the right frequency.",
+            "Servers sipping coffee.",
+            "Connecting the dots (literally).",
+            "Decoding the internet whispers...",
+            "Warming up the servers...",
+            "Polishing the pixels...",
+            "Building the bridge to your data."],
+        currentLoadingMessage: '',
+        availableTLDs: [],
+        domainToSearchAvailableTLDs: [],
+        error: '',
+        currencyPairs: [
+            {name: 'USD', flag: '🇺🇸', text: 'US Dollar', symbol: '$'},
+            {name: 'NGN', flag: '🇳🇬', text: 'Nigerian Naira', symbol: '₦'},
+            {name: 'KES', flag: '🇰🇪', text: 'Kenyan Shilling', symbol: 'KSh'},
+            {name: 'ZAR', flag: '🇿🇦', text: 'South African Rands', symbol: 'R'},
+            {name: 'EUR', flag: '🇪🇺', text: 'European Euro', symbol: '€'},
+            {name: 'GHS', flag: '🇬🇭', text: 'Ghanaian Cedis', symbol: '₵'},
+            {name: 'AED', flag: '🇦🇪', text: 'Arab Emirate Dirham', symbol: 'د.إ'},
+            {name: 'EGP', flag: '🇪🇬', text: 'Egyptian Pound', symbol: 'E£'},
+            {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
+            {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
+        ],
+        orders: [],
+        invoices: [],
         user: {
             info: {
                 full_name: "John Doe",
@@ -251,48 +279,6 @@ const store = createStore({
                 tickets: [],
             }
         },
-        preferredCurrency: JSON.parse(localStorage.getItem('preferredCurrency')) || "NGN",
-        showMobileNav: false,
-        loading: false,
-        loadingMessages: [
-            "Whispering to the network.",
-            "Finding the right frequency.",
-            "Servers sipping coffee.",
-            "Connecting the dots (literally).",
-            "Decoding the internet whispers...",
-            "Warming up the servers...",
-            "Polishing the pixels...",
-            // "Servers dey reason your request.",
-            // "Fetching the network jollof.",
-            // "Servers are doing shakara.",
-            // "Fetching data, no be juju.",
-            // "Fetching data like jollof rice.",
-            // "Fetching data, no be beans.",
-            // "Data dey come, calm down.",
-            // "Server dey do shakara.",
-            // "Checking if the server greeted elders.",
-            // "Catching the digital molue.",
-            // "Checking the village network.",
-            // "Loading, no be small thing o!",
-            "Building the bridge to your data."],
-        currentLoadingMessage: '',
-        availableTLDs: [],
-        domainToSearchAvailableTLDs: [],
-        error: '',
-        currencyPairs: [
-            {name: 'USD', flag: '🇺🇸', text: 'US Dollar', symbol: '$'},
-            {name: 'NGN', flag: '🇳🇬', text: 'Nigerian Naira', symbol: '₦'},
-            {name: 'KES', flag: '🇰🇪', text: 'Kenyan Shilling', symbol: 'KSh'},
-            {name: 'ZAR', flag: '🇿🇦', text: 'South African Rands', symbol: 'R'},
-            {name: 'EUR', flag: '🇪🇺', text: 'European Euro', symbol: '€'},
-            {name: 'GHS', flag: '🇬🇭', text: 'Ghanaian Cedis', symbol: '₵'},
-            {name: 'AED', flag: '🇦🇪', text: 'Arab Emirate Dirham', symbol: 'د.إ'},
-            {name: 'EGP', flag: '🇪🇬', text: 'Egyptian Pound', symbol: 'E£'},
-            {name: 'CAD', flag: '🇨🇦', text: 'Canadian Dollar', symbol: '$'},
-            {name: 'GBP', flag: '🇬🇧', text: 'Pound Sterling', symbol: '£'}
-        ],
-        orders: [],
-        invoices: []
     },
     mutations: {
         UPDATE_DOMAIN_TO_SEARCH(state, domain) {
@@ -340,7 +326,6 @@ const store = createStore({
         },
         SET_CART(state, cart) {
             state.cart = cart;
-        }
         },
         SET_INVOICES(state, invoices) {
             state.invoices = invoices;
@@ -381,7 +366,7 @@ const store = createStore({
             commit('SET_LOADING', false);
         },
         async initialize({commit, state, dispatch}) {
-            console.log("Initializing app & user data...")
+            console.log("Initializing app & user data...");
 
             // INIT LOGGED IN USER'S DATA
             const isLoggedIn = JSON.parse(window.localStorage.getItem("isLoggedIn"));
@@ -397,7 +382,7 @@ const store = createStore({
                     const {data: ordersData} = ordersResponse;
                     if (ordersData.error) {
                         console.error("❌Error while fetching user orders:", ordersData.error.message);
-                        throw new Error(ordersData.error);
+                        throw new Error(ordersData.error.message); // Use message for clarity
                     }
                     commit("SET_ORDERS", ordersData.result.list);
                     console.log(
@@ -406,12 +391,25 @@ const store = createStore({
                         }.`
                     );
 
+                    const invoicesResponse = await invoiceService.getAllInvoices();
+                    const {data: invoicesData} = invoicesResponse;
+
+                    if (invoicesData.error) {
+                        console.error('❌Error while fetching user invoices:', invoicesData.error.message); // Use
+                                                                                                           // message
+                                                                                                           // for
+                                                                                                           // clarity
+                        throw new Error(invoicesData.error.message);
+                    }
+                    commit('SET_INVOICES', invoicesData.result.list);
+                    console.log(`✅Initialized ${invoicesData.result.list.length} ${invoicesData.result.list.length > 1 ? 'invoices' : 'invoice'}.`);
+
                     const cartResponse = await cartService.getAllCartItems(); // No sessionID for logged-in user
                     const {data: cartData} = cartResponse;
                     if (cartData.error) {
                         console.error(
                             "❌Error while fetching authenticated user's cart items:",
-                            cartData.error
+                            cartData.error.message // Use message for clarity
                         );
                         commit("SET_ERROR", cartData.error);
                         throw new Error(cartData.error.message);
@@ -422,30 +420,15 @@ const store = createStore({
                             cartData.result.items.length > 1 ? `${cartData.result.items.length} items` : "no item"
                         } in the authenticated user's cart.`
                     );
+                    try {
+                        await dispatch('support/initialize');
+                    } catch (error) {
+                        console.error("❌Support initialization error:", error);
+                    }
                 } catch (error) {
                     console.error("❌Initialization error:", error);
                     commit("SET_ERROR", error);
                 }
-                    })
-                    .catch((error) => {
-                        console.error('Failed to initialize orders:', error)
-                        commit('SET_ERROR', error)
-                    })
-                invoiceService.getAllInvoices()
-                    .then((response) => {
-                        const {data} = response
-
-                        if (data.error) {
-                            console.error('❌Error while fetching user invoices:', data.error)
-                            throw new Error(data.error)
-                        }
-                        commit('SET_INVOICES', data.result.list)
-                        console.log(`✅Initialized ${data.result.list.length} ${data.result.list.length > 1 ? 'invoices' : 'invoice'}.`)
-                    })
-                    .catch((error) => {
-                        console.error('Failed to initialize invoices:', error)
-                        commit('SET_ERROR', error)
-                    })
             }
             else {
                 // Guest user
@@ -454,7 +437,10 @@ const store = createStore({
                     const cartResponse = await cartService.getAllCartItems(sessionID);
                     const {data: cartData} = cartResponse;
                     if (cartData.error) {
-                        console.error("❌Error while fetching guest user's cart items:", cartData.error);
+                        console.error("❌Error while fetching guest user's cart items:", cartData.error.message); // Use
+                                                                                                                 // message
+                                                                                                                 // for
+                                                                                                                 // clarity
                         commit("SET_ERROR", cartData.error);
                         throw new Error(cartData.error.message);
                     }
@@ -470,32 +456,32 @@ const store = createStore({
                 }
             }
 
-
             // INIT APP DATA
             domainService.availableTLDs()
                 .then((response) => {
-                    const {data} = response
+                    const {data} = response;
 
                     if (data.error) {
-                        console.error('❌Error while fetching available TLDs:', data.error)
-                        commit('SET_ERROR', data.error)
-                        throw new Error(data.error.message || 'Error while fetching available TLDs:')
+                        console.error('❌Error while fetching available TLDs:', data.error.message); // Use message for
+                                                                                                    // clarity
+                        commit('SET_ERROR', data.error);
+                        throw new Error(data.error.message || 'Error while fetching available TLDs:');
                     }
 
                     commit('SET_AVAILABLE_TLDS', data.result);
-                    console.log(`✅Initialized ${data.result.length} TLDs.`)
+                    console.log(`✅Initialized ${data.result.length} TLDs.`);
                 })
                 .catch((error) => {
-                    console.error('❌Failed to initialize TLDs:', error)
-                    commit('SET_ERROR', error)
-                })
+                    console.error('❌Failed to initialize TLDs:', error);
+                    commit('SET_ERROR', error);
+                });
 
             // INIT CURRENCY CONVERSION RATES
             const conversionPromises = state.currencyPairs.map(async (currency) => {
                 try {
-                    const response = await currencyService.getConversionRates(currency.name)
+                    const response = await currencyService.getConversionRates(currency.name);
                     currency.conversion_rate = response.data.result.conversion_rate;
-                    console.log(`✅Initialized conversion rate for ${currency.name}.`)
+                    console.log(`✅Initialized conversion rate for ${currency.name}.`);
                     return currency;
                 } catch (error) {
                     console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
@@ -505,29 +491,30 @@ const store = createStore({
             });
             await Promise.all(conversionPromises)
                 .then((response) => {
-                    commit('SET_CURRENCY_PAIRS', response)
-                })
-                .catch();
-            await dispatch('support/initialize');
-                .catch()
-
-            //     INIT PRODUCTS
-            productService.getAllProducts()
-                .then((response) => {
-                    const {data} = response
-                    if (data.error) {
-                        console.error('❌Error while fetching available TLDs:', data.error)
-                        commit('SET_ERROR', data.error)
-                        throw new Error(data.error.message || 'Error while fetching available TLDs:')
-                    }
-                    commit('products/SET_PRODUCTS', data.result.list)
-                    console.log(`✅Initialized ${data.result.list.length} products.`)
+                    commit('SET_CURRENCY_PAIRS', response);
                 })
                 .catch((error) => {
-                    console.error('❌Failed to initialize products:', error)
-                    commit('SET_ERROR', error)
-                })
+                    console.error("❌Currency conversion error:", error);
+                });
 
+
+            // INIT PRODUCTS
+            productService.getAllProducts()
+                .then((response) => {
+                    const {data} = response;
+                    if (data.error) {
+                        console.error('❌Error while fetching available products:', data.error.message); // Use message
+                                                                                                        // for clarity
+                        commit('SET_ERROR', data.error);
+                        throw new Error(data.error.message || 'Error while fetching available products:');
+                    }
+                    commit('products/SET_PRODUCTS', data.result.list);
+                    console.log(`✅Initialized ${data.result.list.length} products.`);
+                })
+                .catch((error) => {
+                    console.error('❌Failed to initialize products:', error);
+                    commit('SET_ERROR', error);
+                });
         },
         async checkDomainAvailability({state}) {
             const domain = state.domainToSearch;

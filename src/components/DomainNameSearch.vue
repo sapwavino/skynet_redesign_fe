@@ -180,7 +180,6 @@ export default {
       this.searchTerm = domain;
     },
     buyDomain(domain) {
-      console.log(domain)
       let newDomain = new DomainCartItem(domain)
       let cartItem = {
         "id": newDomain.getProduct().id,
@@ -191,7 +190,7 @@ export default {
         "register_years": newDomain.duration
       }
 
-      cartService.addItemToCart(cartItem)
+      cartService.addItemToCart(cartItem, 'domain')
           .then((response) => {
             cartService.getAllCartItems().then((response) => {
               this.$store.commit('SET_CART', response.data.result)

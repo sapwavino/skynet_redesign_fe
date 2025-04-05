@@ -4,6 +4,7 @@ import 'mosha-vue-toastify/dist/style.css'
 import {HostingCartItem} from "@/utils/helper_classes.js";
 import DomainNameSearch from "@/components/DomainNameSearch.vue";
 import {cartService} from "@/services/cart.service.js";
+import {domainService} from "@/services/domain.service.js";
 
 export default {
   name: "DashboardHostingStepper",
@@ -42,15 +43,36 @@ export default {
         )
         return;
       }
-      this.domainChecked = true;
-      createToast(
-          `Domain has been checked`,
-          {
-            position: "bottom-right",
-            type: 'success',
-          }
-      )
-      console.log('Domain checked');
+      let parts = this.domain.split('.')
+      let sld = parts[0]
+      let tld = '.' + parts.slice(1).join('.');
+      let domainObject = {sld, tld}
+      domainService.check(domainObject)
+          .then((res) => {
+            if (res.data.error) {
+              createToast("❌Error checking domain or unavailable", {
+                position: "bottom-right",
+                type: 'danger',
+              })
+              throw "❌Error checking domain"
+            }
+            createToast(
+                `${this.domain} is available`,
+                {
+                  position: "bottom-right",
+                  toastBackgroundColor: 'teal'
+                }
+            )
+            this.domainChecked = true;
+          })
+          .catch((err) => {
+            console.error(err)
+            createToast('Something went wrong' + err, {
+              position: "bottom-right",
+              type: 'danger',
+            })
+            throw "❌Error checking domain: " + err.message
+          })
     },
     addToCart() {
       let domain = {};
@@ -87,7 +109,6 @@ export default {
           domain,
           this.hostingPlan
       )
-      console.log(newHostingItem)
       let cartItem = {
         "id": newHostingItem.product.id,
         "quantity": newHostingItem.quantity,
@@ -103,12 +124,9 @@ export default {
         "multiple": 1
       }
 
-      console.log(cartItem)
-
-      cartService.addItemToCart(cartItem)
+      cartService.addItemToCart(cartItem, 'hosting')
           .then((response) => {
             const {data} = response
-            console.log(data)
             createToast(
                 `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
                 {
@@ -116,6 +134,9 @@ export default {
                   position: "bottom-right"
                 }
             )
+            cartService.getAllCartItems().then((response) => {
+              this.$store.commit('SET_CART', response.data.result)
+            })
           })
 
     },
@@ -672,16 +693,12 @@ export default {
       </section>
       <section class="mt-5">
         <transition name="slowFade">
-          <router-link class="mr-3"
-                       to="/cart"
-          >
-            <button
-                v-show="domainChecked"
-                class="btn-base"
-                @click="addToCart"
-            >Add to cart
-            </button>
-          </router-link>
+          <button
+              v-show="domainChecked"
+              class="btn-base mr-3"
+              @click.prevent="addToCart"
+          >Add to cart
+          </button>
         </transition>
         <button class="btn-base mr-3"
                 @click="currentStep = 1; preferredPanel = ''"

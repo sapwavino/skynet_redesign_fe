@@ -54,7 +54,6 @@ export default {
   <div v-if="$store.state.cart"
        class="mb-5 min-h-[85vh]"
   >
-
     <EmptyCart v-if="cartItems && cartItems.length < 1" />
 
     <section v-else

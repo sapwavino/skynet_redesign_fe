@@ -231,7 +231,7 @@ function addHostingToCart() {
 
   console.log(cartItem)
 
-  cartService.addItemToCart(cartItem)
+  cartService.addItemToCart(cartItem, 'hosting')
       .then((response) => {
         createToast(
             `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,

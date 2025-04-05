@@ -2,7 +2,7 @@ import api from "@/config/axios"
 import store from "@/store/index.js";
 
 export const cartService = {
-    getAllCartItems(sessionID) {
+    getAllCartItems() {
         return api.post("/client/cart/get");
     },
     addItemToCart(item) {
@@ -16,8 +16,8 @@ export const cartService = {
         })
     },
     removeItemFromCart(itemId) {
-        return api.post('/guest/cart/remove_item', {
-            item_id: itemId
+        return api.post('/client/cart/remove_item', {
+            id: itemId
         })
     }
 }

@@ -166,7 +166,8 @@ const copyToClipboard = () => {
               "Root password copied to clipboard! ✅",
               {
                 type: "info",
-                duration: 2500
+                duration: 2500,
+                position: "bottom-right"
               }
           )
         });
@@ -236,6 +237,7 @@ function addHostingToCart() {
             `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
             {
               type: 'success',
+              position: "bottom-right",
             }
         )
         cartService.getAllCartItems().then((response => {
@@ -262,6 +264,7 @@ function checkDomain(domainValue) {
           if (data.error) {
             createToast(`❌${data.error.message}`, {
               type: "danger",
+              position: "bottom-right"
             });
             canOrderHosting.value = false;
             resolve(false); // Resolve with false
@@ -269,6 +272,7 @@ function checkDomain(domainValue) {
           else {
             createToast("✅Domain is available.", {
               type: "success",
+              position: "bottom-right"
             });
             canOrderHosting.value = true;
             resolve(true); // Resolve with true
@@ -278,6 +282,7 @@ function checkDomain(domainValue) {
           console.error(error);
           createToast("❌Couldn't check domain availability", {
             type: "error",
+            position: "bottom-right"
           });
           reject(error); // Reject the promise with the error
         });

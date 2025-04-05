@@ -36,7 +36,7 @@ export default {
         createToast(
             `Please enter a valid domain`,
             {
-              // duration: 5000,
+              position: "bottom-right",
               type: 'danger',
             }
         )
@@ -46,7 +46,7 @@ export default {
       createToast(
           `Domain has been checked`,
           {
-            // duration: 5000,
+            position: "bottom-right",
             type: 'success',
           }
       )
@@ -113,6 +113,7 @@ export default {
                 `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
                 {
                   type: 'success',
+                  position: "bottom-right"
                 }
             )
           })

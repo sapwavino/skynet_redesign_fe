@@ -327,6 +327,10 @@ const store = createStore({
         SET_CART(state, cart) {
             state.cart = cart;
         },
+        REMOVE_CART_ITEM(state, itemId) {
+            state.cart.items = state.cart.items.filter(item => item.id !== itemId);
+            // Update total if needed
+        },
         SET_INVOICES(state, invoices) {
             state.invoices = invoices;
         },
@@ -348,7 +352,7 @@ const store = createStore({
         addItemToCart({commit}, item) {
             commit("ADD_ITEM_TO_CART", item);
             createToast("Item added to cart: " + item.name, {
-                type: 'info', duration: 2000,
+                type: 'info', duration: 2000, position: "bottom-right",
             })
         },
         markNotificationAsRead({commit}, id) {
@@ -367,6 +371,7 @@ const store = createStore({
         },
         async initialize({commit, state, dispatch}) {
             console.log("Initializing app & user data...");
+            dispatch('startLoading')
 
             // INIT CURRENCY CONVERSION RATES
             const conversionPromises = state.currencyPairs.map(async (currency) => {
@@ -389,6 +394,44 @@ const store = createStore({
                     console.error("❌Currency conversion error:", error);
                 });
 
+            // INIT APP DATA
+            domainService.availableTLDs()
+                .then((response) => {
+                    const {data} = response;
+
+                    if (data.error) {
+                        console.error('❌Error while fetching available TLDs:', data.error.message); // Use message for
+                                                                                                    // clarity
+                        commit('SET_ERROR', data.error);
+                        throw new Error(data.error.message || 'Error while fetching available TLDs:');
+                    }
+
+                    commit('SET_AVAILABLE_TLDS', data.result);
+                    console.log(`✅Initialized ${data.result.length} TLDs.`);
+                })
+                .catch((error) => {
+                    console.error('❌Failed to initialize TLDs:', error);
+                    commit('SET_ERROR', error);
+                });
+
+
+            // INIT PRODUCTS
+            productService.getAllProducts()
+                .then((response) => {
+                    const {data} = response;
+                    if (data.error) {
+                        console.error('❌Error while fetching available products:', data.error.message); // Use message
+                                                                                                        // for clarity
+                        commit('SET_ERROR', data.error);
+                        throw new Error(data.error.message || 'Error while fetching available products:');
+                    }
+                    commit('products/SET_PRODUCTS', data.result.list);
+                    console.log(`✅Initialized ${data.result.list.length} products.`);
+                })
+                .catch((error) => {
+                    console.error('❌Failed to initialize products:', error);
+                    commit('SET_ERROR', error);
+                });
 
 
             // INIT LOGGED IN USER'S DATA
@@ -479,44 +522,9 @@ const store = createStore({
                 }
             }
 
-            // INIT APP DATA
-            domainService.availableTLDs()
-                .then((response) => {
-                    const {data} = response;
+            dispatch('stopLoading')
 
-                    if (data.error) {
-                        console.error('❌Error while fetching available TLDs:', data.error.message); // Use message for
-                                                                                                    // clarity
-                        commit('SET_ERROR', data.error);
-                        throw new Error(data.error.message || 'Error while fetching available TLDs:');
-                    }
 
-                    commit('SET_AVAILABLE_TLDS', data.result);
-                    console.log(`✅Initialized ${data.result.length} TLDs.`);
-                })
-                .catch((error) => {
-                    console.error('❌Failed to initialize TLDs:', error);
-                    commit('SET_ERROR', error);
-                });
-
-            
-            // INIT PRODUCTS
-            productService.getAllProducts()
-                .then((response) => {
-                    const {data} = response;
-                    if (data.error) {
-                        console.error('❌Error while fetching available products:', data.error.message); // Use message
-                                                                                                        // for clarity
-                        commit('SET_ERROR', data.error);
-                        throw new Error(data.error.message || 'Error while fetching available products:');
-                    }
-                    commit('products/SET_PRODUCTS', data.result.list);
-                    console.log(`✅Initialized ${data.result.list.length} products.`);
-                })
-                .catch((error) => {
-                    console.error('❌Failed to initialize products:', error);
-                    commit('SET_ERROR', error);
-                });
         },
         async checkDomainAvailability({state}) {
             const domain = state.domainToSearch;

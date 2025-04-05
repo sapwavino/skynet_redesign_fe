@@ -95,6 +95,7 @@ export default {
             {
               duration: 5000,
               type: 'danger',
+              position: "bottom-right",
             }
         )
         return;
@@ -112,6 +113,7 @@ export default {
             {
               duration: 5000,
               type: 'danger',
+              position: "bottom-right",
             }
         )
         this.loading = false;
@@ -123,6 +125,7 @@ export default {
             {
               duration: 5000,
               type: 'danger',
+              position: "bottom-right",
             }
         )
         this.loading = false;
@@ -134,6 +137,7 @@ export default {
             {
               duration: 5000,
               type: 'danger',
+              position: "bottom-right",
             }
         )
         this.loading = false;
@@ -144,8 +148,7 @@ export default {
       this.$store.dispatch('updateSearchDomain', removeTLD(this.searchTerm));
 
       try {
-        const availabilityResults = await this.$store.dispatch('checkDomainAvailability'); // Await the dispatch
-        console.log("Availability results:", availabilityResults);
+        await this.$store.dispatch('checkDomainAvailability');
         this.loading = false; //stop loading in case of error.
         // Process availabilityResults here if needed.
       } catch (error) {
@@ -188,36 +191,19 @@ export default {
         "register_years": newDomain.duration
       }
 
-      const sessionId = JSON.parse(localStorage.getItem('sessionid',))
-      if (sessionId) {
-        cartService.addItemToCart(cartItem, sessionId)
-            .then((response) => {
-              createToast(
-                  `${newDomain.sld}${newDomain.tld} been added to cart`,
-                  {
-                    type: 'success',
-                  }
-              )
+      cartService.addItemToCart(cartItem)
+          .then((response) => {
+            cartService.getAllCartItems().then((response) => {
+              this.$store.commit('SET_CART', response.data.result)
             })
-
-        console.log(newDomain)
-      }
-      else {
-        cartService.addItemToCart(cartItem)
-            .then((response) => {
-              localStorage.setItem('sessionid', JSON.stringify(response.data.sessionid))
-              createToast(
-                  `${newDomain.sld}${newDomain.tld} been added to cart`,
-                  {
-                    type: 'success',
-                  }
-              )
-            })
-
-        console.log(newDomain)
-        // localStorage.setItem('sessionid', JSON.parse(sessionId))
-
-      }
+            createToast(
+                `${newDomain.sld}${newDomain.tld} been added to cart`,
+                {
+                  type: 'success',
+                  position: "bottom-right",
+                }
+            )
+          })
     },
     changePreferredCurrency() {
       this.$store.dispatch('updatePreferredCurrency', this.selectedCurrency);

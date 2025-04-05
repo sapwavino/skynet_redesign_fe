@@ -28,6 +28,7 @@ export default {
         createToast(`Please enter a valid email address.`, {
           duration: 2000,
           type: "danger",
+          position: "bottom-right",
           showIcon: true
         });
         return;
@@ -40,6 +41,7 @@ export default {
         createToast(`Please enter valid credentials.`, {
           duration: 2000,
           type: "danger",
+          position: "bottom-right",
         });
         return;
       }
@@ -60,6 +62,7 @@ export default {
         createToast(this.error, {
           duration: 2000,
           type: "danger",
+          position: "bottom-right",
         });
       } finally {
         this.loading = false;

@@ -124,7 +124,7 @@ export default {
       ) {
         createToast("Please fill in all required fields", {
           type: "warning",
-          position: "top-right",
+          position: "bottom-right",
           toastBackgroundColor: "#ff9800",
           backgroundColor: "#ff9800",
         });
@@ -146,14 +146,14 @@ export default {
         };
         createToast("Support ticket created successfully", {
           type: "success",
-          position: "top-right",
+          position: "bottom-right",
           toastBackgroundColor: "#4caf50",
           backgroundColor: "#4caf50",
         });
       } catch (error) {
         createToast(error.message || "Failed to create ticket", {
           type: "error",
-          position: "top-right",
+          position: "bottom-right",
           toastBackgroundColor: "#f44336",
           backgroundColor: "#f44336",
         });

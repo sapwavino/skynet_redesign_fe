@@ -62,6 +62,7 @@ export default {
                         createToast(`Hello ${state.user.first_name}`, {
                             duration: 2000,
                             type: "success",
+                            position: "bottom-right",
                             toastBackgroundColor: 'teal',
                             showIcon: true
                         });

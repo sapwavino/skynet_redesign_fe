@@ -5,6 +5,9 @@ export default {
   name: "DashboardOverview",
   components: {Tooltip},
   computed: {
+    user() {
+      return this.$store.state.auth.user
+    },
     hosting: function () {
       // return this.$store.state.user.services.hosting
       return []
@@ -33,9 +36,6 @@ export default {
     toggleBalance() {
       this.showBalance = !this.showBalance
     }
-  },
-  mounted() {
-
   }
 }
 </script>

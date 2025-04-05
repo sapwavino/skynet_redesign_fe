@@ -32,28 +32,28 @@ export default {
     async handleSignup() {
       // Validate inputs
       if (!this.firstName || !this.lastName) {
-        createToast("Please enter your full name", {type: "danger"});
+        createToast("Please enter your full name", {type: "danger", position: "bottom-right",});
         return;
       }
 
       if (!this.email) {
-        createToast("Please enter your email", {type: "danger"});
+        createToast("Please enter your email", {type: "danger", position: "bottom-right",});
         return;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.email)) {
-        createToast("Please enter a valid email address", {type: "danger"});
+        createToast("Please enter a valid email address", {type: "danger", position: "bottom-right",});
         return;
       }
 
       if (!this.password || !this.password2) {
-        createToast("Please enter both passwords", {type: "danger"});
+        createToast("Please enter both passwords", {type: "danger", position: "bottom-right",});
         return;
       }
 
       if (this.password !== this.password2) {
-        createToast("Passwords do not match", {type: "danger"});
+        createToast("Passwords do not match", {type: "danger", position: "bottom-right",});
         return;
       }
 
@@ -62,7 +62,7 @@ export default {
       if (!passwordRegex.test(this.password)) {
         createToast(
             "Password must be at least 8 characters and contain uppercase, lowercase, number and special character",
-            {type: "danger"}
+            {type: "danger", position: "bottom-right",}
         );
         return;
       }
@@ -85,7 +85,7 @@ export default {
 
         await this.signupAction(userData);
 
-        createToast("Account created successfully!", {type: "success"});
+        createToast("Account created successfully!", {toastBackgroundColor: "teal", position: "bottom-right",});
         this.$router.push("/login");
       } catch (error) {
         const errorDetails = this.$store.getters["auth/getLastAuthError"];
@@ -93,12 +93,14 @@ export default {
         if (errorDetails?.code === 9999) {
           createToast(`${errorDetails.message}. Please add your postal code.`, {
             type: "error",
+            position: "bottom-right",
             duration: 4000,
           });
         }
         else {
           createToast(errorDetails?.message || "Signup failed", {
             type: "error",
+            position: "bottom-right",
           });
         }
       } finally {

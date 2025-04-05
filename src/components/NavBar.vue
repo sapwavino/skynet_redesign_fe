@@ -50,7 +50,7 @@ export default {
                    to="/cart"
       >
         🛒
-        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center font-bold">
           {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>
@@ -76,7 +76,7 @@ export default {
                    to="/cart"
       >
         🛒
-        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center font-bold">
           {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>
@@ -129,7 +129,7 @@ export default {
                    to="/cart"
       >
         🛒
-        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center">
+        <div class="absolute top-0 -right-2 bg-red-600 px-2 py-1 rounded-full text-xs text-white text-center font-bold">
           {{ $store.state.cart?.items?.length || 0 }}
         </div>
       </router-link>

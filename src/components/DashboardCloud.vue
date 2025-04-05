@@ -341,6 +341,7 @@ export default {
             {
               type: 'danger',
               duration: 2000,
+              position: "bottom-right"
             }
         )
         ;
@@ -355,6 +356,7 @@ export default {
             {
               type: 'danger',
               duration: 2500,
+              position: "bottom-right"
             }
         )
         return;
@@ -377,6 +379,7 @@ export default {
             {
               type: 'danger',
               duration: 2000,
+              position: "bottom-right"
             }
         )
       }
@@ -397,7 +400,8 @@ export default {
                   "Root password copied to clipboard! ✅",
                   {
                     type: "info",
-                    duration: 2500
+                    duration: 2500,
+                    position: "bottom-right"
                   }
               )
             });

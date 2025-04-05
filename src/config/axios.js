@@ -13,7 +13,7 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
     config => {
-        store.dispatch('startLoading');
+        // store.dispatch('startLoading');
         const token = localStorage.getItem('token');
         if (token) {
             const username = 'client';
@@ -23,7 +23,7 @@ api.interceptors.request.use(
         return config;
     },
     error => {
-        store.dispatch('stopLoading');
+        // store.dispatch('stopLoading');
         return Promise.reject(error);
     }
 );
@@ -31,11 +31,11 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
     response => {
-        store.dispatch('stopLoading')
+        // store.dispatch('stopLoading')
         return response
     },
     error => {
-        store.dispatch('stopLoading')
+        // store.dispatch('stopLoading')
         if (error.response?.status === 401) {
             store.dispatch('auth/logout')
         }

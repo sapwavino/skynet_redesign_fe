@@ -22,7 +22,7 @@ const store = createStore({
     },
     state: {
         domainToSearch: "",
-        cart: {},
+        cart: null,
         showCookieModal: true,
         preferredCurrency: JSON.parse(localStorage.getItem('preferredCurrency')) || "NGN",
         showMobileNav: false,
@@ -368,6 +368,29 @@ const store = createStore({
         async initialize({commit, state, dispatch}) {
             console.log("Initializing app & user data...");
 
+            // INIT CURRENCY CONVERSION RATES
+            const conversionPromises = state.currencyPairs.map(async (currency) => {
+                try {
+                    const response = await currencyService.getConversionRates(currency.name);
+                    currency.conversion_rate = response.data.result.conversion_rate;
+                    console.log(`✅Initialized conversion rate for ${currency.name}.`);
+                    return currency;
+                } catch (error) {
+                    console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
+                    currency.conversion_rate = null;
+                    return currency;
+                }
+            });
+            await Promise.all(conversionPromises)
+                .then((response) => {
+                    commit('SET_CURRENCY_PAIRS', response);
+                })
+                .catch((error) => {
+                    console.error("❌Currency conversion error:", error);
+                });
+
+
+
             // INIT LOGGED IN USER'S DATA
             const isLoggedIn = JSON.parse(window.localStorage.getItem("isLoggedIn"));
             if (isLoggedIn) {
@@ -476,28 +499,7 @@ const store = createStore({
                     commit('SET_ERROR', error);
                 });
 
-            // INIT CURRENCY CONVERSION RATES
-            const conversionPromises = state.currencyPairs.map(async (currency) => {
-                try {
-                    const response = await currencyService.getConversionRates(currency.name);
-                    currency.conversion_rate = response.data.result.conversion_rate;
-                    console.log(`✅Initialized conversion rate for ${currency.name}.`);
-                    return currency;
-                } catch (error) {
-                    console.error(`❌Error fetching conversion rate for ${currency.name}:`, error);
-                    currency.conversion_rate = null;
-                    return currency;
-                }
-            });
-            await Promise.all(conversionPromises)
-                .then((response) => {
-                    commit('SET_CURRENCY_PAIRS', response);
-                })
-                .catch((error) => {
-                    console.error("❌Currency conversion error:", error);
-                });
-
-
+            
             // INIT PRODUCTS
             productService.getAllProducts()
                 .then((response) => {

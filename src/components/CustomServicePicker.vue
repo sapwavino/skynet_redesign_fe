@@ -13,6 +13,7 @@ import windows from "@/assets/img/windows.svg";
 import {domainService} from "@/services/domain.service.js";
 import axios from "axios";
 import {extractAndSaveSessionId} from "@/utils/helper_functions.js";
+import store from '@/store';
 
 const popularConfigs = ref([
   {
@@ -191,8 +192,6 @@ function addHostingToCart() {
   let parts = domain.value.toString().split('.')
   let sld = parts[0]
   let tld = '.' + parts.slice(1).join('.');
-  let domainObject = {sld, tld}
-  console.log(sld, tld)
 
   // EXISTING DOMAIN
   hostingDomain = {
@@ -233,15 +232,15 @@ function addHostingToCart() {
 
   cartService.addItemToCart(cartItem)
       .then((response) => {
-        const {data} = response
-        const sessionID = extractAndSaveSessionId(response, 'PHPSESSID')
-        console.log(document.cookie)
         createToast(
             `${newHostingItem.quantity} ${newHostingItem.product.title} ${newHostingItem.quantity > 1 ? 'products' : 'product'} ${newHostingItem.quantity > 1 ? 'have' : 'has'} been added to cart`,
             {
               type: 'success',
             }
         )
+        cartService.getAllCartItems().then((response => {
+          store.commit('SET_CART', response.data)
+        }))
       })
 
 
@@ -1119,6 +1118,8 @@ watch(selectedConfig, (newConfig) => {
           </button>
         </section>
         <hr class="border-black col-span-2 my-10" />
+
+        <!-- DOMAIN -->
         <section class="container flex h-14 col-span-2">
           <input
               v-model="domain"

@@ -249,7 +249,7 @@ export default {
     async handleCloseTicket() {
       try {
         await this.$store.dispatch("support/closeTicket", this.ticketId);
-        this.closeConfirmModal(); 
+        this.closeConfirmModal();
 
         // Re-fetch ticket details
         await this.fetchTicketDetails();

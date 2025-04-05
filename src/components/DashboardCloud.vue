@@ -429,7 +429,7 @@ export default {
 </script>
 
 <template>
-  <div class="">
+  <div>
     <h1 class="header uppercase">Cloud</h1>
     <h1 class="muteSubheader capitalize mb-5">All of your cloud services are displayed here.</h1>
 
@@ -607,9 +607,9 @@ export default {
           class="col-span-2"
       >
         <!--    POPULAR CONFIGS-->
-        <div class="mt-5">
-          <h2 class="text-2xl  text-center dark:text-gray-300">Popular Configurations</h2>
-          <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />
+        <div class="">
+          <!--          <h2 class="text-2xl  text-center dark:text-gray-300">Popular Configurations</h2>-->
+          <!--          <hr class="mx-96 mb-5 mt-1 border-gray-300 dark:border-gray-500" />-->
           <section class="grid md:grid-cols-4">
             <div
                 v-for="(config, idx) in popularConfigs"
@@ -1123,6 +1123,8 @@ export default {
       </section>
 
     </div>
+
+    <!-- MANAGE -->
     <div
         v-if="tab === 'manage'"
     >

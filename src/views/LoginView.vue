@@ -2,17 +2,19 @@
 import {createToast} from "mosha-vue-toastify";
 import {mapActions} from "vuex";
 import "mosha-vue-toastify/dist/style.css";
+import Modal from "@/components/Modal.vue";
 
 
 export default {
   name: "Login",
-  components: {},
+  components: {Modal},
   data() {
     return {
       email: "",
       password: "",
       error: "",
       loading: false,
+      openForgotPasswordModal: false
     };
   },
   methods: {
@@ -121,12 +123,12 @@ export default {
 
       <!-- Forgot Password -->
       <div class="text-right">
-        <a
+        <button
             class="text-sm text-customGold hover:text-customGold/80 font-medium"
-            href="#"
+            @click="openForgotPasswordModal = true"
         >
           Forgot your password?
-        </a>
+        </button>
       </div>
 
       <!-- Submit Button -->
@@ -173,6 +175,20 @@ export default {
       </p>
     </form>
   </div>
+  <Modal
+      :model-value="openForgotPasswordModal"
+      :on-cancel="() => openForgotPasswordModal = false"
+      cancel-text="Cancel"
+      confirm-text="Send Recovery Link"
+      persistent
+      title="Password Recovery"
+      type="confirm"
+  >
+    <h1 class="dark:text-gray-300">Enter your Skynet email address to receive a recovery link.</h1>
+    <input class="text-input-base w-full rounded-2xl p-3 my-5"
+           placeholder="your_skynet_email@website.com"
+    />
+  </Modal>
 </template>
 
 <style scoped>

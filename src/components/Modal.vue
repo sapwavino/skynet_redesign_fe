@@ -27,8 +27,8 @@ const handleOutsideClick = (event) => {
     <div
         v-if="modelValue"
         id="modal-overlay"
+        class="fixed inset-0 flex items-center justify-center bg-black/90 z-50"
         @click="handleOutsideClick"
-        class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
     >
       <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-lg p-6">
         <!-- Modal Title -->
@@ -38,7 +38,7 @@ const handleOutsideClick = (event) => {
 
         <!-- Slot for Custom Content -->
         <div class="mt-4">
-          <slot/>
+          <slot />
         </div>
 
         <!-- Modal Actions -->
@@ -46,16 +46,16 @@ const handleOutsideClick = (event) => {
           <!-- Cancel Button (Only for Confirm Modals) -->
           <button
               v-if="type === 'confirm'"
-              @click="onCancel ? onCancel() : closeModal()"
               class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
+              @click="onCancel ? onCancel() : closeModal()"
           >
             {{ cancelText }}
           </button>
 
           <!-- Confirm Button -->
           <button
-              @click="onConfirm ? onConfirm() : closeModal()"
               class="btn-base"
+              @click="onConfirm ? onConfirm() : closeModal()"
           >
             {{ confirmText }}
           </button>
@@ -68,10 +68,10 @@ const handleOutsideClick = (event) => {
 <style scoped>
 /* Smooth fade transition */
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s ease-in-out;
+  transition:opacity 0.3s ease-in-out;
 }
 
 .fade-enter-from, .fade-leave-to {
-  opacity: 0;
+  opacity:0;
 }
 </style>
